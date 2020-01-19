@@ -10,13 +10,12 @@ struct ProblemInfo
 	int num_literal;
 }info;
 
-void skip(const char* filename)
+void skip(FILE* fp)
 {
 	/**
 	@brief: 跳过cnf文件注释行, 获取总体信息
-	@param filename: cnf文件名
+	@param fp: cnf文件指针
 	*/
-	FILE* fp = fopen(filename, "r");
 	char c[30];
 	while (true) {
 		fscanf(fp, "%s", c);
@@ -41,7 +40,7 @@ struct Formula* loadFile(const char* filename)
 	else {
 		char num[30];
 		struct Formula* formula = initFormula();
-		skip(filename);
+		skip(fp);
 		
 	}
 }
