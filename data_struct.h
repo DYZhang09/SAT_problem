@@ -54,7 +54,9 @@ struct Clause* initClause()
 		else {
 			clause->head->nextLiteral = clause->tail;
 			clause->head->isHead = true;
+			clause->head->isTail = false;
 			clause->tail->beforeLiteral = clause->head;
+			clause->tail->isHead = false;
 			clause->tail->isTail = true;
 			return clause;
 		}
@@ -69,14 +71,20 @@ struct Formula* initFormula()
 	@return: 指向初始化公式的指针
 	*/
 	struct Formula* formula = (struct Formula*)malloc(sizeof(struct Formula));
-	if (!formula) printf("malloc error.\nFileName:data_struct\nFunc:initFormula\n");
+	if (!formula) {
+		printf("malloc error.\nFileName:data_struct\nFunc:initFormula\n");
+		return NULL;
+	}
 	else {
 		formula->head = initClause();
 		formula->tail = initClause();
 		formula->head->nextClause = formula->tail;
 		formula->head->isFirstClause = true;
+		formula->head->isLastClause = false;
 		formula->tail->beforeClause = formula->head;
+		formula->tail->isFirstClause = false;
 		formula->tail->isLastClause = true;
+		formula->num_clause = 0;
 		return formula;
 	}
 }
@@ -92,6 +100,8 @@ void addLiteral(struct Clause* clause, int data)
 	struct Literal* temp = (struct Literal*)malloc(sizeof(struct Literal));
 	if (temp) {
 		temp->data = data;
+		temp->isTail = false;
+		temp->isHead = false;
 		tl->beforeLiteral->nextLiteral = temp;
 		temp->beforeLiteral = tl->beforeLiteral;
 		temp->nextLiteral = tl;
@@ -113,6 +123,7 @@ struct Clause* addClause(struct Formula* formula)
 	struct Clause* tl = formula->tail;
 	struct Clause* temp = initClause();
 	if(temp){
+		temp->isFirstClause = temp->isLastClause = false;
 		tl->beforeClause->nextClause = temp;
 		temp->beforeClause = tl->beforeClause;
 		temp->nextClause = tl;
@@ -122,6 +133,7 @@ struct Clause* addClause(struct Formula* formula)
 	}
 	else {
 		printf("malloc error.\n FileName:data_struct.h\nFunc:addClause\n");
+		return NULL;
 	}
 }
 
@@ -224,4 +236,21 @@ bool evaluateFormula(struct Formula* formula, int* var)
 		else curr = curr->nextClause;
 	}
 	return true;
+}
+
+
+void printFormula(struct Formula* formula)
+{
+	int i = 1;
+	struct Clause* currClause = formula->head->nextClause;
+	while (!currClause->isLastClause) {
+		struct Literal* currLit = currClause->head->nextLiteral;
+		printf("Formula %d:\n", i++);
+		while (!currLit->isTail) {
+			printf("%d ", currLit->data);
+			currLit = currLit->nextLiteral;
+		}
+		std::cout << '\n';
+		currClause = currClause->nextClause;
+	}
 }
