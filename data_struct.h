@@ -1,6 +1,7 @@
 #pragma once
 #include<stdio.h>
 #include<stdlib.h>
+#define DEBUG
 
 //------------------------data structure---------------------//
 struct Literal
@@ -238,7 +239,8 @@ bool evaluateFormula(struct Formula* formula, int* var)
 	return true;
 }
 
-
+//-------------------------functions for debug-----------------------------------//
+#ifdef DEBUG
 void printFormula(struct Formula* formula)
 {
 	int i = 1;
@@ -254,3 +256,5 @@ void printFormula(struct Formula* formula)
 		currClause = currClause->nextClause;
 	}
 }
+#endif // DEBUG
+
