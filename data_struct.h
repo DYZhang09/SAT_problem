@@ -59,6 +59,7 @@ struct Clause* initClause()
 			clause->tail->beforeLiteral = clause->head;
 			clause->tail->isHead = false;
 			clause->tail->isTail = true;
+			clause->len = 0;
 			return clause;
 		}
 	}
@@ -252,7 +253,7 @@ void printFormula(struct Formula* formula)
 			printf("%d ", currLit->data);
 			currLit = currLit->nextLiteral;
 		}
-		std::cout << '\n';
+		std::cout << currClause->len<<'\n';
 		currClause = currClause->nextClause;
 	}
 }

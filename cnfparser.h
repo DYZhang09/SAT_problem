@@ -55,6 +55,7 @@ struct Formula* loadFile(const char* filename)
 			}
 			else break;		//∂¡»° ‰»ÎÕÍ±œ
 		}
+
 		#ifdef DEBUG
 			printFormula(formula);
 		#endif // DEBUG
