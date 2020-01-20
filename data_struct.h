@@ -121,6 +121,28 @@ void addLiteral(struct Clause* clause, int data)
 	}
 }
 
+void deleteLiteral(struct Clause* clause, int data)
+{
+	/**
+	@brief: 删除指定子句中的指定文字
+	@param clause: 指向指定子句的指针
+	@param data: 需要删除的文字的序号
+	*/
+	struct Literal* curr = clause->head->nextLiteral;
+	struct Literal* target = curr;
+	while (!curr->isTail) {
+		if (curr->data == data) {
+			target = curr;
+			target->beforeLiteral->nextLiteral = target->nextLiteral;
+			target->nextLiteral->beforeLiteral = target->beforeLiteral;
+			curr = curr->nextLiteral;
+			free(target);
+			clause->len--;
+		}
+		else curr = curr->nextLiteral;
+	}
+}
+
 struct Clause* addClause(struct Formula* formula)
 {
 	/**
@@ -178,7 +200,24 @@ bool hasData(struct Clause* clause, int data)
 	return false;
 }
 
-int removeLiteral(struct Formula* formula, int data)
+int removeLiteralFromFormula(struct Formula* formula, int data)
+{
+	/**
+	@brief: 删除公式里所有子句所包含的特定文字
+	@param formula: 指向需要删除子句文字的公式的指针
+	@param data: 需要删除的文字的序号
+	@calls: deleteLiteral()
+	@return: 被删除的文字的序号
+	*/
+	struct Clause* curr = formula->head->nextClause;
+	while (!curr->isLastClause) {
+		deleteLiteral(curr, data);
+		curr = curr->nextClause;
+	}
+	return data;
+}
+
+int removeClauseHasLiteral(struct Formula* formula, int data)
 {
 	/**
 	@brief: 删除公式里所有包含指定文字的子句
