@@ -16,12 +16,12 @@ struct ProblemInfo
 	int num_literal;
 }info;
 
+/**
+@brief: 跳过cnf文件注释行, 获取总体信息
+@param fp: cnf文件指针
+*/
 void skip(FILE* fp)
 {
-	/**
-	@brief: 跳过cnf文件注释行, 获取总体信息
-	@param fp: cnf文件指针
-	*/
 	char c[30];
 	while (true) {
 		fscanf(fp, "%s", c);
@@ -31,13 +31,14 @@ void skip(FILE* fp)
 	fscanf(fp, "%d %d", &info.num_literal, &info.num_clause);		//读取总体信息
 }
 
+
+/**
+@brief: 从cnf文件中读取数据构建公式
+@param filename: cnf文件名
+@return: 构建完成的公式
+*/
 struct Formula* loadFile(const char* filename)
 {
-	/**
-	@brief: 从cnf文件中读取数据构建公式
-	@param filename: cnf文件名
-	@return: 构建完成的公式
-	*/
 	FILE* fp = fopen(filename, "r");
 	if (!fp) {
 		printf("Can't open the file:%s", filename);
