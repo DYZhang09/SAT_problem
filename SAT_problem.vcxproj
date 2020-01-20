@@ -140,6 +140,7 @@
   <ItemGroup>
     <ClInclude Include="cnfparser.h" />
     <ClInclude Include="data_struct.h" />
+    <ClInclude Include="solver.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="test.cpp" />
