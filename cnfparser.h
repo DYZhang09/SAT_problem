@@ -15,7 +15,10 @@ struct ProblemInfo
 
 
 //-------------------------functions for debug-----------------------------------//
-
+/**
+@brief: 打印公式
+@param formula: 指向公式的指针
+*/
 void printFormula(struct Formula* formula)
 {
 	int i = 1;
@@ -32,6 +35,11 @@ void printFormula(struct Formula* formula)
 	}
 }
 
+
+/**
+@brief: 打印结果的数组
+@param res: 结果数组
+*/
 void printArray(int* res)
 {
 	for (int i = 1; i <= info.num_literal; i++) {
@@ -41,6 +49,7 @@ void printArray(int* res)
 }
 
 
+//-----------------------------functions for cnfparser-----------------------------//
 /**
 @brief: 跳过cnf文件注释行, 获取总体信息
 @param fp: cnf文件指针

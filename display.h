@@ -1,3 +1,9 @@
+/***********************************************************/
+/** Author: Zhang DY                                                     **/
+/** Date: 2020/01/21                                                     **/
+/** Description: 主控、交互与显示模块                           **/
+/**********************************************************/
+
 #pragma once
 #include"config.h"
 #include"solver.h"
@@ -21,6 +27,11 @@ char* getFileName()
 }
 
 
+/**
+@brief: 将结果写入文件
+@param filename: 目标文件的路径
+@param result: 结果
+*/
 void filePrint(char* filename, struct Result result)
 {
 	FILE* fp = fopen(filename, "w");
@@ -35,6 +46,12 @@ void filePrint(char* filename, struct Result result)
 	printf("解答已写入文件:%s\n", filename);
 }
 
+
+/**
+@brief: debug时使用函数, 负责将结果输出到屏幕
+@param filename: cnf文件路径
+@calls: loadFile(), copyFormula(), DPLL(), printArray()
+*/
 void debug(char* filename)
 {
 	float start = clock();
@@ -50,6 +67,12 @@ void debug(char* filename)
 	printf("\n%f", finish - start);
 }
 
+
+/**
+@brief: 通过DPLL算法求解CNF范式
+@param filename: cnf文件路径
+@calls: loadFile(), copyFormula(), DPLL(), filePrint()
+*/
 void calculate(char* filename)
 {
 	float start = clock();
