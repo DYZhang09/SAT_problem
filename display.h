@@ -10,18 +10,27 @@
 #include"data_struct.h"
 #include"cnfparser.h"
 
+
+/**
+@brief: 打印相关信息
+*/
+void printHelp()
+{
+	printf("/**************************************************************/\n");
+	printf("/****************欢迎来到CNF公式求解程序***********************/\n");
+	printf("/*********答案将写入与输入文件同文件夹下的res文件中************/\n");
+	printf("/**************************************************************/\n");
+}
+
+
 /**
 @brief: 显示交互环境，获取用户输入, 输入DEFAULT表示使用默认文件
 @return: 输入的文件路径名, 若输入DEFAULT,则返回默认文件路径
 */
 char* getFileName()
 {
-	char* filename = (char*)malloc(sizeof(char) * 255);
-	printf("/**************************************************************/\n");
-	printf("/****************欢迎来到CNF公式求解程序***********************/\n");
-	printf("/*********答案将写入与输入文件同文件夹下的res文件中************/\n");
-	printf("/**************************************************************/\n");
 	printf("\n/*请输入cnf文件路径(斜杠请用双斜杠表示):\n");
+	char* filename = (char*)malloc(sizeof(char) * 255);
 	scanf("%s", filename);
 	return filename;
 }
@@ -44,6 +53,7 @@ void filePrint(char* filename, struct Result result)
 	fprintf(fp, "%c", '\n');
 	fprintf(fp, "%s %f", "t", result.time);
 	printf("解答已写入文件:%s\n", filename);
+	fclose(fp);
 }
 
 
@@ -77,7 +87,7 @@ void calculate(char* filename)
 {
 	float start = clock();
 	struct Formula* formula = loadFile(filename);
-	struct Formula* formula_copy = copyFormula(formula);
+	//struct Formula* formula_copy = copyFormula(formula);
 	std::cout << std::endl;
 
 	struct Result result = DPLL(formula);
@@ -87,4 +97,6 @@ void calculate(char* filename)
 	char* path = strtok(filename, ".cnf");
 	char* w_filename = strcat(path, ".res");
 	filePrint(w_filename, result);
+	free(formula);
+	//free(formula_copy);
 }

@@ -9,17 +9,22 @@
 
 int main()
 {
+	char c;
 	struct Formula* formula;
-	char* filename = getFileName();
 
+	printHelp();
+	do {
+		char* filename = getFileName();
 #ifdef DEBUG
-	debug(filename);
+		debug(filename);
 #endif // DEBUG
 
 #ifndef DEBUG
-	calculate(filename);
+		calculate(filename);
 #endif // !DEBUG
-	//free(filename);
+		//free(filename);
+		printf("按ESC退出, 其他键继续\n");
+	} while ((c = getchar()) != 27);
 	system("Pause");
 	return 0;
 }

@@ -101,6 +101,7 @@ struct Formula* loadFile(const char* filename)
 			printFormula(formula);
 		#endif // DEBUG
 
+		fclose(fp);
 		return formula;
 	}
 }
