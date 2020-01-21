@@ -338,7 +338,7 @@ bool evaluateClause(struct Clause* clause, int* var)
 {
 	struct Literal* curr = clause->head->nextLiteral;
 	while (!curr->isTail) {
-		if (curr->data * var[abs(curr->data)] > 0) return true;
+		if (curr->data * var[abs(curr->data)] >= 0) return true;
 		else curr = curr->nextLiteral;
 	}
 	return false;
@@ -356,28 +356,14 @@ bool evaluateFormula(struct Formula* formula, int* var)
 {
 	struct Clause* curr = formula->head->nextClause;
 	while (!curr->isLastClause) {
-		if (!evaluateClause(curr, var)) return false;
-		else curr = curr->nextClause;
+		bool flag = evaluateClause(curr, var);
+		if (!flag) return false;
+		else {
+			curr = curr->nextClause;
+		}
 	}
 	return true;
 }
 
-//-------------------------functions for debug-----------------------------------//
-#ifdef DEBUG
-void printFormula(struct Formula* formula)
-{
-	int i = 1;
-	struct Clause* currClause = formula->head->nextClause;
-	while (!currClause->isLastClause) {
-		struct Literal* currLit = currClause->head->nextLiteral;
-		printf("Formula %d:\n", i++);
-		while (!currLit->isTail) {
-			printf("%d ", currLit->data);
-			currLit = currLit->nextLiteral;
-		}
-		std::cout << currClause->len<<'\n';
-		currClause = currClause->nextClause;
-	}
-}
-#endif // DEBUG
+
 

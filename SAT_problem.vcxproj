@@ -141,6 +141,7 @@
     <ClInclude Include="cnfparser.h" />
     <ClInclude Include="config.h" />
     <ClInclude Include="data_struct.h" />
+    <ClInclude Include="display.h" />
     <ClInclude Include="solver.h" />
   </ItemGroup>
   <ItemGroup>

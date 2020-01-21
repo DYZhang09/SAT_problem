@@ -13,6 +13,34 @@ struct ProblemInfo
 	int num_literal;
 }info;
 
+
+//-------------------------functions for debug-----------------------------------//
+
+void printFormula(struct Formula* formula)
+{
+	int i = 1;
+	struct Clause* currClause = formula->head->nextClause;
+	while (!currClause->isLastClause) {
+		struct Literal* currLit = currClause->head->nextLiteral;
+		printf("Formula %d:\n", i++);
+		while (!currLit->isTail) {
+			printf("%d ", currLit->data);
+			currLit = currLit->nextLiteral;
+		}
+		std::cout << currClause->len << '\n';
+		currClause = currClause->nextClause;
+	}
+}
+
+void printArray(int* res)
+{
+	for (int i = 1; i <= info.num_literal; i++) {
+		printf("%d ", res[i]);
+		if (i % 10 == 0) printf("\n");
+	}
+}
+
+
 /**
 @brief: 跳过cnf文件注释行, 获取总体信息
 @param fp: cnf文件指针

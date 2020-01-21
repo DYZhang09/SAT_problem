@@ -9,4 +9,5 @@
 #include<stdlib.h>
 #include<string.h>
 #include<iostream>
-#define DEBUG
+#include<time.h>
+//#define DEBUG
