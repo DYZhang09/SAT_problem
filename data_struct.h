@@ -1,13 +1,11 @@
 /***********************************************************/
-/** author: Zhang DY                                                     **/
-/** date: 2020/01/20                                                     **/
-/** description: CNF公式存储数据结构与相关函数实现    **/
+/** Author: Zhang DY                                                     **/
+/** Date: 2020/01/20                                                     **/
+/** Description: CNF公式存储数据结构与相关函数实现    **/
 /**********************************************************/
 
 #pragma once
-#include<stdio.h>
-#include<stdlib.h>
-#define DEBUG
+#include"config.h"
 
 //------------------------data structure---------------------//
 struct Literal
@@ -133,7 +131,7 @@ void deleteLiteral(struct Clause* clause, int data)
 {
 	struct Literal* curr = clause->head->nextLiteral;
 	struct Literal* target = curr;
-	while (!curr->isTail) {
+	while (! curr->isTail) {
 		if (curr->data == data) {
 			target = curr;
 			target->beforeLiteral->nextLiteral = target->nextLiteral;
@@ -208,6 +206,22 @@ bool hasData(struct Clause* clause, int data)
 
 
 /**
+@brief: 判断公式中是否有空子句
+@param formula: 指向公式的指针
+@return: 有空子句返回true, 否则返回false
+*/
+bool hasVoidClause(struct Formula* formula)
+{
+	struct Clause* curr = formula->head->nextClause;
+	while (!curr->isLastClause) {
+		if (curr->len == 0) return true;
+		else curr = curr->nextClause;
+	}
+	return false;
+}
+
+
+/**
 @brief: 删除公式里所有子句所包含的特定文字
 @param formula: 指向需要删除子句文字的公式的指针
 @param data: 需要删除的文字的序号
@@ -259,6 +273,34 @@ int removeClauseHasLiteral(struct Formula* formula, int data)
 bool isUnitClause(struct Clause* clause)
 {
 	return (clause->len == 1) ? true : false;
+}
+
+
+/**
+@brief: 选取公式的第一个子句的第一个文字
+@param formula: 指向公式的指针
+@return: 选取的文字的序号
+*/
+int selectFirstData(struct Formula* formula)
+{
+	return formula->head->nextClause->head->nextLiteral->data;
+}
+
+
+/**
+@brief: 从公式中选取一个单子句并返回其文字序号, 若不存在单子句则返回0
+@param formula: 指向公式的指针
+@calls: isUnitClause()
+@return: 单子句的文字序号, 若不存在单子句返回0
+*/
+int selectDataFromUnitClause(struct Formula* formula)
+{
+	struct Clause* curr = formula->head->nextClause;
+	while (!curr->isLastClause) {
+		if (isUnitClause(curr)) return curr->head->nextLiteral->data;
+		else curr = curr->nextClause;
+	}
+	return 0;
 }
 
 

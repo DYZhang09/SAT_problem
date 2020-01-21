@@ -1,13 +1,10 @@
 /***********************************************************/
-/** author: Zhang DY                                                     **/
-/** date: 2020/01/20                                                     **/
-/** description: cnf文件解析模块头文件                          **/
+/** Author: Zhang DY                                                     **/
+/** Date: 2020/01/20                                                     **/
+/** Description: cnf文件解析模块头文件                          **/
 /**********************************************************/
 
 #pragma once
-#include<stdio.h>
-#include<string.h>
-#include<iostream>
 #include"data_struct.h"
 
 struct ProblemInfo
