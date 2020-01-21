@@ -31,12 +31,29 @@ bool dpll(struct Formula* formula, char *res)
 		else if (hasVoidClause(formula)) return false;
 	}
 
+	struct Formula* formula_copy = copyFormula(formula);
 	selected_data = selectFirstData(formula);
 	res[abs(selected_data)] = 1;
+	if (selected_data > 0) {
+		removeClauseHasLiteral(formula, selected_data);
+		removeLiteralFromFormula(formula, -selected_data);
+	}
+	else {
+		removeClauseHasLiteral(formula, -selected_data);
+		removeLiteralFromFormula(formula, selected_data);
+	}
 	if (dpll(formula, res)) return true;
 	else {
 		res[abs(selected_data)] = -1;
-		return dpll(formula, res);
+		if (selected_data < 0) {
+			removeClauseHasLiteral(formula_copy, selected_data);
+			removeLiteralFromFormula(formula_copy, -selected_data);
+		}
+		else {
+			removeClauseHasLiteral(formula_copy, -selected_data);
+			removeLiteralFromFormula(formula_copy, selected_data);
+		}
+		return dpll(formula_copy, res);
 	}
 }
 

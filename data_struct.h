@@ -171,6 +171,30 @@ struct Clause* addClause(struct Formula* formula)
 
 
 /**
+@brief: 复制公式
+@param formula: 指向被复制公式的指针
+@calls: initFormula(), addClause(), addLiteral()
+@return: 指向复制后公式的指针
+*/
+struct Formula* copyFormula(struct Formula* formula)
+{
+	struct Formula* formula_copy = initFormula();
+	struct Clause* curr_clause = formula->head->nextClause;
+	struct Clause* curr_clause_copy = formula_copy->head;
+	while (!curr_clause->isLastClause) {
+		curr_clause_copy = addClause(formula_copy);
+		struct Literal* curr_literal = curr_clause->head->nextLiteral;
+		while (!curr_literal->isTail) {
+			addLiteral(curr_clause_copy, curr_literal->data);
+			curr_literal = curr_literal->nextLiteral;
+		}
+		curr_clause = curr_clause->nextClause;
+	}
+	return formula_copy;
+}
+
+
+/**
 @brief: 删除一个子句
 @param clause: 指向被删除子句的指针
 */

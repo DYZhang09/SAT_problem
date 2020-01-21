@@ -1,4 +1,5 @@
 #include"cnfparser.h"
+#include"solver.h"
 
 int main()
 {
@@ -13,11 +14,23 @@ char filename[255];
 #endif // !DEBUG
 
 #ifdef DEBUG
+	printf("原公式:\n");
 	formula = loadFile("E:\\课程设计\\程序设计综合课程设计任务及指导学生包\\SAT测试备选算例\\基准算例\\功能测试\\sat-20.cnf");
 	std::cout << std::endl;
 	//removeClauseHasLiteral(formula, 4);
+
+	/*struct Formula* formula_copy = copyFormula(formula);
+	printf("\n复制后的公式:\n");
+	printFormula(formula_copy);
+
+	printf("\n原公式删除文字\"4\"后的原公式:\n");
 	removeLiteralFromFormula(formula, 4);
 	printFormula(formula);
-	//loadFile("E:\\课程设计\\程序设计综合课程设计任务及指导学生包\\SAT测试备选算例\\不满足算例\\eu-rand_net60-25-10.shuffled-3000.cnf");
+	
+
+	printf("\n原公式删除文字\"4\"后的复制公式:\n");
+	printFormula(formula_copy);*/
+
+
 #endif // DEBUG
 }
