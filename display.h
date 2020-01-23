@@ -112,7 +112,17 @@ void debug(char* filename)
 	printf("结果:\n");
 	printf("%d\n", result.isSatisfied);
 	printArray(result.res);
-	printf("\n%f", finish - start);
+	printf("\n%f\n", finish - start);
+
+	printf("验证:\n");
+	struct Clause* test = formula->head->nextClause;
+	while (!test->isLastClause) {
+		printf("%d\n", evaluateClause(test, result.res));
+		test = test->nextClause;
+	}
+	printf("公式结果:%d\n", evaluateFormula(formula, result.res));
+	free(result.res);
+	destoryFormula(formula);
 }
 
 
