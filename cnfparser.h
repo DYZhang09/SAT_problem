@@ -75,8 +75,8 @@ struct Formula* loadFile(const char* filename)
 {
 	FILE* fp = fopen(filename, "r");
 	if (!fp) {
-		printf("Can't open the file:%s", filename);
-		return NULL;
+		printf("无法读取文件:%s", filename);
+		exit(1);
 	}
 	else {
 		int num=0, i = 1;

@@ -10,4 +10,5 @@
 #include<string.h>
 #include<iostream>
 #include<time.h>
+#include<conio.h>
 //#define DEBUG

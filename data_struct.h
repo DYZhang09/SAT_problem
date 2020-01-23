@@ -60,9 +60,11 @@ struct Clause* initClause()
 			clause->head->nextLiteral = clause->tail;
 			clause->head->isHead = true;
 			clause->head->isTail = false;
+			clause->head->beforeLiteral = NULL;
 			clause->tail->beforeLiteral = clause->head;
 			clause->tail->isHead = false;
 			clause->tail->isTail = true;
+			clause->tail->nextLiteral = NULL;
 			clause->len = 0;
 			return clause;
 		}
@@ -88,9 +90,11 @@ struct Formula* initFormula()
 		formula->head->nextClause = formula->tail;
 		formula->head->isFirstClause = true;
 		formula->head->isLastClause = false;
+		formula->head->beforeClause = NULL;
 		formula->tail->beforeClause = formula->head;
 		formula->tail->isFirstClause = false;
 		formula->tail->isLastClause = true;
+		formula->tail->nextClause = NULL;
 		formula->num_clause = 0;
 		return formula;
 	}
@@ -209,6 +213,25 @@ void destroyClause(struct Clause* clause)
 	}
 	clause->len = 0;
 	free(clause->head);
+}
+
+
+/**
+@brief: 删除公式, 归还动态分配内存
+@param formula: 指向被删除公式的指针
+@calls: destroyFormula()
+*/
+void destoryFormula(struct Formula* formula)
+{
+	struct Clause* curr = formula->tail;
+	struct Clause* prev = curr->beforeClause;
+	while (prev != NULL) {
+		destroyClause(curr);
+		curr = prev;
+		prev = prev->beforeClause;
+	}
+	formula->num_clause = 0;
+	destroyClause(formula->head);
 }
 
 

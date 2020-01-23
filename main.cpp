@@ -24,7 +24,9 @@ int main()
 #endif // !DEBUG
 		//free(filename);
 		printf("按ESC退出, 其他键继续\n");
-	} while ((c = getchar()) != 27);
+		c = getchar();
+	} while ((c = getch()) != 27);
+	printf("已退出\n");
 	system("Pause");
 	return 0;
 }

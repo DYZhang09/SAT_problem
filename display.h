@@ -24,12 +24,12 @@ void printHelp()
 
 
 /**
-@brief: 显示交互环境，获取用户输入, 输入DEFAULT表示使用默认文件
-@return: 输入的文件路径名, 若输入DEFAULT,则返回默认文件路径
+@brief: 显示交互环境，获取用户输入
+@return: 输入的文件路径名
 */
 char* getFileName()
 {
-	printf("\n/*请输入cnf文件路径(斜杠请用双斜杠表示):\n");
+	printf("\n/*请输入cnf文件路径:\n");
 	char* filename = (char*)malloc(sizeof(char) * 255);
 	scanf("%s", filename);
 	return filename;
@@ -87,7 +87,6 @@ void calculate(char* filename)
 {
 	float start = clock();
 	struct Formula* formula = loadFile(filename);
-	//struct Formula* formula_copy = copyFormula(formula);
 	std::cout << std::endl;
 
 	struct Result result = DPLL(formula);
@@ -97,6 +96,6 @@ void calculate(char* filename)
 	char* path = strtok(filename, ".cnf");
 	char* w_filename = strcat(path, ".res");
 	filePrint(w_filename, result);
-	free(formula);
-	//free(formula_copy);
+	free(result.res);
+    destoryFormula(formula);
 }
