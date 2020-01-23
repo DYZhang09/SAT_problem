@@ -357,3 +357,70 @@ bool evaluateFormula(struct Formula* formula, int* var)
 	}
 	return true;
 }
+
+
+/**
+@brief: 从指定子句中删除特定文字, 并返回删除结果
+@param clause: 指向需要删除文字的子句的指针
+@param data: 需要删除的文字序号
+@return: 删除了文字则返回true, 否则返回false
+*/
+bool deleteLiteral_opti1(struct Clause* clause, int data)
+{
+	bool flag = false;
+	struct Literal* curr = clause->head->nextLiteral;
+	struct Literal* target = curr;
+	while (!curr->isTail) {
+		if (curr->data == data) {
+			target = curr;
+			target->beforeLiteral->nextLiteral = target->nextLiteral;
+			target->nextLiteral->beforeLiteral = target->beforeLiteral;
+			curr = curr->nextLiteral;
+			free(target);
+			clause->len--;
+			flag = true;
+		}
+		else curr = curr->nextLiteral;
+	}
+	return flag;
+}
+
+
+/**
+@brief: 删除公式里所有子句所包含的特定文字,并返回删除了文字的子句的序号
+@param formula: 指向公式的指针
+@param data: 需要删除的文字的序号
+@param index: 标志数组，标记每一个子句是否有删除文字
+@return: 删除的文字的序号
+*/
+int removeLiteralFromFormula_opti1(struct Formula* formula, int data, bool* index)
+{
+	struct Clause* curr = formula->head->nextClause;
+	int i = 1;
+	while (!curr->isLastClause) {
+		if (deleteLiteral_opti1(curr, data)) {
+			index[i] = true;
+		}
+		curr = curr->nextClause;
+		i++;
+	}
+	return data;
+}
+
+
+/**
+@brief: 给公式中指定的子句添加指定的文字
+@param formula: 指向公式的指针
+@param data: 待添加的文字序号
+@param index: 标志数组, 标记每一个子句是否需要添加文字
+*/
+void addLiteralIntoFormula(struct Formula* formula, int data, bool* index)
+{
+	struct Clause* curr = formula->head->nextClause;
+	int i = 1;
+	while (!curr->isLastClause) {
+		if (index[i]) addLiteral(curr, data);
+		curr = curr->nextClause;
+		i++;
+	}
+}

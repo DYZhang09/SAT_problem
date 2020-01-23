@@ -35,26 +35,14 @@ bool dpll(struct Formula* formula, int *res)
 	struct Formula* formula_copy = copyFormula(formula);
 	selected_data = selectFirstData(formula);
 	res[abs(selected_data)] = abs(selected_data);
-	if (selected_data > 0) {
-		removeClauseHasLiteral(formula_copy, selected_data);
-		removeLiteralFromFormula(formula_copy, -selected_data);
-	}
-	else {
-		removeClauseHasLiteral(formula_copy, -selected_data);
-		removeLiteralFromFormula(formula_copy, selected_data);
-	}
+	removeClauseHasLiteral(formula_copy, abs(selected_data));
+	removeLiteralFromFormula(formula_copy, -abs(selected_data));
 	if (dpll(formula_copy, res)) return true;
 	else {
-		free(formula_copy);
+		destoryFormula(formula_copy);
 		res[abs(selected_data)] = -abs(selected_data);
-		if (selected_data < 0) {
-			removeClauseHasLiteral(formula, selected_data);
-			removeLiteralFromFormula(formula, -selected_data);
-		}
-		else {
-			removeClauseHasLiteral(formula, -selected_data);
-			removeLiteralFromFormula(formula, selected_data);
-		}
+		removeClauseHasLiteral(formula, -abs(selected_data));
+		removeLiteralFromFormula(formula, abs(selected_data));
 		return dpll(formula, res);
 	}
 }
