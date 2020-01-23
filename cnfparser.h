@@ -14,42 +14,6 @@ struct ProblemInfo
 }info;
 
 
-//-------------------------functions for debug-----------------------------------//
-/**
-@brief: 打印公式
-@param formula: 指向公式的指针
-*/
-void printFormula(struct Formula* formula)
-{
-	int i = 1;
-	struct Clause* currClause = formula->head->nextClause;
-	while (!currClause->isLastClause) {
-		struct Literal* currLit = currClause->head->nextLiteral;
-		printf("Formula %d:\n", i++);
-		while (!currLit->isTail) {
-			printf("%d ", currLit->data);
-			currLit = currLit->nextLiteral;
-		}
-		std::cout << currClause->len << '\n';
-		currClause = currClause->nextClause;
-	}
-}
-
-
-/**
-@brief: 打印结果的数组
-@param res: 结果数组
-*/
-void printArray(int* res)
-{
-	for (int i = 1; i <= info.num_literal; i++) {
-		printf("%d ", res[i]);
-		if (i % 10 == 0) printf("\n");
-	}
-}
-
-
-//-----------------------------functions for cnfparser-----------------------------//
 /**
 @brief: 跳过cnf文件注释行, 获取总体信息
 @param fp: cnf文件指针
@@ -96,10 +60,6 @@ struct Formula* loadFile(const char* filename)
 			}
 			else break;		//读取输入完毕
 		}
-
-		#ifdef DEBUG
-			printFormula(formula);
-		#endif // DEBUG
 
 		fclose(fp);
 		return formula;

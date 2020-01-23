@@ -143,6 +143,7 @@
     <ClInclude Include="data_struct.h" />
     <ClInclude Include="display.h" />
     <ClInclude Include="solver.h" />
+    <ClInclude Include="tool_functions.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />

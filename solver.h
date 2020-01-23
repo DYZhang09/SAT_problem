@@ -5,7 +5,7 @@
 /**********************************************************/
 
 #pragma once
-#include"data_struct.h"
+#include"tool_functions.h"
 #include"cnfparser.h"
 
 struct Result
