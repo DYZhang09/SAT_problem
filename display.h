@@ -5,7 +5,6 @@
 /**********************************************************/
 
 #pragma once
-#include"config.h"
 #include"solver.h"
 #include"data_struct.h"
 #include"cnfparser.h"

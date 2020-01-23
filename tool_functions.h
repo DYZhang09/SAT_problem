@@ -8,6 +8,12 @@
 #include"data_struct.h"
 
 
+struct ProblemInfo
+{
+	int num_clause;
+	int num_literal;
+}info;
+
 /**
 @brief: 初始化一个子句
 @return: 指向初始化子句的指针
@@ -120,11 +126,11 @@ void deleteLiteral(struct Clause* clause, int data)
 
 
 /**
-@brief: 给指定公式尾部添加一个公式
+@brief: 给指定公式尾部创建一个子句
 @param formula: 指定的公式
-@return: 指向新添加公式的指针
+@return: 指向新添加子句的指针
 */
-struct Clause* addClause(struct Formula* formula)
+struct Clause* createClause(struct Formula* formula)
 {
 	struct Clause* tl = formula->tail;
 	struct Clause* temp = initClause();
@@ -145,6 +151,22 @@ struct Clause* addClause(struct Formula* formula)
 
 
 /**
+@brief: 给公式末尾添加一个子句
+@param formula: 指向公式的指针
+@param clause: 指向被添加子句的指针
+*/
+void addClause(struct Formula* formula, struct Clause* clause)
+{
+	struct Clause* tl = formula->tail;
+	struct Clause* last = tl->beforeClause;
+	last->nextClause = clause;
+	clause->beforeClause = last;
+	clause->nextClause = tl;
+	tl->beforeClause = clause;
+}
+
+
+/**
 @brief: 复制公式
 @param formula: 指向被复制公式的指针
 @calls: initFormula(), addClause(), addLiteral()
@@ -156,7 +178,7 @@ struct Formula* copyFormula(struct Formula* formula)
 	struct Clause* curr_clause = formula->head->nextClause;
 	struct Clause* curr_clause_copy = formula_copy->head;
 	while (!curr_clause->isLastClause) {
-		curr_clause_copy = addClause(formula_copy);
+		curr_clause_copy = createClause(formula_copy);
 		struct Literal* curr_literal = curr_clause->head->nextLiteral;
 		while (!curr_literal->isTail) {
 			addLiteral(curr_clause_copy, curr_literal->data);
@@ -356,71 +378,4 @@ bool evaluateFormula(struct Formula* formula, int* var)
 		}
 	}
 	return true;
-}
-
-
-/**
-@brief: 从指定子句中删除特定文字, 并返回删除结果
-@param clause: 指向需要删除文字的子句的指针
-@param data: 需要删除的文字序号
-@return: 删除了文字则返回true, 否则返回false
-*/
-bool deleteLiteral_opti1(struct Clause* clause, int data)
-{
-	bool flag = false;
-	struct Literal* curr = clause->head->nextLiteral;
-	struct Literal* target = curr;
-	while (!curr->isTail) {
-		if (curr->data == data) {
-			target = curr;
-			target->beforeLiteral->nextLiteral = target->nextLiteral;
-			target->nextLiteral->beforeLiteral = target->beforeLiteral;
-			curr = curr->nextLiteral;
-			free(target);
-			clause->len--;
-			flag = true;
-		}
-		else curr = curr->nextLiteral;
-	}
-	return flag;
-}
-
-
-/**
-@brief: 删除公式里所有子句所包含的特定文字,并返回删除了文字的子句的序号
-@param formula: 指向公式的指针
-@param data: 需要删除的文字的序号
-@param index: 标志数组，标记每一个子句是否有删除文字
-@return: 删除的文字的序号
-*/
-int removeLiteralFromFormula_opti1(struct Formula* formula, int data, bool* index)
-{
-	struct Clause* curr = formula->head->nextClause;
-	int i = 1;
-	while (!curr->isLastClause) {
-		if (deleteLiteral_opti1(curr, data)) {
-			index[i] = true;
-		}
-		curr = curr->nextClause;
-		i++;
-	}
-	return data;
-}
-
-
-/**
-@brief: 给公式中指定的子句添加指定的文字
-@param formula: 指向公式的指针
-@param data: 待添加的文字序号
-@param index: 标志数组, 标记每一个子句是否需要添加文字
-*/
-void addLiteralIntoFormula(struct Formula* formula, int data, bool* index)
-{
-	struct Clause* curr = formula->head->nextClause;
-	int i = 1;
-	while (!curr->isLastClause) {
-		if (index[i]) addLiteral(curr, data);
-		curr = curr->nextClause;
-		i++;
-	}
 }

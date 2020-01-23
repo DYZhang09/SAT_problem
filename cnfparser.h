@@ -6,12 +6,7 @@
 
 #pragma once
 #include"data_struct.h"
-
-struct ProblemInfo
-{
-	int num_clause;
-	int num_literal;
-}info;
+#include"tool_functions.h"
 
 
 /**
@@ -47,11 +42,11 @@ struct Formula* loadFile(const char* filename)
 		struct Formula* formula = initFormula();		//初始化公式
 		skip(fp);	//跳过文件注释行
 
-		struct Clause* clause = addClause(formula);	//特别处理:添加第一个子句
+		struct Clause* clause = createClause(formula);	//特别处理:添加第一个子句
 		while (!feof(fp) and (i <= info.num_clause)) {
 			fscanf(fp, "%d", &num);
 			if (num == 0 and i < info.num_clause) {		//遇到行尾，新建一个子句
-				clause = addClause(formula);
+				clause = createClause(formula);
 				i++;
 				continue;
 			}
