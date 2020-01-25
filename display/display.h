@@ -5,9 +5,9 @@
 /**********************************************************/
 
 #pragma once
-#include"solver.h"
-#include"data_struct.h"
-#include"cnfparser.h"
+#include"solver/solver.h"
+#include"data_structure/data_struct.h"
+#include"cnfparser/cnfparser.h"
 
 
 
@@ -145,4 +145,32 @@ void calculate(char* filename)
 	filePrint(w_filename, result);
 	free(result.res);
     destoryFormula(formula);
+}
+
+
+/**
+@brief: 主程序
+*/
+void __main__()
+{
+	char c;
+	struct Formula* formula;
+
+	printHelp();
+	do {
+		char* filename = getFileName();
+#ifdef DEBUG
+		debug(filename);
+#endif // DEBUG
+
+#ifndef DEBUG
+		calculate(filename);
+		//calculate_opti1(filename);
+#endif // !DEBUG
+		//free(filename);
+		
+		printf("按ESC退出, 其他键继续\n");
+		c = getchar();
+	} while ((c = getch()) != 27);
+	printf("已退出\n");
 }

@@ -14,6 +14,14 @@ struct ProblemInfo
 	int num_literal;
 }info;
 
+
+struct Counter
+{
+	int positive;
+	int negative;
+};
+
+
 /**
 @brief: 初始化一个子句
 @return: 指向初始化子句的指针
@@ -211,7 +219,7 @@ void destroyClause(struct Clause* clause)
 /**
 @brief: 删除公式, 归还动态分配内存
 @param formula: 指向被删除公式的指针
-@calls: destroyFormula()
+@calls: destroyClause()
 */
 void destoryFormula(struct Formula* formula)
 {
@@ -322,7 +330,7 @@ bool isUnitClause(struct Clause* clause)
 */
 int selectFirstData(struct Formula* formula)
 {
-	return formula->head->nextClause->head->nextLiteral->data;
+	return	formula->head->nextClause->head->nextLiteral->data;
 }
 
 
@@ -378,4 +386,74 @@ bool evaluateFormula(struct Formula* formula, int* var)
 		}
 	}
 	return true;
+}
+
+
+/**
+@brief: 初始化一个计数器
+@return: 初始化后的计数器数组
+*/
+struct Counter* initCounter()
+{
+	struct Counter* counter = (struct Counter*)malloc(sizeof(struct Counter) * (info.num_literal + 1));
+	memset(counter, 0, sizeof(struct Counter) * (info.num_literal + 1));
+	return counter;
+}
+
+
+/**
+@brief: 从计数器中选取出现次数最多的文字序号
+@param counter: 计数器数组
+@return: 出现次数最多的文字序号
+*/
+int argmaxFromCounter(struct Counter* counter)
+{
+	int i = 1, max_count = -1, argmax = 0;
+	for (; i <= info.num_literal; i++) {
+		if (counter[i].positive > max_count) {
+			max_count = counter[i].positive;
+			argmax = i;
+		}
+		if (counter[i].negative > max_count) {
+			max_count = counter[i].negative;
+			argmax = -i;
+		}
+	}
+	counter[abs(argmax)].positive = 0;
+	counter[abs(argmax)].negative = 0;
+	return argmax;
+}
+
+
+struct Counter* copyCounter(struct Counter* counter)
+{
+	struct Counter* counter_copy = initCounter();
+	for (int i = 0; i <= info.num_literal; i++)
+		counter_copy[i] = counter[i];
+	return counter_copy;
+}
+
+
+struct Clause* minLenClause(struct Formula* formula)
+{
+	int minlen = INT_MAX;
+	struct  Clause* min_clause = NULL;
+	struct Clause* curr = formula->head->nextClause;
+	while (!curr->isLastClause) {
+		if (curr->len < minlen) {
+			if (curr->len == 2) return curr;
+			else {
+				minlen = curr->len;
+				min_clause = curr;
+			}
+		}
+		curr = curr->nextClause;
+	}
+	return min_clause;
+}
+
+
+int selectData(struct Formula* formula)
+{
+	return minLenClause(formula)->head->nextLiteral->data;
 }

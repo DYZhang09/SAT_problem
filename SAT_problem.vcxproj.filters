@@ -13,25 +13,40 @@
       <UniqueIdentifier>{67DA6AB6-F800-4c08-8B7A-83BB121AAD01}</UniqueIdentifier>
       <Extensions>rc;ico;cur;bmp;dlg;rc2;rct;bin;rgs;gif;jpg;jpeg;jpe;resx;tiff;tif;png;wav;mfcribbon-ms</Extensions>
     </Filter>
+    <Filter Include="cnfparser">
+      <UniqueIdentifier>{36135b95-b7ad-4f11-9bee-1bf742148c82}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="config">
+      <UniqueIdentifier>{cc531cde-32a2-4888-b06e-f44f352522dd}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="data_structure">
+      <UniqueIdentifier>{7eb89737-fe1e-4084-8bac-563504fee370}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="display">
+      <UniqueIdentifier>{2f906a23-2535-4c37-9d7d-86ac3de6b2e2}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="solver">
+      <UniqueIdentifier>{c70f7052-6a76-4275-bad1-5685c0298168}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="cnfparser.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="cnfparser\cnfparser.h">
+      <Filter>cnfparser</Filter>
     </ClInclude>
-    <ClInclude Include="data_struct.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="config\config.h">
+      <Filter>config</Filter>
     </ClInclude>
-    <ClInclude Include="solver.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="display\display.h">
+      <Filter>display</Filter>
     </ClInclude>
-    <ClInclude Include="config.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="solver\solver.h">
+      <Filter>solver</Filter>
     </ClInclude>
-    <ClInclude Include="display.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="data_structure\data_struct.h">
+      <Filter>data_structure</Filter>
     </ClInclude>
-    <ClInclude Include="tool_functions.h">
-      <Filter>头文件</Filter>
+    <ClInclude Include="data_structure\tool_functions.h">
+      <Filter>data_structure</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

@@ -5,7 +5,7 @@
 /**********************************************************/
 
 #pragma once
-#include"config.h"
+#include"config/config.h"
 
 //------------------------naive data structure---------------------//
 struct Literal

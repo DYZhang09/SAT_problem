@@ -5,8 +5,8 @@
 /**********************************************************/
 
 #pragma once
-#include"tool_functions.h"
-#include"cnfparser.h"
+#include"data_structure/tool_functions.h"
+#include"cnfparser/cnfparser.h"
 
 struct Result
 {
@@ -31,9 +31,12 @@ bool dpll(struct Formula* formula, int *res)
 		if (formula->num_clause == 0) return true;
 		else if (hasVoidClause(formula)) return false;
 	}
+	if (formula->num_clause == 0) return true;
 
 	struct Formula* formula_copy = copyFormula(formula);
 	selected_data = selectFirstData(formula);
+	//selected_data = selectData(formula);
+	int num = formula->num_clause;
 	res[abs(selected_data)] = abs(selected_data);
 	removeClauseHasLiteral(formula_copy, abs(selected_data));
 	removeLiteralFromFormula(formula_copy, -abs(selected_data));

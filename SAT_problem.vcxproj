@@ -138,12 +138,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="cnfparser.h" />
-    <ClInclude Include="config.h" />
-    <ClInclude Include="data_struct.h" />
-    <ClInclude Include="display.h" />
-    <ClInclude Include="solver.h" />
-    <ClInclude Include="tool_functions.h" />
+    <ClInclude Include="cnfparser\cnfparser.h" />
+    <ClInclude Include="config\config.h" />
+    <ClInclude Include="data_structure\data_struct.h" />
+    <ClInclude Include="display\display.h" />
+    <ClInclude Include="solver\solver.h" />
+    <ClInclude Include="data_structure\tool_functions.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
