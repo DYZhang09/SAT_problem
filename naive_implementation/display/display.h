@@ -148,6 +148,25 @@ void calculate(char* filename)
 }
 
 
+
+void calculate_opti1(char* filename, struct Counter** counter)
+{
+	float start = clock();
+	struct Formula* formula = loadFile_opti1(filename, counter);
+	std::cout << std::endl;
+
+	struct Result result = DPLL_opti1(formula, *counter);
+	float finish = clock();
+	result.time = finish - start;
+
+	char* path = strtok(filename, ".cnf");
+	char* w_filename = strcat(path, ".res");
+	filePrint(w_filename, result);
+	free(result.res);
+	destoryFormula(formula);
+}
+
+
 /**
 @brief: Ö÷³ÌÐò
 */
@@ -159,13 +178,14 @@ void __main__()
 	printHelp();
 	do {
 		char* filename = getFileName();
+		struct Counter* counter = initCounter();
 #ifdef DEBUG
 		debug(filename);
 #endif // DEBUG
 
 #ifndef DEBUG
 		calculate(filename);
-		//calculate_opti1(filename);
+		//calculate_opti1(filename, &counter);
 #endif // !DEBUG
 		//free(filename);
 		

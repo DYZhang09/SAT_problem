@@ -389,6 +389,27 @@ bool evaluateFormula(struct Formula* formula, int* var)
 }
 
 
+void unitClauseRule(struct Formula* formula, int data)
+{
+	struct Clause* target;
+	struct Clause* curr = formula->head->nextClause;
+	while (!curr->isLastClause) {
+		if (hasData(curr, data)) {
+			curr->beforeClause->nextClause = curr->nextClause;
+			curr->nextClause->beforeClause = curr->beforeClause;
+			target = curr;
+			curr = curr->nextClause;
+			free(target);
+			formula->num_clause--;
+		}
+		else {
+			deleteLiteral(curr, -data);
+			curr = curr->nextClause;
+		}
+	}
+}
+
+
 /**
 @brief: 初始化一个计数器
 @return: 初始化后的计数器数组
@@ -431,29 +452,4 @@ struct Counter* copyCounter(struct Counter* counter)
 	for (int i = 0; i <= info.num_literal; i++)
 		counter_copy[i] = counter[i];
 	return counter_copy;
-}
-
-
-struct Clause* minLenClause(struct Formula* formula)
-{
-	int minlen = INT_MAX;
-	struct  Clause* min_clause = NULL;
-	struct Clause* curr = formula->head->nextClause;
-	while (!curr->isLastClause) {
-		if (curr->len < minlen) {
-			if (curr->len == 2) return curr;
-			else {
-				minlen = curr->len;
-				min_clause = curr;
-			}
-		}
-		curr = curr->nextClause;
-	}
-	return min_clause;
-}
-
-
-int selectData(struct Formula* formula)
-{
-	return minLenClause(formula)->head->nextLiteral->data;
 }

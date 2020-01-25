@@ -39,14 +39,14 @@
     <ClInclude Include="naive_implementation\data_structure\data_struct.h">
       <Filter>data_structure</Filter>
     </ClInclude>
-    <ClInclude Include="naive_implementation\data_structure\tool_functions.h">
-      <Filter>data_structure</Filter>
-    </ClInclude>
     <ClInclude Include="naive_implementation\display\display.h">
       <Filter>display</Filter>
     </ClInclude>
     <ClInclude Include="naive_implementation\solver\solver.h">
       <Filter>solver</Filter>
+    </ClInclude>
+    <ClInclude Include="naive_implementation\data_structure\tool_functions.h">
+      <Filter>data_structure</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
