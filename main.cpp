@@ -6,10 +6,12 @@
 
 #include"naive_implementation/display/display.h"
 #include"naive_implementation/config/config.h"
+#include"binary_puzzle/solve_puzzle.h"
 
 int main()
 {
-	__main__();
+	//solve();
+	test_puzzle();
 	system("Pause");
 	return 0;
 }

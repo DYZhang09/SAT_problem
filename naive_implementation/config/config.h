@@ -13,3 +13,5 @@
 #include<conio.h>
 
 //#define DEBUG
+
+constexpr int puzzle_size = 4;

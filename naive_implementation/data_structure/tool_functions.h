@@ -166,11 +166,18 @@ struct Clause* createClause(struct Formula* formula)
 void addClause(struct Formula* formula, struct Clause* clause)
 {
 	struct Clause* tl = formula->tail;
-	struct Clause* last = tl->beforeClause;
-	last->nextClause = clause;
-	clause->beforeClause = last;
-	clause->nextClause = tl;
-	tl->beforeClause = clause;
+	struct Clause* temp = clause;
+	if (temp) {
+		temp->isFirstClause = temp->isLastClause = false;
+		tl->beforeClause->nextClause = temp;
+		temp->beforeClause = tl->beforeClause;
+		temp->nextClause = tl;
+		tl->beforeClause = temp;
+		formula->num_clause++;
+	}
+	else {
+		printf("malloc error.\n FileName:data_struct.h\nFunc:addClause\n");
+	}
 }
 
 
@@ -453,3 +460,4 @@ struct Counter* copyCounter(struct Counter* counter)
 		counter_copy[i] = counter[i];
 	return counter_copy;
 }
+

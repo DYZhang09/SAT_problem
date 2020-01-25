@@ -170,7 +170,7 @@ void calculate_opti1(char* filename, struct Counter** counter)
 /**
 @brief: Ö÷³ÌÐò
 */
-void __main__()
+void solve()
 {
 	char c;
 	struct Formula* formula;
