@@ -5,7 +5,7 @@
 /**********************************************************/
 
 #pragma once
-#include"data_structure/tool_functions.h"
+#include"naive_implementation/data_structure/tool_functions.h"
 
 
 /**

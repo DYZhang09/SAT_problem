@@ -5,8 +5,8 @@
 /**********************************************************/
 
 #pragma once
-#include"data_structure/tool_functions.h"
-#include"cnfparser/cnfparser.h"
+#include"naive_implementation/data_structure/tool_functions.h"
+#include"naive_implementation/cnfparser/cnfparser.h"
 
 struct Result
 {

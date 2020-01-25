@@ -5,9 +5,9 @@
 /**********************************************************/
 
 #pragma once
-#include"solver/solver.h"
-#include"data_structure/data_struct.h"
-#include"cnfparser/cnfparser.h"
+#include"naive_implementation/solver/solver.h"
+#include"naive_implementation/data_structure/data_struct.h"
+#include"naive_implementation/cnfparser/cnfparser.h"
 
 
 

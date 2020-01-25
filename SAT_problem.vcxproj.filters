@@ -30,23 +30,23 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="cnfparser\cnfparser.h">
+    <ClInclude Include="naive_implementation\cnfparser\cnfparser.h">
       <Filter>cnfparser</Filter>
     </ClInclude>
-    <ClInclude Include="config\config.h">
+    <ClInclude Include="naive_implementation\config\config.h">
       <Filter>config</Filter>
     </ClInclude>
-    <ClInclude Include="display\display.h">
+    <ClInclude Include="naive_implementation\data_structure\data_struct.h">
+      <Filter>data_structure</Filter>
+    </ClInclude>
+    <ClInclude Include="naive_implementation\data_structure\tool_functions.h">
+      <Filter>data_structure</Filter>
+    </ClInclude>
+    <ClInclude Include="naive_implementation\display\display.h">
       <Filter>display</Filter>
     </ClInclude>
-    <ClInclude Include="solver\solver.h">
+    <ClInclude Include="naive_implementation\solver\solver.h">
       <Filter>solver</Filter>
-    </ClInclude>
-    <ClInclude Include="data_structure\data_struct.h">
-      <Filter>data_structure</Filter>
-    </ClInclude>
-    <ClInclude Include="data_structure\tool_functions.h">
-      <Filter>data_structure</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>

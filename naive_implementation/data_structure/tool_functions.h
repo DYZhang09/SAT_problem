@@ -5,7 +5,7 @@
 /**********************************************************/
 
 #pragma once
-#include"data_struct.h"
+#include"naive_implementation/data_structure/data_struct.h"
 
 
 struct ProblemInfo

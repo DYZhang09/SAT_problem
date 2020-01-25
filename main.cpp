@@ -4,8 +4,8 @@
 /** Description: 运行主程序                                            **/
 /**********************************************************/
 
-#include"display/display.h"
-#include"config/config.h"
+#include"naive_implementation/display/display.h"
+#include"naive_implementation/config/config.h"
 
 int main()
 {
