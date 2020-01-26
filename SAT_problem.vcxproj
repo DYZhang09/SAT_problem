@@ -140,6 +140,7 @@
   <ItemGroup>
     <ClInclude Include="binary_puzzle\generate.h" />
     <ClInclude Include="binary_puzzle\solve_puzzle.h" />
+    <ClInclude Include="binary_puzzle\tool.h" />
     <ClInclude Include="binary_puzzle\transform.h" />
     <ClInclude Include="naive_implementation\cnfparser\cnfparser.h" />
     <ClInclude Include="naive_implementation\config\config.h" />

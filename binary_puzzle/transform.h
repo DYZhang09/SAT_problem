@@ -5,8 +5,7 @@
 /**********************************************************/
 
 #pragma once
-#include"generate.h"
-#include"../naive_implementation/data_structure/tool_functions.h"
+#include"tool.h"
 
 
 /**
@@ -70,7 +69,7 @@ void addLiteralForCol_Rule1(struct Clause* clause_pos, struct Clause* clause_neg
 
 
 /**
-@brief: 为规则1的行限制生成子句集并添加入公式
+@brief: 为规则1的行限制生成子句并添加入公式
 @param formula: 指向公式的指针
 @param data: 第一个被添加的文字的序号
 */
@@ -85,7 +84,7 @@ void addClauseForRow_Rule1(struct Formula* formula, int data)
 
 
 /**
-@brief: 为规则1的列限制生成子句集并添加入公式
+@brief: 为规则1的列限制生成子句并添加入公式
 @param formula: 指向公式的指针
 @param data: 第一个被添加的文字的序号
 */
@@ -102,7 +101,6 @@ void addClauseForCol_Rule1(struct Formula* formula, int data)
 /**
 @brief: 为规则1生成子句集并添加入公式
 @param formula: 指向公式的指针
-@param data: 第一个被添加的文字的序号
 */
 void transformRule1(struct Formula* formula)
 {
@@ -116,4 +114,89 @@ void transformRule1(struct Formula* formula)
 			int data = i * puzzle_size + (j + 1);
 			addClauseForCol_Rule1(formula, data);
 		}
+}
+
+
+/**
+@brief: 为规则2的生成单行对应的子句集并添加入公式
+@param formula: 指向公式的指针
+@param data: 行首文字序号
+*/
+void addClauseForEachRow_Rule2(struct Formula* formula, int data)
+{
+	for (int i = 0; i < puzzle_size; i++)
+		comb_arr[i] = data + i;
+	comb(0, 0);
+	for (int i = 0; i < CNUM; i++) {
+		struct Clause* clause_pos = initClause();
+		struct Clause* clause_neg = initClause();
+		for (int j = 0; j < M; j++) {
+			addLiteral(clause_pos, datas[i][j]);
+			addLiteral(clause_neg, -datas[i][j]);
+		}
+		addClause(formula, clause_pos);
+		addClause(formula, clause_neg);
+	}
+	data_cnt = 0;
+}
+
+
+/**
+@brief: 为规则2的生成单列对应的子句集并添加入公式
+@param formula: 指向公式的指针
+@param data: 列首文字序号
+*/
+void addClauseForEachCol_Rule2(struct Formula* formula, int data)
+{
+	for (int i = 0; i < puzzle_size; i++)
+		comb_arr[i] = data + i * puzzle_size;
+	comb(0, 0);
+	for (int i = 0; i < CNUM; i++) {
+		struct Clause* clause_pos = initClause();
+		struct Clause* clause_neg = initClause();
+		for (int j = 0; j < M; j++) {
+			addLiteral(clause_pos, datas[i][j]);
+			addLiteral(clause_neg, -datas[i][j]);
+		}
+		addClause(formula, clause_pos);
+		addClause(formula, clause_neg);
+	}
+	data_cnt = 0;
+}
+
+
+/**
+@brief: 为规则2的行限制生成子句集并添加入公式
+@param formula: 指向公式的指针
+*/
+void addClauseForRow_Rule2(struct Formula* formula)
+{
+	for (int i = 0; i < puzzle_size; i++) {
+		int data = i * puzzle_size + 1;
+		addClauseForEachRow_Rule2(formula, data);
+	}
+}
+
+
+/**
+@brief: 为规则2的列限制生成子句集并添加入公式
+@param formula: 指向公式的指针
+*/
+void addClauseForCol_Rule2(struct Formula* formula)
+{
+	for (int j = 0; j < puzzle_size; j++) {
+		int data = j + 1;
+		addClauseForEachCol_Rule2(formula, data);
+	}
+}
+
+
+/**
+@brief: 为规则2生成子句集并添加入公式
+@param formula: 指向公式的指针
+*/
+void transformRule2(struct Formula* formula)
+{
+	addClauseForRow_Rule2(formula);
+	addClauseForCol_Rule2(formula);
 }
