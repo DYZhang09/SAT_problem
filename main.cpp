@@ -13,6 +13,7 @@ int main()
 	//solve();
 	test_puzzle();
 //	test_comb();
+
 	system("Pause");
 	return 0;
 }

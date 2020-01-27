@@ -8,6 +8,7 @@
 #include"tool.h"
 
 
+//---------------------------------Rule 0----------------------------------------//
 /**
 @brief: 读取初始化的棋盘, 生成单子句集并添加入公式中
 @param formula: 指向公式的指针
@@ -34,6 +35,7 @@ void transformUnitClause(struct Formula* formula, struct Puzzle p)
 }
 
 
+//----------------------------------------Rule 1----------------------------------------------//
 /**
 @brief: 为规则1的行限制的子句添加文字
 @param clause_pos: 指向正子句的指针
@@ -117,6 +119,7 @@ void transformRule1(struct Formula* formula)
 }
 
 
+//-----------------------------------------Rule 2--------------------------------------------//
 /**
 @brief: 为规则2的生成单行对应的子句集并添加入公式
 @param formula: 指向公式的指针
@@ -124,9 +127,11 @@ void transformRule1(struct Formula* formula)
 */
 void addClauseForEachRow_Rule2(struct Formula* formula, int data)
 {
+	int comb_arr[puzzle_size];
 	for (int i = 0; i < puzzle_size; i++)
 		comb_arr[i] = data + i;
-	comb(0, 0);
+	int** datas = setDataArr(N, M);
+	comb(0, 0, comb_arr, datas, M);
 	for (int i = 0; i < CNUM; i++) {
 		struct Clause* clause_pos = initClause();
 		struct Clause* clause_neg = initClause();
@@ -148,9 +153,11 @@ void addClauseForEachRow_Rule2(struct Formula* formula, int data)
 */
 void addClauseForEachCol_Rule2(struct Formula* formula, int data)
 {
+	int comb_arr[puzzle_size];
 	for (int i = 0; i < puzzle_size; i++)
 		comb_arr[i] = data + i * puzzle_size;
-	comb(0, 0);
+	int** datas = setDataArr(N, M);
+	comb(0, 0, comb_arr, datas, M);
 	for (int i = 0; i < CNUM; i++) {
 		struct Clause* clause_pos = initClause();
 		struct Clause* clause_neg = initClause();
@@ -199,4 +206,159 @@ void transformRule2(struct Formula* formula)
 {
 	addClauseForRow_Rule2(formula);
 	addClauseForCol_Rule2(formula);
+}
+
+
+//---------------------------------------Rule 3---------------------------------------------------//
+/**
+@brief: 给子句批量添加文字, 并将子句添加入公式中(仅用于规则3相关函数实现)
+@param formula: 指向公式的指针
+@param datas: 待添加文字的序号的数组
+@param len: datas长度
+*/
+void addClauseWithArr(struct Formula* formula, int* datas, int len)
+{
+	struct Clause* clause = initClause();
+	for (int i = 0; i < len; i++)
+		addLiteral(clause, datas[i]);
+	addClause(formula, clause);
+}
+
+
+/**
+@brief: 重置all数组(仅用于规则3相关函数实现)
+@param all: 需要重置的数组
+*/
+void recoverAllArr(int* all)
+{
+	for (int i = 0; i < 2 * puzzle_size; i++)
+		all[i] = abs(all[i]);
+}
+
+
+/**
+@brief: 根据all数组里面元素的排列组合添加子句集(仅用于规则3相关函数实现)
+@param formula: 指向公式的指针
+@param all: all数组
+@param comb_arr: 需要排列组合的序号数组
+*/
+void addClauseForRule3(struct Formula* formula, int* all, int* comb_arr)
+{
+	addClauseWithArr(formula, all, 2 * puzzle_size);
+	for (int m = 1; m <= puzzle_size; m++) {
+		int** datas = setDataArr(C(N, m), m);
+		comb(0, 0, comb_arr, datas, m);
+		data_cnt = 0;
+		for (int row = 0; row < C(N, m); row++) {
+			for (int col = 0; col < m; col++) {
+				int index = datas[row][col] - 1;
+				all[index * 2] *= -1;
+				all[index * 2 + 1] *= -1;
+			}
+			addClauseWithArr(formula, all, 2 * puzzle_size);
+			recoverAllArr(all);
+		}
+	}
+}
+
+
+/**
+@brief: 为规则3任意两行限制添加子句集
+@param formula: 指向公式的指针
+@param data1: 第一行的行首文字序号
+@param data2: 第二行的行首文字序号
+*/
+void addClauseForTwoRows_Rule3(struct Formula* formula, int data1, int data2)
+{
+	int all[2 * puzzle_size];
+	int comb_arr[puzzle_size];
+	for (int i = 0; i < puzzle_size; i++) {
+		comb_arr[i] = i + 1;
+		all[2 * i] = data1 + i;
+		all[2 * i + 1] = data2 + i;
+	}
+	addClauseForRule3(formula, all, comb_arr);
+}
+
+
+/**
+@brief: 为规则3任意两列限制添加子句集
+@param formula: 指向公式的指针
+@param data1: 第一行的列首文字序号
+@param data2: 第二行的列首文字序号
+*/
+void addClauseForTwoCols_Rule3(struct Formula* formula, int data1, int data2)
+{
+	int all[2 * puzzle_size];
+	int comb_arr[puzzle_size];
+	for (int i = 0; i < puzzle_size; i++) {
+		comb_arr[i] = i + 1;
+		all[2 * i] = data1 + i * puzzle_size;
+		all[2 * i + 1] = data2 + i * puzzle_size;
+	}
+	addClauseForRule3(formula, all, comb_arr);
+}
+
+
+/**
+@brief: 为规则3的行限制添加子句集
+@param formula: 指向公式的指针
+*/
+void addClauseForRow_Rule3(struct Formula* formula)
+{
+	int comb_arr[puzzle_size];
+	for (int i = 0; i < puzzle_size; i++)
+		comb_arr[i] = i * puzzle_size + 1;
+	int** datas = setDataArr(C(N, 2), 2);
+	comb(0, 0, comb_arr, datas, 2);
+	data_cnt = 0;
+	for (int i = 0; i < C(N, 2); i++) {
+		addClauseForTwoRows_Rule3(formula, datas[i][0], datas[i][1]);
+	}
+}
+
+
+/**
+@brief: 为规则3的列限制添加子句集
+@param formula: 指向公式的指针
+*/
+void addClauseForCol_Rule3(struct Formula* formula)
+{
+	int comb_arr[puzzle_size];
+	for (int i = 0; i < puzzle_size; i++)
+		comb_arr[i] = i + 1;
+	int** datas = setDataArr(C(N, 2), 2);
+	comb(0, 0, comb_arr, datas, 2);
+	data_cnt = 0;
+	for (int i = 0; i < C(N, 2); i++) {
+		addClauseForTwoCols_Rule3(formula, datas[i][0], datas[i][1]);
+	}
+}
+
+
+/**
+@brief: 为规则3添加子句集
+@param formula: 指向公式的指针
+*/
+void transformRule3(struct Formula* formula)
+{
+	addClauseForRow_Rule3(formula);
+	addClauseForCol_Rule3(formula);
+}
+
+
+//-------------------------------------------------------------------------------------
+/**
+@brief: 将数独转换为CNF公式
+@param p: 需要转换的数独
+@return: 转换后的数独
+*/
+struct Formula* transform(struct Puzzle p)
+{
+	struct Formula* formula = initFormula();
+	transformUnitClause(formula, p);
+	transformRule1(formula);
+	transformRule2(formula);
+	transformRule3(formula);
+	return formula;
 }

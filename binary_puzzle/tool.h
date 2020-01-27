@@ -23,18 +23,29 @@ constexpr int C(int n, int m)
 
 constexpr int CNUM = C(N, M);
 
-int comb_arr[puzzle_size];
+//int comb_arr[puzzle_size];
 int cnt = 0, data_cnt = 0;
 int results[puzzle_size] = { 0 };
-int datas[CNUM][M] = { 0 };
+//int datas[CNUM][M] = { 0 };
+//int** datas;
 
-void comb(int beg, int div)
+int** setDataArr(size_t n, size_t m)
 {
-    if (div == M)
+    int** datas = (int**)malloc(sizeof(int*) * n);
+    for (int i = 0; i < n; i++) {
+       datas[i] = (int*)malloc(sizeof(int) * m);
+       memset(datas[i], 0, sizeof(int) * m);
+    }
+    return datas;
+}
+
+void comb(int beg, int div, int* comb_arr, int** datas, int m)
+{
+    if (div == m)
     {
-        if (cnt != M)
+        if (cnt != m)
             return;
-        for (int i = 0; i < M; ++i)
+        for (int i = 0; i < m; ++i)
         {
            // printf("%d", results[i]);
             datas[data_cnt][i] = results[i];
@@ -45,7 +56,7 @@ void comb(int beg, int div)
     for (int i = beg; i < N; ++i)
     {
         results[cnt++] = comb_arr[i];
-        comb(i + 1, div + 1);
+        comb(i + 1, div + 1, comb_arr, datas, m);
         --cnt;
     }
     return;
