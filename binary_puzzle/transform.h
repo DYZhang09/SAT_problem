@@ -130,7 +130,7 @@ void addClauseForEachRow_Rule2(struct Formula* formula, int data)
 	int comb_arr[puzzle_size];
 	for (int i = 0; i < puzzle_size; i++)
 		comb_arr[i] = data + i;
-	int** datas = setDataArr(N, M);
+	int** datas = setDataArr(C(N, M), M);
 	comb(0, 0, comb_arr, datas, M);
 	for (int i = 0; i < CNUM; i++) {
 		struct Clause* clause_pos = initClause();
@@ -156,7 +156,7 @@ void addClauseForEachCol_Rule2(struct Formula* formula, int data)
 	int comb_arr[puzzle_size];
 	for (int i = 0; i < puzzle_size; i++)
 		comb_arr[i] = data + i * puzzle_size;
-	int** datas = setDataArr(N, M);
+	int** datas = setDataArr(C(N, M), M);
 	comb(0, 0, comb_arr, datas, M);
 	for (int i = 0; i < CNUM; i++) {
 		struct Clause* clause_pos = initClause();
