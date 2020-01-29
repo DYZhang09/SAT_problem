@@ -7,13 +7,15 @@
 #include"naive_implementation/display/display.h"
 #include"naive_implementation/config/config.h"
 #include"binary_puzzle/solve_puzzle.h"
+#include"binary_puzzle/test.h"
 
 int main()
 {
 	//solve();
-	test_puzzle();
+	//test_puzzle();
 //	test_comb();
-
+	//testLoadFile();
+	solvePuzzle();
 	system("Pause");
 	return 0;
 }

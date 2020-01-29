@@ -8,8 +8,18 @@
 
 struct Puzzle
 {
-	char puzzle[puzzle_size][puzzle_size] = { -1 };
+	int puzzle[puzzle_size][puzzle_size];
 };
+
+
+struct Puzzle initPuzzle()
+{
+	struct Puzzle p;
+	for (int i = 0; i < puzzle_size; i++)
+		for (int j = 0; j < puzzle_size; j++)
+			p.puzzle[i][j] = -1;
+	return p;
+}
 
 
 void drawLineTerminal()
@@ -34,6 +44,7 @@ void drawTerminal(struct Puzzle p)
 	for (int i = 0; i < puzzle_size; i++) {
 		for (int j = 0; j < puzzle_size; j++) {
 			if (p.puzzle[i][j] > -1) printf("|\t%d\t", p.puzzle[i][j]);
+			else printf("|\t  \t");
 		}
 		printf("|\n");
 		drawLineTerminal();
