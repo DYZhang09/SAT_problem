@@ -140,12 +140,14 @@
   <ItemGroup>
     <ClInclude Include="binary_puzzle\generate.h" />
     <ClInclude Include="binary_puzzle\load_puzzle.h" />
+    <ClInclude Include="binary_puzzle\print.h" />
     <ClInclude Include="binary_puzzle\solve_puzzle.h" />
     <ClInclude Include="binary_puzzle\test.h" />
     <ClInclude Include="binary_puzzle\tool.h" />
     <ClInclude Include="binary_puzzle\transform.h" />
+    <ClInclude Include="display\display.h" />
     <ClInclude Include="naive_implementation\cnfparser\cnfparser.h" />
-    <ClInclude Include="naive_implementation\config\config.h" />
+    <ClInclude Include="config\config.h" />
     <ClInclude Include="naive_implementation\data_structure\data_struct.h" />
     <ClInclude Include="naive_implementation\display\display.h" />
     <ClInclude Include="naive_implementation\solver\solver.h" />

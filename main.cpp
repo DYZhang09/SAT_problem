@@ -5,9 +5,10 @@
 /**********************************************************/
 
 #include"naive_implementation/display/display.h"
-#include"naive_implementation/config/config.h"
+#include"config/config.h"
 #include"binary_puzzle/solve_puzzle.h"
 #include"binary_puzzle/test.h"
+#include"display/display.h"
 
 int main()
 {
@@ -15,7 +16,8 @@ int main()
 	//test_puzzle();
 //	test_comb();
 	//testLoadFile();
-	solvePuzzle();
+	//solvePuzzle(loadPuzzleFromFile("E:\\SAT_Problem_\\SAT_problem\\test.res"));
+	display();
 	system("Pause");
 	return 0;
 }

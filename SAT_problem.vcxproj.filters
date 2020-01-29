@@ -33,9 +33,6 @@
     <ClInclude Include="naive_implementation\cnfparser\cnfparser.h">
       <Filter>cnfparser</Filter>
     </ClInclude>
-    <ClInclude Include="naive_implementation\config\config.h">
-      <Filter>config</Filter>
-    </ClInclude>
     <ClInclude Include="naive_implementation\data_structure\data_struct.h">
       <Filter>data_structure</Filter>
     </ClInclude>
@@ -64,6 +61,15 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="binary_puzzle\test.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="config\config.h">
+      <Filter>config</Filter>
+    </ClInclude>
+    <ClInclude Include="binary_puzzle\print.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="display\display.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
