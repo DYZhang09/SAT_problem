@@ -11,6 +11,12 @@
 constexpr int N = puzzle_size;
 constexpr int M = (puzzle_size / 2) + 1;
 
+/**
+@brief: 求组合数C(n, m)
+@param n: 待选总体数n
+@param m: 需要选取个体数m
+@return: 组合数C(n, m)
+*/
 constexpr int C(int n, int m)
 {
     int a = 1, b = 1;
@@ -21,14 +27,20 @@ constexpr int C(int n, int m)
     return a / b;
 }
 
+//规则2转换时所用组合数
 constexpr int CNUM = C(N, M);
 
-//int comb_arr[puzzle_size];
+//求组合时所用参数
 int cnt = 0, data_cnt = 0;
 int results[puzzle_size] = { 0 };
-//int datas[CNUM][M] = { 0 };
-//int** datas;
 
+
+/**
+@brief: 初始化二维数组datas用于存放组合结果
+@param n: datas第一维大小
+@param m: datas第二维大小
+@return: 初始化后的datas数组
+*/
 int** setDataArr(size_t n, size_t m)
 {
     int** datas = (int**)malloc(sizeof(int*) * n);
@@ -39,6 +51,15 @@ int** setDataArr(size_t n, size_t m)
     return datas;
 }
 
+
+/**
+@brief: 求组合
+@param beg: 开始位标志，一般为0
+@param div: 起始深度设置，一般为0
+@param comb_arr: 需要组合的样本总体数组
+@param datas: 用于存放组合结果的二维数组
+@param m: datas第二维大小
+*/
 void comb(int beg, int div, int* comb_arr, int** datas, int m)
 {
     if (div == m)

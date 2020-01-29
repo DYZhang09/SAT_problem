@@ -7,14 +7,18 @@
 #pragma once
 #include"transform.h"
 #include"load_puzzle.h"
+#include"print.h"
 #include"../naive_implementation/solver/solver.h"
 
 
-struct Puzzle  solvePuzzle()
+/**
+@brief: 解数独函数
+@param p: 待求解数独
+@return: 求解后的数独
+*/
+struct Puzzle  solvePuzzle(struct Puzzle p)
 {
 	info.num_literal = puzzle_size * puzzle_size;
-	const char* filename = "E:\\SAT_Problem_\\SAT_problem\\test.res";
-	struct Puzzle p = loadPuzzleFromFile(filename);
 	struct Formula* formula = transform(p);
 	struct Result result = DPLL(formula);
 	for (int i = 0; i < puzzle_size; i++) {

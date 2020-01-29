@@ -7,6 +7,10 @@
 #pragma once
 #include"generate.h"
 
+/**
+@brief: 从命令行中读取棋盘
+@return: 读取数据后的棋盘
+*/
 struct Puzzle loadPuzzleFromTerm()
 {
 	struct Puzzle p = initPuzzle();
@@ -21,6 +25,11 @@ struct Puzzle loadPuzzleFromTerm()
 }
 
 
+/**
+@brief: 从文件中读取棋盘
+@param filename: 目标文件路径名
+@return: 读取数据后的棋盘
+*/
 struct Puzzle loadPuzzleFromFile(const char* filename)
 {
 	FILE* fp = fopen(filename, "r");

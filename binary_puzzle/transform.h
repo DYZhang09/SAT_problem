@@ -351,7 +351,7 @@ void transformRule3(struct Formula* formula)
 /**
 @brief: 将数独转换为CNF公式
 @param p: 需要转换的数独
-@return: 转换后的数独
+@return: 转换后的公式
 */
 struct Formula* transform(struct Puzzle p)
 {
