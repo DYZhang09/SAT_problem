@@ -86,3 +86,64 @@ void draw(struct Puzzle p, const char* filename = NULL)
 	if (!filename) drawTerminal(p);
 	else drawFile(p, filename);
 }
+
+
+/**
+@brief: 获取当前时间并转换为字符串
+@return: 当前时间字符串
+*/
+string getTimeStr()
+{
+	std:: string year, month, day, hour, minute, time_str;
+	time_t now_time;
+	time(&now_time);
+	struct tm* tm_now = localtime(&now_time);
+	year = to_string(tm_now->tm_year + 1900);
+	month = to_string(tm_now->tm_mon + 1);
+	day = to_string(tm_now->tm_mday);
+	hour = to_string(tm_now->tm_hour);
+	minute = to_string(tm_now->tm_min);
+	time_str = year + "-" + month + "-" + day + "-" + hour + "-" + minute;
+	return time_str;
+}
+
+
+/**
+@brief: 获取存放CNF文件的路径
+@return: CNF文件路径
+*/
+string getNameOfCnfFile()
+{
+	return ".\\puzzleCnfFile\\" + getTimeStr() + ".puzzle";
+}
+
+
+/**
+@brief: 将CNF公式写入文件中
+@param formula: 指向需要写入文件的公式的指针
+*/
+void printCnfIntoFile(struct Formula* formula)
+{
+	string file = getNameOfCnfFile();
+	const char* filename = file.c_str();
+	FILE* fp = fopen(filename, "w");
+	if (!fp) {
+		printf("/*无法写入文件: %s\n", filename);
+		exit(1);
+	}
+	else {
+		fprintf(fp, "%s %s %d %d\n", "p", "cnf", puzzle_size * puzzle_size, formula->num_clause);
+		struct Clause* curr_clause = formula->head->nextClause;
+		while (!curr_clause->isLastClause) {
+			struct Literal* curr_literal = curr_clause->head->nextLiteral;
+			while (!curr_literal->isTail) {
+				fprintf(fp, "%d ", curr_literal->data);
+				curr_literal = curr_literal->nextLiteral;
+			}
+			fprintf(fp, "%d\n", 0);
+			curr_clause = curr_clause->nextClause;
+		}
+		printf("/*棋盘对应CNF范式已写入文件: %s\n", filename);
+		fclose(fp);
+	}
+}

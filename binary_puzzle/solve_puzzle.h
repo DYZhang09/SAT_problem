@@ -20,6 +20,7 @@ struct Puzzle  solvePuzzle(struct Puzzle p)
 {
 	info.num_literal = puzzle_size * puzzle_size;
 	struct Formula* formula = transform(p);
+	printCnfIntoFile(formula);
 	struct Result result = DPLL(formula);
 	for (int i = 0; i < puzzle_size; i++) {
 		for (int j = 0; j < puzzle_size; j++) {
@@ -27,7 +28,7 @@ struct Puzzle  solvePuzzle(struct Puzzle p)
 			p.puzzle[i][j] = (result.res[data] > 0) ? 1 : 0;
 		}
 	}
-	drawTerminal(p);
+	draw(p);
 	destoryFormula(formula);
 	free(result.res);
 	return p;
