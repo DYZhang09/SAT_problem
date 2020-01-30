@@ -97,8 +97,8 @@ string getTimeStr()
 	std:: string year, month, day, hour, minute, time_str;
 	time_t now_time;
 	time(&now_time);
-	struct tm* tm_now = localtime(&now_time);
-	year = to_string(tm_now->tm_year + 1900);
+	struct tm* tm_now = localtime(&now_time);		//获取系统当前时间
+	year = to_string(tm_now->tm_year + 1900);		//时间转换为字符串
 	month = to_string(tm_now->tm_mon + 1);
 	day = to_string(tm_now->tm_mday);
 	hour = to_string(tm_now->tm_hour);
@@ -125,15 +125,15 @@ string getNameOfCnfFile()
 void printCnfIntoFile(struct Formula* formula)
 {
 	string file = getNameOfCnfFile();
-	const char* filename = file.c_str();
-	FILE* fp = fopen(filename, "w");
+	const char* filename = file.c_str();		//获取目的文件路径
+	FILE* fp = fopen(filename, "w");			
 	if (!fp) {
 		printf("/*无法写入文件: %s\n", filename);
 		exit(1);
 	}
 	else {
-		fprintf(fp, "%s %s %d %d\n", "p", "cnf", puzzle_size * puzzle_size, formula->num_clause);
-		struct Clause* curr_clause = formula->head->nextClause;
+		fprintf(fp, "%s %s %d %d\n", "p", "cnf", puzzle_size * puzzle_size, formula->num_clause);		//打印总体信息
+		struct Clause* curr_clause = formula->head->nextClause;		//遍历公式进行输出
 		while (!curr_clause->isLastClause) {
 			struct Literal* curr_literal = curr_clause->head->nextLiteral;
 			while (!curr_literal->isTail) {

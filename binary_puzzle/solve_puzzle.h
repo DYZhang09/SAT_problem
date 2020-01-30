@@ -18,18 +18,18 @@
 */
 struct Puzzle  solvePuzzle(struct Puzzle p)
 {
-	info.num_literal = puzzle_size * puzzle_size;
-	struct Formula* formula = transform(p);
-	printCnfIntoFile(formula);
-	struct Result result = DPLL(formula);
-	for (int i = 0; i < puzzle_size; i++) {
+	info.num_literal = puzzle_size * puzzle_size;		//初始化变量数
+	struct Formula* formula = transform(p);				//根据棋盘转换为CNF公式
+	printCnfIntoFile(formula);			//将转化得到的公式写入文件
+	struct Result result = DPLL(formula);		//调用DPLL模块进行求解
+	for (int i = 0; i < puzzle_size; i++) {			//棋盘赋值
 		for (int j = 0; j < puzzle_size; j++) {
 			int data = i * puzzle_size + j + 1;
 			p.puzzle[i][j] = (result.res[data] > 0) ? 1 : 0;
 		}
 	}
-	draw(p);
-	destoryFormula(formula);
+	draw(p);		//打印棋盘
+	destoryFormula(formula);		//释放空间
 	free(result.res);
 	return p;
 }
