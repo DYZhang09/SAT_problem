@@ -8,7 +8,7 @@
 #include"../../config/config.h"
 
 //------------------------naive data structure---------------------//
-struct Literal
+struct Literal			//文字结构体，data对应文字序号
 {
 	int data = 0;
 	struct Literal* nextLiteral = NULL;
@@ -17,7 +17,7 @@ struct Literal
 	bool isTail = false;
 };
 
-struct Clause
+struct Clause		//子句结构体
 {
 	struct Literal* head;
 	struct Literal* tail;
@@ -29,7 +29,7 @@ struct Clause
 	int len = 0;
 };
 
-struct Formula
+struct Formula		//公式结构体
 {
 	struct Clause* head;
 	struct Clause* tail;
