@@ -18,4 +18,3 @@ using namespace std;
 
 //数独棋盘大小
 constexpr int puzzle_size = 8;
-//数独cnf文件存放位置
