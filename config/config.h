@@ -11,8 +11,11 @@
 #include<iostream>
 #include<time.h>
 #include<conio.h>
+#include<string>
+using namespace std;
 
 //#define DEBUG
 
 //数独棋盘大小
 constexpr int puzzle_size = 8;
+//数独cnf文件存放位置
