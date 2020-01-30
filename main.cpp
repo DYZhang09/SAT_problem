@@ -12,11 +12,6 @@
 
 int main()
 {
-	//solve();
-	//test_puzzle();
-//	test_comb();
-	//testLoadFile();
-	//solvePuzzle(loadPuzzleFromFile("E:\\SAT_Problem_\\SAT_problem\\test.res"));
 	display();
 	system("Pause");
 	return 0;
