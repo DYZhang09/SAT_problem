@@ -7,13 +7,20 @@
 #pragma once
 #include"../binary_puzzle/solve_puzzle.h"
 
-
+//模式状态
+//MAIN: 主界面(选择模式界面), 
+//CNF:CNF求解模式, 
+//PUZZLE: 求解数独模式
+//ESC: 退出程序
 enum
 {
 	MAIN, CNF, PUZZLE, ESC
 } mode;
 
 
+/**
+@brief: 打印说明界面
+*/
 void printGuide()
 {
 	printf("/**************************************************************/\n");
@@ -25,6 +32,11 @@ void printGuide()
 }
 
 
+/**
+@brief: 将求解cnf的解答写入文件
+@param filename: 写入文件的路径
+@param result: 解答
+*/
 void cnfResultPrint(char* filename, struct Result result)
 {
 	FILE* fp = fopen(filename, "w");
@@ -42,7 +54,7 @@ void cnfResultPrint(char* filename, struct Result result)
 
 
 /**
-@brief: 显示交互环境，获取用户输入
+@brief: 显示CNF交互环境，获取用户输入
 @return: 输入的文件路径名
 */
 char* getCnfFileName()
@@ -54,6 +66,10 @@ char* getCnfFileName()
 }
 
 
+/**
+@brief: 显示PUZZLE交互环境，获取用户输入
+@return: 输入的文件路径名
+*/
 char* getPuzzleName()
 {
 	printf("\n/*请输入Puzzle棋盘文件路径:\n");
@@ -63,6 +79,9 @@ char* getPuzzleName()
 }
 
 
+/**
+@brief: 模式选择函数
+*/
 void modeChange()
 {
 	mode = MAIN;
@@ -87,40 +106,50 @@ void modeChange()
 }
 
 
+/**
+@brief: 调用cnf求解程序接口
+*/
 void callCnfSolver()
 {
-	char* cnf_filename = getCnfFileName();
-	struct Formula* formula = loadFile(cnf_filename);
+	char* cnf_filename = getCnfFileName();		//获取cnf输入文件路径
+	struct Formula* formula = loadFile(cnf_filename);		//读取文件得到CNF公式
 
-	float start = clock();
-	struct Result result = DPLL(formula);
-	float finish = clock();
-	result.time = finish - start;
+	float start = clock();		//时间起点
+	struct Result result = DPLL(formula);		//调用DPLL函数求解CNF公式
+	float finish = clock();	//时间终点
+	result.time = finish - start;		//求解时间
 
-	char* path = strtok(cnf_filename, ".cnf");
+	char* path = strtok(cnf_filename, ".cnf");		//获取结果写入文件的路径
 	char* w_filename = strcat(path, ".res");
-	cnfResultPrint(w_filename, result);
-	free(result.res);
+	cnfResultPrint(w_filename, result);		//将结果写入文件
+	free(result.res);			//释放空间
 	free(cnf_filename);
 	destoryFormula(formula);
 }
 
 
+/**
+@brief: 调用数独求解程序接口
+*/
 void callPuzzleSolver()
 {
-	char* puzzle_filename = getPuzzleName();
-	struct Puzzle p = loadPuzzleFromFile(puzzle_filename);
-	solvePuzzle(p);
+	char* puzzle_filename = getPuzzleName();		//获取初始棋盘文件
+	struct Puzzle p = loadPuzzleFromFile(puzzle_filename);		//从文件中读取棋盘
+	solvePuzzle(p);		//求解数独
+	free(puzzle_filename);		//释放空间
 }
 
 
+/**
+@brief: 主控模块主程序
+*/
 void display()
 {
-	printGuide();
-	modeChange();
-	while (mode != ESC){
-		if (mode == CNF) callCnfSolver();
-		if (mode == PUZZLE) callPuzzleSolver();
+	printGuide();		//打印说明界面
+	modeChange();	//模式选择
+	while (mode != ESC){		//当模式不是ESC时循环
+		if (mode == CNF) callCnfSolver();		//调用CNF求解模块
+		if (mode == PUZZLE) callPuzzleSolver();		//调用数独求解模块
 		printf("/*按下ESC键退回到模式选择, 其他按键则继续当前模式.\n");
 		char c = getch();
 		if (c == 27) modeChange();
