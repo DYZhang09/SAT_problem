@@ -36,14 +36,13 @@ void drawLineFile(FILE* fp)
 */
 void drawTerminal(struct Puzzle p)
 {
-	printf("Answer: \n");
 	drawLineTerminal();
 	for (int i = 0; i < puzzle_size; i++) {
 		for (int j = 0; j < puzzle_size; j++) {
 			if (p.puzzle[i][j] > -1) printf("| %d ", p.puzzle[i][j]);
-			else printf("|    ");
+			else printf("|   ");
 		}
-		printf(" |\n");
+		printf("|\n");
 		drawLineTerminal();
 	}
 }

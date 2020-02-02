@@ -18,6 +18,8 @@
 */
 struct Puzzle  solvePuzzle(struct Puzzle p)
 {
+	printf("待解答棋盘:\n");
+	draw(p);
 	info.num_literal = puzzle_size * puzzle_size;		//初始化变量数
 	struct Formula* formula = transform(p);				//根据棋盘转换为CNF公式
 	printCnfIntoFile(formula);			//将转化得到的公式写入文件
@@ -28,6 +30,7 @@ struct Puzzle  solvePuzzle(struct Puzzle p)
 			p.puzzle[i][j] = (result.res[data] > 0) ? 1 : 0;
 		}
 	}
+	printf("解答:\n");
 	draw(p);		//打印棋盘
 	destoryFormula(formula);		//释放空间
 	free(result.res);
