@@ -5,16 +5,17 @@
 /**********************************************************/
 
 #pragma once
-#include"../binary_puzzle/solve_puzzle.h"
+#include"../binary_puzzle/play.h"
 
 //模式状态
 //MAIN: 主界面(选择模式界面), 
 //CNF:CNF求解模式, 
 //PUZZLE: 求解数独模式
+//PUZZLE_PLAY: 游玩数独模式
 //ESC: 退出程序
 enum
 {
-	MAIN, CNF, PUZZLE, ESC
+	MAIN, CNF, PUZZLE, PUZZLE_PLAY, ESC
 } mode;
 
 
@@ -85,7 +86,7 @@ char* getPuzzleName()
 void modeChange()
 {
 	mode = MAIN;
-	printf("/*请进行模式选择(按下c键进入求解CNF范式模式, 按下p键进入求解数独模式, esc退出程序): \n");
+	printf("/*请进行模式选择(按下c键进入求解CNF范式模式, 按下p键进入求解数独模式, 按下g键进入游玩数独模式, esc退出程序): \n");
 	char c = getch();
 	if (c == 'c' or c == 'C') {
 		mode = CNF;
@@ -94,6 +95,10 @@ void modeChange()
 	else if (c == 'p' or c == 'P') {
 		mode = PUZZLE;
 		printf("/*进入求解数独模式(当前数独阶数为%d)\n", puzzle_size);
+	}
+	else if (c == 'g' or c == 'G') {
+		mode = PUZZLE_PLAY;
+		printf("/*进入游玩数独模式(当前数独阶数为%d)\n", puzzle_size);
 	}
 	else if (c == 27) {
 			mode = ESC;
@@ -141,6 +146,18 @@ void callPuzzleSolver()
 
 
 /**
+@brief: 调用数独游玩程序接口
+*/
+void callPuzzlePlayer()
+{
+	char* puzzle_filename = getPuzzleName();
+	struct Puzzle p = loadPuzzleFromFile(puzzle_filename);
+	puzzlePlay(p);
+	free(puzzle_filename);
+}
+
+
+/**
 @brief: 主控模块主程序
 */
 void display()
@@ -150,6 +167,7 @@ void display()
 	while (mode != ESC){		//当模式不是ESC时循环
 		if (mode == CNF) callCnfSolver();		//调用CNF求解模块
 		if (mode == PUZZLE) callPuzzleSolver();		//调用数独求解模块
+		if (mode == PUZZLE_PLAY) callPuzzlePlayer();	//调用数独游玩模块
 		printf("/*按下ESC键退回到模式选择, 其他按键则继续当前模式.\n");
 		char c = getch();
 		if (c == 27) modeChange();
