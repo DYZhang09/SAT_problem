@@ -10,6 +10,7 @@
 struct Puzzle
 {
 	int puzzle[puzzle_size][puzzle_size];
+	int difficulty;
 };
 
 
