@@ -140,6 +140,7 @@
   <ItemGroup>
     <ClInclude Include="binary_puzzle\generate.h" />
     <ClInclude Include="binary_puzzle\load_puzzle.h" />
+    <ClInclude Include="binary_puzzle\play.h" />
     <ClInclude Include="binary_puzzle\print.h" />
     <ClInclude Include="binary_puzzle\solve_puzzle.h" />
     <ClInclude Include="binary_puzzle\test.h" />

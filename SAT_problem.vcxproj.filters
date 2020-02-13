@@ -72,6 +72,9 @@
     <ClInclude Include="display\display.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="binary_puzzle\play.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
