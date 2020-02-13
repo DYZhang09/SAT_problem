@@ -27,6 +27,7 @@ struct Puzzle  solvePuzzle(struct Puzzle p, bool verbose = true)
 
 	info.num_literal = puzzle_size * puzzle_size;		//初始化变量数
 	struct Formula* formula = transform(p);				//根据棋盘转换为CNF公式
+	printCnfIntoFile(formula);
 	struct Result result = DPLL(formula);		//调用DPLL模块进行求解
 	for (int i = 0; i < puzzle_size; i++) {			//棋盘赋值
 		for (int j = 0; j < puzzle_size; j++) {
