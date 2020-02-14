@@ -54,9 +54,6 @@
     <ClInclude Include="binary_puzzle\solve_puzzle.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="binary_puzzle\tool.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="binary_puzzle\load_puzzle.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -73,6 +70,15 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="binary_puzzle\play.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="binary_puzzle\tool_function.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="binary_puzzle\comb_tool.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="binary_puzzle\puzzle.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

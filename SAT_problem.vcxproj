@@ -142,9 +142,11 @@
     <ClInclude Include="binary_puzzle\load_puzzle.h" />
     <ClInclude Include="binary_puzzle\play.h" />
     <ClInclude Include="binary_puzzle\print.h" />
+    <ClInclude Include="binary_puzzle\puzzle.h" />
     <ClInclude Include="binary_puzzle\solve_puzzle.h" />
     <ClInclude Include="binary_puzzle\test.h" />
-    <ClInclude Include="binary_puzzle\tool.h" />
+    <ClInclude Include="binary_puzzle\comb_tool.h" />
+    <ClInclude Include="binary_puzzle\tool_function.h" />
     <ClInclude Include="binary_puzzle\transform.h" />
     <ClInclude Include="display\display.h" />
     <ClInclude Include="naive_implementation\cnfparser\cnfparser.h" />
