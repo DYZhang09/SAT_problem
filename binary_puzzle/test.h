@@ -1,6 +1,7 @@
 #pragma once
 #include"transform.h"
 #include"load_puzzle.h"
+#include"generate.h"
 
 void test_puzzle()
 {
@@ -45,4 +46,22 @@ void testLoadFile()
 	struct Formula* formula = transform(p);
 	printFormula(formula);
 	drawTerminal(p);
+}
+
+
+void testLasVegas()
+{
+	struct Puzzle p = initPuzzle();
+	while (!lasVegas(&p));
+	for (int i = 0; i < puzzle_size; i++) {
+		for (int j = 0; j < puzzle_size; j++)
+			printf("%d ", p.puzzle[i][j]);
+		printf("\n");
+	}
+}
+
+void testGenerate()
+{
+	struct Puzzle p = generatePuzzle();
+	draw(p);
 }

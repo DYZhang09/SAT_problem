@@ -5,7 +5,7 @@
 /**********************************************************/
 
 #pragma once
-#include"generate.h"
+//#include"generate.h"
 #include"../naive_implementation/data_structure/tool_functions.h"
 
 constexpr int N = puzzle_size;
@@ -43,6 +43,7 @@ int results[puzzle_size] = { 0 };
 */
 int** setDataArr(size_t n, size_t m)
 {
+    data_cnt = 0;
     int** datas = (int**)malloc(sizeof(int*) * n);
     for (int i = 0; i < n; i++) {
        datas[i] = (int*)malloc(sizeof(int) * m);
@@ -78,6 +79,39 @@ void comb(int beg, int div, int* comb_arr, int** datas, int m)
     {
         results[cnt++] = comb_arr[i];
         comb(i + 1, div + 1, comb_arr, datas, m);
+        --cnt;
+    }
+    return;
+}
+
+
+/**
+@brief: 求所有的排列
+@param comb_arr: 需要排列的总体
+@param datas: 存放结果的数组
+@param n: 总体的元素个数
+@param m: 需要选取的元素个数
+@param beg: 开始位标志，默认为0
+@param div: 起始深度设置，默认为0
+*/
+void combine(int* comb_arr, int** datas, int n, int m, int beg = 0, int div = 0)
+{
+    if (div == m)
+    {
+        if (cnt != m)
+            return;
+        for (int i = 0; i < m; ++i)
+        {
+            // printf("%d", results[i]);
+            datas[data_cnt][i] = results[i];
+        }
+        data_cnt++;
+        return;
+    }
+    for (int i = beg; i < n; ++i)
+    {
+        results[cnt++] = comb_arr[i];
+        combine(comb_arr, datas, n, m, i + 1, div + 1);
         --cnt;
     }
     return;
