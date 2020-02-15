@@ -150,10 +150,8 @@ void callPuzzleSolver()
 */
 void callPuzzlePlayer()
 {
-	char* puzzle_filename = getPuzzleName();
-	struct Puzzle p = loadPuzzleFromFile(puzzle_filename);
+	struct Puzzle p = generatePuzzle();
 	puzzlePlay(p);
-	free(puzzle_filename);
 }
 
 
