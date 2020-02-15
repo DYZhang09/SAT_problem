@@ -1,6 +1,6 @@
 # SAT_problem
-## DPLL, SAT, Binary Puzzle   
+## Introduction
 ### Brief  
-Code for program design of HUST
-### Use
-run .exe file in x64\Release folder
+Solving SAT problems by using DPLL algorithm and solving binary puzzle by inducing to SAT problem.
+### How To Use
+run the .exe file in path: x64/Release/SAT_problem.exe
