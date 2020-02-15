@@ -14,7 +14,6 @@
 */
 void puzzlePlay(struct Puzzle p)
 {
-	printf("/*´ý½â´ðÆåÅÌ:\n");
 	draw(p);
 
 	info.num_literal = puzzle_size * puzzle_size;

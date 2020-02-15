@@ -18,8 +18,12 @@ struct Puzzle initPuzzle()
 {
 	struct Puzzle p;
 	for (int i = 0; i < puzzle_size; i++)
-		for (int j = 0; j < puzzle_size; j++)
+		for (int j = 0; j < puzzle_size; j++) {
 			p.puzzle[i][j] = -1;
+			p.mask[i][j] = 0;
+		}
+	
+	p.level == puzzle_size * puzzle_size - 1;
 	return p;
 }
 
@@ -156,6 +160,7 @@ void digHoleRandom(struct Puzzle* p)
 		int c = rand() % puzzle_size;
 		if (p->puzzle[r][c] >= 0) {
 			p->puzzle[r][c] = -1;
+			p->mask[r][c] = 1;
 			level++;
 		}
 	}
@@ -197,6 +202,7 @@ void getLevel(struct Puzzle* p)
 */
 struct Puzzle generatePuzzle()
 {
+	printf("/*∆Â≈Ã…˙≥…÷–\n");
 	struct Puzzle p = initPuzzle();
 	while (!lasVegas(&p));
 

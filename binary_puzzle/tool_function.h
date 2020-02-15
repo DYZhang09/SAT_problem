@@ -1,4 +1,8 @@
-
+/***********************************************************/
+/** Author: Zhang DY                                                     **/
+/** Date: 2020/01/25                                                     **/
+/** Description: 数独模块相关函数头文件	                      **/
+/**********************************************************/
 
 #pragma once
 #include"puzzle.h"
@@ -70,7 +74,7 @@ bool hasVacant(struct Puzzle p)
 */
 int* getPlayInput()
 {
-	int input[3] = { -1 };
+	static int input[3] = { -1, -1, -1 };
 	printPlayGuide();
 	scanf("%d %d %d", input, input + 1, input + 2);
 	if (!checkInput(input)) {
@@ -89,6 +93,9 @@ int* getPlayInput()
 void applyInput(struct Puzzle* p, int* input)
 {
 	int row = input[0], col = input[1];
-	p->puzzle[row - 1][col - 1] = input[2];
+	if (p->mask[row - 1][col - 1])
+		p->puzzle[row - 1][col - 1] = input[2];
+	else
+		printf("/*请不要尝试修改题目哦\n");
 }
 
