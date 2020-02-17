@@ -155,6 +155,8 @@
     <ClInclude Include="naive_implementation\display\display.h" />
     <ClInclude Include="naive_implementation\solver\solver.h" />
     <ClInclude Include="naive_implementation\data_structure\tool_functions.h" />
+    <ClInclude Include="Optimized_implementation\cnfparser\cnfparser.h" />
+    <ClInclude Include="Optimized_implementation\tool_function.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />

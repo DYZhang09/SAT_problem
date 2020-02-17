@@ -81,6 +81,12 @@
     <ClInclude Include="binary_puzzle\puzzle.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Optimized_implementation\cnfparser\cnfparser.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Optimized_implementation\tool_function.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
