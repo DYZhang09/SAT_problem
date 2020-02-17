@@ -36,3 +36,11 @@ struct Formula		//公式结构体
 
 	int num_clause = 0;
 };
+
+
+//CNF总体信息结构体
+struct ProblemInfo
+{
+	int num_clause;
+	int num_literal;
+}info;
