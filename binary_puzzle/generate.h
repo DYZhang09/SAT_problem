@@ -80,7 +80,7 @@ bool dfs(struct Puzzle *p)
 */
 bool lasVegas(struct Puzzle* p, int n = puzzle_size * puzzle_size / 6 + 1)
 {
-	int i, j, k, value;
+	int i, j, value;
 	srand((unsigned)time(NULL));
 	
 	while (n > 0) {

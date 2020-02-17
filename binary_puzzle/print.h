@@ -114,7 +114,7 @@ string getTimeStr()
 */
 string getNameOfCnfFile()
 {
-	return ".\\puzzleCnfFile\\" + getTimeStr() + ".puzzle";
+	return ".\\puzzleCnfFile\\" + getTimeStr() + ".cnf";
 }
 
 
