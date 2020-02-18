@@ -6,6 +6,7 @@
 
 #pragma once
 #include"../naive_implementation/solver/solver.h"
+#include"../Optimized_implementation/solver/solver.h"
 #include"../binary_puzzle/play.h"
 
 //ģʽ״̬
