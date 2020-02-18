@@ -87,6 +87,12 @@
     <ClInclude Include="Optimized_implementation\tool_function.h">
       <Filter>头文件</Filter>
     </ClInclude>
+    <ClInclude Include="Optimized_implementation\solver\solver.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="display\test.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">

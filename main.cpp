@@ -9,12 +9,15 @@
 #include"binary_puzzle/solve_puzzle.h"
 #include"binary_puzzle/test.h"
 #include"display/display.h"
+#include"display/test.h"
 
 int main()
 {
-	if (puzzle_size >= 4 and !(puzzle_size % 2))
+	/*if (puzzle_size >= 4 and !(puzzle_size % 2))
 		display();
-	else printf("请检查数独棋盘大小是否合法, 相关设置位于config/config.h中\n");
+	else printf("请检查数独棋盘大小是否合法, 相关设置位于config/config.h中\n");*/
+	//testLoadFileOpti();
+	testCnfSolverOpti();
 	system("Pause");
 	return 0;
 }
