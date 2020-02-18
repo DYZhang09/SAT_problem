@@ -44,3 +44,12 @@ struct ProblemInfo
 	int num_clause;
 	int num_literal;
 }info;
+
+
+struct Result
+{
+	bool isSatisfied;
+	int* res;
+	int* counter;
+	float time;
+};

@@ -288,15 +288,16 @@ int removeLiteralFromFormula(struct Formula* formula, int data)
 */
 int removeClauseHasLiteral(struct Formula* formula, int data)
 {
-	struct Clause* traget;
+	struct Clause* target;
 	struct Clause* curr = formula->head->nextClause;
 	while (!curr->isLastClause) {		//±éÀúÉ¾³ý
 		if (hasData(curr, data)) {
 			curr->beforeClause->nextClause = curr->nextClause;
 			curr->nextClause->beforeClause = curr->beforeClause;
-			traget = curr;
+			target = curr;
 			curr = curr->nextClause;
-			free(traget);
+			//free(target);
+			destroyClause(target);
 			formula->num_clause--;
 		}
 		else curr = curr->nextClause;

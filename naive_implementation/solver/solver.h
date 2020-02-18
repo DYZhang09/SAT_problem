@@ -8,13 +8,6 @@
 #include"naive_implementation/data_structure/tool_functions.h"
 #include"naive_implementation/cnfparser/cnfparser.h"
 
-struct Result
-{
-	bool isSatisfied;
-	int* res;
-	float time;
-};
-
 
 /**
 @brief: DPLL算法主程序
@@ -36,7 +29,6 @@ bool dpll(struct Formula* formula, int *res)
 
 	struct Formula* formula_copy = copyFormula(formula);		//复制公式
 	selected_data = selectFirstData(formula);			//选取第一个元素
-	//selected_data = selectData(formula);
 	int num = formula->num_clause;
 	res[abs(selected_data)] = abs(selected_data);			
 	removeClauseHasLiteral(formula_copy, abs(selected_data));
