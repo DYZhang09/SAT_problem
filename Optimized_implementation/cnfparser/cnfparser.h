@@ -9,7 +9,7 @@
 @param counter: 指向计数器数组的指针
 @return: 构建完成的公式
 */
-struct Formula* loadFile_opti1(const char* filename, struct Counter** counter)
+struct Formula* loadFile_opti1(const char* filename, int** counter)
 {
 	FILE* fp = fopen(filename, "r");
 	if (!fp) {
@@ -20,8 +20,8 @@ struct Formula* loadFile_opti1(const char* filename, struct Counter** counter)
 		int num = 0, i = 1;
 		struct Formula* formula = initFormula();		//初始化公式
 		skip(fp);	//跳过文件注释行
-
 		*counter = initCounter();
+
 		struct Clause* clause = createClause(formula);	//特别处理:添加第一个子句
 		while (!feof(fp) and (i <= info.num_clause)) {
 			fscanf(fp, "%d", &num);
@@ -32,7 +32,7 @@ struct Formula* loadFile_opti1(const char* filename, struct Counter** counter)
 			}
 			else if (num != 0) {		//给当前子句添加一个文字
 				addLiteral(clause, num);
-				(num > 0) ? ((*counter)[abs(num)].positive++) : ((*counter)[abs(num)].negative++);
+				(*counter)[abs(num)] ++;
 			}
 			else break;		//读取输入完毕
 		}
