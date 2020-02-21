@@ -1,6 +1,15 @@
 # SAT_problem
-## Introduction
-### Brief  
-Solving SAT problems by using DPLL algorithm and solving binary puzzle by inducing to SAT problem.
-### How To Use
-run the .exe file in path: x64/Release/SAT_problem.exe
+## 快速开始
+### 运行
+直接运行.exe文件, 位于 .\x64\Release\ 中
+### 说明
+提供4种模式选择:    
+1. cnf解析模式: 输入相应的cnf文件(在 *.\datasets\SAT测试备选算例* 中), 求得满足性等解答写于同名文件中(后缀为 *.res*)
+2. 数独求解模式: 输入数独棋盘文件(在 *.\datasets* 中, 文件夹名字对应数独规模), 求得结果打印在屏幕上
+3. 数独游玩模式: 随机生成棋盘, 输入难度后显示棋盘, 通过按键进行解答, 可以直接提供答案。
+4. debug模式: 输入cnf文件, 打印读取到的公式内容, 求得解答后针对每一个公式进行验算并打印至屏幕
+### 数据格式
+#### cnf文件
+需满足标准的cnf文件格式
+#### 数独棋盘文件
+有确定值为0或1, 被挖空的格子需为-1, 相邻的数字之间需用空格隔开
