@@ -17,7 +17,7 @@ constexpr int M = (puzzle_size / 2) + 1;
 @param m: 需要选取个体数m
 @return: 组合数C(n, m)
 */
-constexpr int C(int n, int m)
+int C(int n, int m)
 {
     int a = 1, b = 1;
     for (int i = n; i > n - m; i--)
@@ -28,7 +28,7 @@ constexpr int C(int n, int m)
 }
 
 //规则2转换时所用组合数
-constexpr int CNUM = C(N, M);
+int CNUM = C(N, M);
 
 //求组合时所用参数
 int cnt = 0, data_cnt = 0;
