@@ -1,7 +1,7 @@
 /***********************************************************/
-/** Author: Zhang DY                                                     **/
-/** Date: 2020/01/25                                                     **/
-/** Description: 数独生成相关头文件		                          **/
+//* Author: Zhang DY                                                     
+//* Date: 2020/01/25                                                     
+//* Description: 数独生成相关头文件		                          
 /**********************************************************/
 #pragma once
 #include"../config/config.h"
@@ -179,7 +179,7 @@ void getLevel(struct Puzzle* p)
 	switch (difficulty)
 	{
 	case 3:
-		p->level = puzzle_size * puzzle_size / 3 + 1;
+		p->level = puzzle_size * puzzle_size / 3;
 		break;
 	case 2:
 		p->level = puzzle_size * puzzle_size/ 3 + puzzle_size;

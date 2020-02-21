@@ -2,6 +2,7 @@
 #include"transform.h"
 #include"load_puzzle.h"
 #include"generate.h"
+#include"../display/debug.h"
 
 void test_puzzle()
 {
