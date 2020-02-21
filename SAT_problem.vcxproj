@@ -151,12 +151,12 @@
     <ClInclude Include="binary_puzzle\comb_tool.h" />
     <ClInclude Include="binary_puzzle\tool_function.h" />
     <ClInclude Include="binary_puzzle\transform.h" />
+    <ClInclude Include="display\debug.h" />
     <ClInclude Include="display\display.h" />
     <ClInclude Include="display\test.h" />
     <ClInclude Include="naive_implementation\cnfparser\cnfparser.h" />
     <ClInclude Include="config\config.h" />
     <ClInclude Include="naive_implementation\data_structure\data_struct.h" />
-    <ClInclude Include="naive_implementation\display\display.h" />
     <ClInclude Include="naive_implementation\solver\solver.h" />
     <ClInclude Include="naive_implementation\data_structure\tool_functions.h" />
     <ClInclude Include="Optimized_implementation\cnfparser\cnfparser.h" />
