@@ -1,23 +1,25 @@
 /***********************************************************/
-/** Author: Zhang DY                                                     **/
-/** Date: 2020/01/25                                                     **/
-/** Description: 主控模块相关头文件		                          **/
+//* Author: Zhang DY                                                     
+//* Date: 2020/01/25                                                     
+//* Description: 主控模块相关头文件		                          
 /**********************************************************/
 
 #pragma once
 #include"../naive_implementation/solver/solver.h"
 #include"../Optimized_implementation/solver/solver.h"
 #include"../binary_puzzle/play.h"
+#include"debug.h"
 
 //模式状态
 //MAIN: 主界面(选择模式界面), 
 //CNF:CNF求解模式, 
 //PUZZLE: 求解数独模式
 //PUZZLE_PLAY: 游玩数独模式
+//DEBUG: DEBUG模式(输出验证信息)
 //ESC: 退出程序
 enum
 {
-	MAIN, CNF, PUZZLE, PUZZLE_PLAY, ESC
+	MAIN, CNF, PUZZLE, PUZZLE_PLAY, DEBUG, ESC
 } mode;
 
 
@@ -26,12 +28,12 @@ enum
 */
 void printGuide()
 {
-	printf("/**************************************************************/\n");
-	printf("/*                          欢迎                              */\n");
-	printf("/*           此程序可用于求解CNF范式和求解数独                */\n");
-	printf("/*     按下c键进入求解CNF范式模式, 按下p键进入求解数独模式    */\n");
-	printf("/*   可通过按下ESC键返回模式选择界面, 再次按下ESC键退出程序   */\n");
-	printf("/**************************************************************/\n");
+	printf("/**********************************************************************************/\n");
+	printf("/*                                    欢迎                                        */\n");
+	printf("/*                     此程序可用于求解CNF范式和求解数独                          */\n");
+	printf("/*               按下c键进入求解CNF范式模式, 按下p键进入求解数独模式              */\n");
+	printf("/*             可通过按下ESC键返回模式选择界面, 再次按下ESC键退出程序             */\n");
+	printf("/**********************************************************************************/\n");
 }
 
 
@@ -88,7 +90,7 @@ char* getPuzzleName()
 void modeChange()
 {
 	mode = MAIN;
-	printf("/*请进行模式选择(按下c键进入求解CNF范式模式, 按下p键进入求解数独模式, 按下g键进入游玩数独模式, esc退出程序): \n");
+	printf("/*请进行模式选择(按键选择: c - CNF求解模式, p - 数独求解模式, g - 数独游玩模式, d - debug模式): \n");
 	char c = getch();
 	if (c == 'c' or c == 'C') {
 		mode = CNF;
@@ -101,6 +103,10 @@ void modeChange()
 	else if (c == 'g' or c == 'G') {
 		mode = PUZZLE_PLAY;
 		printf("/*进入游玩数独模式(当前数独阶数为%d)\n", puzzle_size);
+	}
+	else if (c == 'd' or c == 'D') {
+		mode = DEBUG;
+		printf("/*进入debug模式\n");
 	}
 	else if (c == 27) {
 			mode = ESC;
@@ -167,6 +173,45 @@ void callPuzzlePlayer()
 
 
 /**
+@brief: debug时使用函数, 负责将结果输出到屏幕
+@param filename: cnf文件路径
+@calls: loadFile(), copyFormula(), DPLL(), printArray()
+*/
+void debug(char* filename)
+{
+	float start = clock();
+	struct Formula* formula = loadFile(filename);
+	printFormula(formula);
+	struct Formula* formula_copy = copyFormula(formula);
+	std::cout << std::endl;
+
+	struct Result result = DPLL(formula);
+	float finish = clock();
+	printf("结果:\n");
+	printf("%d\n", result.isSatisfied);
+	printArray(result.res);
+	printf("\n%f\n", finish - start);
+
+	printf("验证:\n");
+	struct Clause* test = formula->head->nextClause;
+	while (!test->isLastClause) {
+		printf("%d\n", evaluateClause(test, result.res));
+		test = test->nextClause;
+	}
+	printf("公式结果:%d\n", evaluateFormula(formula, result.res));
+	free(result.res);
+	destoryFormula(formula);
+}
+
+
+void callDebug()
+{
+	char* filename = getCnfFileName();
+	debug(filename);
+}
+
+
+/**
 @brief: 主控模块主程序
 */
 void display()
@@ -177,6 +222,7 @@ void display()
 		if (mode == CNF) callCnfSolver();		//调用CNF求解模块
 		if (mode == PUZZLE) callPuzzleSolver();		//调用数独求解模块
 		if (mode == PUZZLE_PLAY) callPuzzlePlayer();	//调用数独游玩模块
+		if (mode == DEBUG) callDebug();
 		printf("/*按下ESC键退回到模式选择, 其他按键则继续当前模式.\n");
 		char c = getch();
 		if (c == 27) modeChange();
