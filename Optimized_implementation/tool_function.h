@@ -134,3 +134,37 @@ int selectData(struct Formula* formula, int* counter)
 	struct Clause* shortest_clause = selectShortestClause(formula);
 	return selectMaxFreqLiteralData(shortest_clause, counter);
 }
+
+
+int randomSelectData(int* counter)
+{
+	int data = 0;
+	do {
+		data = rand() % (info.num_literal + 1);
+		data = rand() % 2 ? data : -data;
+	} while (data == 0 or counter[abs(data)] == 0);
+	printf("random\n");
+	return data;
+}
+
+
+void unitClauseRuleOpti(struct Formula* formula, int data, int* counter)
+{
+	struct Clause* target;
+	struct Clause* curr = formula->head->nextClause;
+	while (!curr->isLastClause) {			//一次遍历完成单子句传播规则
+		if (hasData(curr, data)) {
+			curr->beforeClause->nextClause = curr->nextClause;
+			curr->nextClause->beforeClause = curr->beforeClause;
+			target = curr;
+			curr = curr->nextClause;
+			//free(target);
+			destroyClauseOpti(target, counter);
+			formula->num_clause--;
+		}
+		else {
+			deleteLiteralOpti(curr, -data, counter);
+			curr = curr->nextClause;
+		}
+	}
+}
