@@ -1,3 +1,9 @@
+/***********************************************************/
+//* Author: Zhang DY                                                     
+//* Date: 2020/02/01                                                     
+//* Description: cnf解析优化模块相关头文件		                          
+/**********************************************************/
+
 #pragma once
 #include"../tool_function.h"
 #include"../../naive_implementation/cnfparser/cnfparser.h"

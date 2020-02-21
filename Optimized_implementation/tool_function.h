@@ -1,3 +1,9 @@
+/***********************************************************/
+//* Author: Zhang DY                                                     
+//* Date: 2020/02/01                                                     
+//* Description: cnf工具函数优化相关头文件		                          
+/**********************************************************/
+
 #pragma once
 #include"../naive_implementation/data_structure/data_struct.h"
 
