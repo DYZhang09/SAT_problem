@@ -10,8 +10,8 @@
 
 int* initCounter()
 {
-	int* counter = (int*)malloc(sizeof(int) * (info.num_literal + 1));
-	memset(counter, 0, sizeof(int) * (info.num_literal + 1));
+	int* counter = (int*)malloc(sizeof(int) * ( 2 * info.num_literal + 1));
+	memset(counter, 0, sizeof(int) * ( 2 * info.num_literal + 1));
 	return counter;
 }
 
@@ -19,9 +19,21 @@ int* initCounter()
 int* copyCounter(int* counter)
 {
 	int* copy_counter = initCounter();
-	for (int i = 0; i < info.num_literal + 1; i++)
+	for (int i = 0; i < 2 * info.num_literal + 1; i++)
 		copy_counter[i] = counter[i];
 	return copy_counter;
+}
+
+
+int counterIndex(int data)
+{
+	return data > 0 ? (2 * data) : (2 * abs(data) -1);
+}
+
+
+int counterData(int index)
+{
+	return (index % 2) ? (-(index + 1) / 2) : (index / 2);
 }
 
 
@@ -37,7 +49,7 @@ void deleteLiteralOpti(struct Clause* clause, int data, int* counter)
 			curr = curr->nextLiteral;
 			free(target);
 			clause->len--;
-			counter[abs(data)] --;
+			counter[counterIndex(data)] --;
 		}
 		else curr = curr->nextLiteral;
 	}
@@ -49,8 +61,8 @@ void destroyClauseOpti(struct Clause* clause, int* counter)
 	struct Literal* curr = clause->tail;
 	struct Literal* prev = curr->beforeLiteral;
 	while (prev != NULL) {		//遍历删除文字
+		if (!curr->isTail) counter[counterIndex(curr->data)] --;
 		free(curr);
-		if (!curr->isTail) counter[abs(curr->data)] --;
 		curr = prev;
 		prev = prev->beforeLiteral;
 	}
@@ -104,6 +116,36 @@ int removeClauseHasLiteralOpti(struct Formula* formula, int data, int* counter)
 }
 
 
+int selectDataFromUnitClauseOpti(struct Formula* formula, int* counter)
+{
+	int max_freq = 0, selected_data =0;
+	struct Clause* curr = formula->head->nextClause;
+	while (!curr->isLastClause) {		//遍历，直到找到一个单子句
+		if (isUnitClause(curr)) {
+			if (counter[counterIndex(curr->head->nextLiteral->data)] + 
+				counter[counterIndex(-(curr->head->nextLiteral->data ))]> max_freq) {
+				selected_data = curr->head->nextLiteral->data;
+				max_freq = counter[counterIndex(curr->head->nextLiteral->data)] +
+									counter[counterIndex(-(curr->head->nextLiteral->data))];
+			}
+		}
+		curr = curr->nextClause;
+	}
+	return selected_data;
+}
+
+
+int selectPureData(int* counter)
+{
+	for (int i = 1; i < info.num_literal + 1; i++) {
+		if (counter[counterIndex(i)] == 0 and counter[counterIndex(-i)] > 0) return -i;
+		if (counter[counterIndex(i)] > 0 and counter[counterIndex(-i)] == 0) return i;
+	}
+	return 0;
+}
+
+
+
 struct Clause* selectShortestClause(struct Formula* formula)
 {
 	static struct Clause* shortest = NULL;
@@ -125,9 +167,9 @@ int selectMaxFreqLiteralData(struct Clause* clause, int* counter)
 	struct Literal* curr = clause->head->nextLiteral;
 	int max_freq = 0, selected_data = 0;
 	while (!curr->isTail) {
-		if (counter[abs(curr->data)] > max_freq) {
+		if (counter[counterIndex(curr->data)] + counter[counterIndex(-(curr->data))] > max_freq) {
 			selected_data = curr->data;
-			max_freq = counter[abs(curr->data)];
+			max_freq = counter[counterIndex(curr->data)] + counter[counterIndex(-(curr->data))];
 		}
 		curr = curr->nextLiteral;
 	}
@@ -142,13 +184,26 @@ int selectData(struct Formula* formula, int* counter)
 }
 
 
+int selectData(int* counter)
+{
+	int max = 0, selected = 0;
+	for (int i = 1; i < 2 * info.num_literal + 1; i++) {
+		if (counter[i] > max) {
+			max = counter[i];
+			selected = i;
+		}
+	}
+	return counterData(selected);
+}
+
+
 int randomSelectData(int* counter)
 {
 	int data = 0;
 	do {
 		data = rand() % (info.num_literal + 1);
 		data = rand() % 2 ? data : -data;
-	} while (data == 0 or counter[abs(data)] == 0);
+	} while (data == 0 or counter[counterIndex(data)] == 0);
 	printf("random\n");
 	return data;
 }

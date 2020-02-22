@@ -38,7 +38,7 @@ struct Formula* loadFile_opti1(const char* filename, int** counter)
 			}
 			else if (num != 0) {		//给当前子句添加一个文字
 				addLiteral(clause, num);
-				(*counter)[abs(num)] ++;
+				(*counter)[counterIndex(num)] ++;
 			}
 			else break;		//读取输入完毕
 		}
