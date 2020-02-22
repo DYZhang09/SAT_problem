@@ -206,6 +206,7 @@ void destroyClause(struct Clause* clause)
 	}
 	clause->len = 0;
 	free(clause->head);
+	free(clause);
 }
 
 
@@ -225,6 +226,7 @@ void destoryFormula(struct Formula* formula)
 	}
 	formula->num_clause = 0;
 	destroyClause(formula->head);
+	free(formula);
 }
 
 
