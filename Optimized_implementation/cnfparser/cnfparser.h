@@ -6,7 +6,7 @@
 
 #pragma once
 #include"../tool_function.h"
-#include"../../naive_implementation/cnfparser/cnfparser.h"
+#include"../../naive_dpll/cnfparser/cnfparser.h"
 
 
 /**
