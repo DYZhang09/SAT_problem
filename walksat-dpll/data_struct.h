@@ -1,3 +1,10 @@
+/***********************************************************/
+//* Author: Zhang DY                                                     
+//* Date: 2020/02/10                                                     
+//* Description: 数据结构及相关函数定义头文件		                          
+/**********************************************************/
+
+
 #pragma once
 #include"../config/config.h"
 #include"../naive_implementation/data_structure/data_struct.h"
@@ -5,6 +12,7 @@
 #define DEFAULT_CAPACITY 3
 
 
+//一维vector的结构体
 struct Vector
 {
 	int _size, _capacity;
@@ -12,6 +20,13 @@ struct Vector
 };
 
 
+/**
+@brief: 初始化一个vector
+@param c: vector的初始容量, 默认为DEFAULT_CAPACITY
+@param s: vector的初始大小, 默认为0
+@param v: 每个元素的初始值, 默认为0
+@return: 初始化后的一维vector
+*/
 struct Vector vecInit(int c = DEFAULT_CAPACITY, int s = 0, int v = 0)
 {
 	struct Vector vec;
@@ -21,6 +36,10 @@ struct Vector vecInit(int c = DEFAULT_CAPACITY, int s = 0, int v = 0)
 }
 
 
+/**
+@brief: 销毁一个vector
+@param vec: 指向被销毁vector的指针
+*/
 void freeVec(struct Vector* vec)
 {
 	free(vec->_elem);
@@ -28,39 +47,57 @@ void freeVec(struct Vector* vec)
 }
 
 
+//brief:返回vector的大小
 int vecSize(struct Vector vec)
 {
 	return vec._size;
 }
 
 
-bool vecEmpty(struct Vector vec)
-{
-	return !vec._size;
-}
-
-
+/**
+@brief: 扩容vector(仅在push_back函数中使用)
+@param vec: 待扩容的vector
+*/
 void __expand(struct Vector* vec)
 {
-	if (vec->_size < vec->_capacity) return;
+	if (vec->_size < vec->_capacity) return;		//无需扩容即退出函数
 	if (vec->_capacity < DEFAULT_CAPACITY) vec->_capacity = DEFAULT_CAPACITY;
 	int *_more_elem = (int*)realloc(vec->_elem, sizeof(int) * (vec->_capacity <<= 1));
 	if (_more_elem) vec->_elem = _more_elem;
 }
 
 
+/**
+@brief: 返回vector中的下标为n的元素
+@param vec: vector
+@param n: 元素所在的下标
+@return: 下标为n的元素
+*/
 int vecNth(struct Vector vec, int n)
 {
 	return vec._elem[n];
 }
 
 
+/**
+@brief: 更改vector中下标为n的元素的值
+@param vec: 指向被修改的vector的指针
+@param n: 被修改元素的下标
+@param data: 替换后的值
+*/
 void vecNth_re(struct Vector* vec, int n, int data)
 {
 	vec->_elem[n] = data;
 }
 
 
+/**
+@brief: 向vector中插入元素
+@param vec: 指向被修改vector的指针
+@param r: 插入位置的下标(插入元素放在r之前)
+@param data: 需要插入的值
+@return: 插入位置的下标
+*/
 int vecInsert(struct Vector* vec, int r, int data)
 {
 	__expand(vec);
@@ -72,29 +109,23 @@ int vecInsert(struct Vector* vec, int r, int data)
 }
 
 
+/**
+@brief: 向vector的末尾压入元素
+@param vec: 指向被修改vector的指针
+@param data: 被插入的元素
+*/
 void vec_push_back(struct Vector* vec, int data)
 {
 	vecInsert(vec, vec->_size, data);
 }
 
 
-int vecRemove(struct Vector* vec,int low, int high)
-{
-	if (low == high) return 0;
-	while (high < vec->_size) vec->_elem[low++] = vec->_elem[high++];
-	vec->_size = low;
-	return high - low;
-}
-
-
-int vecRemoveSingle(struct Vector* vec, int r)
-{
-	int data = vec->_elem[r];
-	vecRemove(vec, r, r + 1);
-	return data;
-}
-
-
+/**
+@brief: 在vector中搜索指定的元素, 返回其位置
+@param vec: 被搜索的vector
+@param data: 需要搜索的元素
+@return: 返回搜索到的第一个位置下标, 若没有搜索到则返回-1
+*/
 int vecSearch(struct Vector vec, int data)
 {
 	for (int i = 0; i < vec._size; i++)
@@ -103,13 +134,10 @@ int vecSearch(struct Vector vec, int data)
 }
 
 
-void vecTraverse(struct Vector vec, void (*visit)(int data))
-{
-	for (int i = 0; i < vec._size; i++)
-		visit(vec._elem[i]);
-}
-
-
+/**
+@brief: 打印vector
+@param vec: 被打印的vector
+*/
 void vecPrint(struct Vector vec)
 {
 	for (int i = 0; i < vec._size; i++) {
@@ -120,22 +148,8 @@ void vecPrint(struct Vector vec)
 }
 
 
-
-void test_vec()
-{
-	struct Vector vec = vecInit();
-	for (int i = 0; i < 10; i++)
-		vec_push_back(&vec, i + 1);
-	vecInsert(&vec, 2, 10);
-	vecRemoveSingle(&vec, 4);
-	printf("%d %d\n", vec._size, vec._capacity);
-	printf("%d\n", vecSearch(vec, 8));
-	printf("%d\n", vecNth(vec, 7));
-	vecPrint(vec);
-}
-
-
 //--------------------------------------------------------------------------------
+//二维vector的结构体
 struct BinVector
 {
 	int _size, _capacity;
@@ -143,6 +157,12 @@ struct BinVector
 };
 
 
+/**
+@brief: 初始化一个二维vector
+@param c: 二维vector的一维容量
+@param s: 二维vector的一维大小
+@return: 返回初始化后的二维vector
+*/
 struct BinVector binVecInit(int c = DEFAULT_CAPACITY, int s = 0)
 {
 	struct BinVector bvec;
@@ -152,6 +172,10 @@ struct BinVector binVecInit(int c = DEFAULT_CAPACITY, int s = 0)
 }
 
 
+/**
+@brief: 销毁二维vector
+@param bvec: 指向被销毁二维vector的指针
+*/
 void freeBinVec(struct BinVector* bvec)
 {
 	for (int i = 0; i < bvec->_size; i++)
@@ -161,18 +185,18 @@ void freeBinVec(struct BinVector* bvec)
 }
 
 
+/**
+@brief: 返回二维vector的第一维大小
+*/
 int binVecSize(struct BinVector bvec)
 {
 	return bvec._size;
 }
 
 
-bool binVecEmpty(struct BinVector bvec)
-{
-	return !bvec._size;
-}
-
-
+/**
+@brief: 扩容二维vector(类似于一维vector的扩容)
+*/
 void __expand_b(struct BinVector* bvec)
 {
 	if (bvec->_size < bvec->_capacity) return;
@@ -182,30 +206,63 @@ void __expand_b(struct BinVector* bvec)
 }
 
 
+/**
+@brief: 返回二维vector第一维下标为n的元素
+@param bvec: 二维vector
+@param n: 第一维下标n
+@return: 第一维下标n对应的一维vector
+*/
 struct Vector binVecNth(struct BinVector bvec, int n)
 {
 	return bvec._elem[n];
 }
 
 
+/**
+@brief: 替换二维vector第一维下标为n的元素
+@param bvec: 指向被修改vector的指针
+@param n: 第一维下标n
+@param vec: 用来替换的一维vector
+*/
 void binVecNth_re(struct BinVector* bvec, int n, struct Vector vec)
 {
 	bvec->_elem[n] = vec;
 }
 
 
+/**
+@brief: 返回下标为(n,m) 的元素
+@param bvec: 二维vector
+@param n: 第一维下标
+@param m: 第二维下标
+@return: 下标维(n,m)的元素
+*/
 int binVecGrid(struct BinVector bvec, int n, int m)
 {
 	return bvec._elem[n]._elem[m];
 }
 
 
+/**
+@brief: 更改下标为(n,m)的元素值
+@param bvec: 指向被修改的二维vector的指针
+@param n: 第一维下标
+@param m: 第二维下标
+@param data: 用来替换的值
+*/
 void binVecGrid_re(struct BinVector* bvec, int n, int m, int data)
 {
 	bvec->_elem[n]._elem[m] = data;
 }
 
 
+/**
+@brief: 向二维vector中插入一维vector
+@param bvec: 指向被修改的二维vector的指针
+@param r: 插入位置下标(插入原对应元素之前)
+@param vec: 被插入的一维vector
+@return: 插入位置下标
+*/
 int binVecInsert(struct BinVector* bvec, int r, struct Vector vec)
 {
 	__expand_b(bvec);
@@ -217,29 +274,18 @@ int binVecInsert(struct BinVector* bvec, int r, struct Vector vec)
 }
 
 
+/**
+@brief: 向二维vector末尾压入一维vector
+*/
 void binVec_push_back(struct BinVector* bvec, struct Vector vec)
 {
 	binVecInsert(bvec, bvec->_size, vec);
 }
 
 
-int binVecRemove(struct BinVector* bvec, int low, int high)
-{
-	if (low == high) return 0;
-	while (high < bvec->_size) bvec->_elem[low++] = bvec->_elem[high++];
-	bvec->_size = low;
-	return high - low;
-}
-
-
-struct Vector binVecRemoveSingle(struct BinVector* bvec, int r)
-{
-	struct Vector vec = bvec->_elem[r];
-	binVecRemove(bvec, r, r + 1);
-	return vec;
-}
-
-
+/**
+@brief: 打印二维vector的元素
+*/
 void binVecPrint(struct BinVector bvec)
 {
 	for (int i = 0; i < bvec._size; i++)
@@ -247,18 +293,8 @@ void binVecPrint(struct BinVector bvec)
 }
 
 
-void test_binVec()
-{
-	struct BinVector bvec = binVecInit();
-	struct Vector vec = vecInit(3, 3, 2);
-	binVec_push_back(&bvec, vec);
-	binVec_push_back(&bvec, vec);
-	binVecRemoveSingle(&bvec, 0);
-	binVecPrint(bvec);
-}
-
-
 //--------------------------------------------------------------------
+//删除标记Mask结构体
 struct Mask
 {
 	struct BinVector lit_masks;
@@ -269,6 +305,7 @@ struct Mask
 };
 
 
+//@brief: 初始化一个mask
 struct Mask maskInit()
 {
 	struct Mask mask;
@@ -279,6 +316,7 @@ struct Mask maskInit()
 }
 
 
+//@brief: 销毁一个mask
 void freeMask(struct Mask* mask)
 {
 	freeVec(&(mask->clause_masks));

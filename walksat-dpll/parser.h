@@ -1,8 +1,17 @@
+/***********************************************************/
+//* Author: Zhang DY                                                     
+//* Date: 2020/02/10                                                     
+//* Description: cnf文件读取解析函数定义                         
+/**********************************************************/
+
 #pragma once
 #include"data_struct.h"
 #include"tools.h"
 
 
+/**
+@brief: 跳过文件头, 获取相关信息
+*/
 void skipHead(FILE* fp)
 {
 	char c[30];
@@ -15,7 +24,15 @@ void skipHead(FILE* fp)
 }
 
 
-bool loadFile(const char* filename, struct BinVector* bvec, struct Mask* mask, int** p_counter)
+/**
+@brief: 读取cnf文件获得公式, 初始化mask与计数器
+@param filename: 文件路径名
+@param formula: 公式保存的位置
+@param mask: 指向mask的指针
+@param p_counter: 指向计数器的指针
+@return: 读取文件成功返回true
+*/
+bool loadFile(const char* filename, struct BinVector* formula, struct Mask* mask, int** p_counter)
 {
 	FILE* fp = fopen(filename, "r");
 	if (!fp) {
@@ -33,7 +50,7 @@ bool loadFile(const char* filename, struct BinVector* bvec, struct Mask* mask, i
 		while (!feof(fp) and (i <= info.num_clause)) {
 			fscanf(fp, "%d", &num);
 			if (num == 0 and i <= info.num_clause) {		//遇到行尾，新建一个子句
-				binVec_push_back(bvec, vec);
+				binVec_push_back(formula, vec);
 				binVec_push_back(&(mask->lit_masks), lit_mask);
 				vec = vecInit();
 				lit_mask = vecInit();
@@ -57,6 +74,13 @@ bool loadFile(const char* filename, struct BinVector* bvec, struct Mask* mask, i
 }
 
 
+/**
+@brief: 读取cnf文件获得公式, 初始化保存变量赋值的数组
+@param filename: 文件路径名
+@param formula: 公式保存的位置
+@param vars: 存放变量赋值的一维vector
+@return: 读取文件成功返回true
+*/
 bool load_formula(const char* filename, struct BinVector* formula, struct Vector* vars)
 {
 	FILE* fp = fopen(filename, "r");
