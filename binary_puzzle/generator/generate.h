@@ -4,11 +4,15 @@
 //* Description: 数独生成相关头文件		                          
 /**********************************************************/
 #pragma once
-#include"../config/config.h"
-#include"comb_tool.h"
-#include"puzzle.h"
-#include"tool_function.h"
-#include"transform.h"
+#include"./puzzle.h"
+
+#include"../solver/transform.h"
+
+#include"../tools/comb_tool.h"
+#include"../tools/tool_function.h"
+
+#include"../../config/config.h"
+
 
 /**
 @brief: 初始化一个棋盘
@@ -19,11 +23,11 @@ struct Puzzle initPuzzle()
 	struct Puzzle p;
 	for (int i = 0; i < puzzle_size; i++)
 		for (int j = 0; j < puzzle_size; j++) {
-			p.puzzle[i][j] = -1;
+			p.puzzle[i][j] = -1;		//棋盘初始化全部为-1
 			p.mask[i][j] = 0;
 		}
 	
-	p.level == puzzle_size * puzzle_size - 1;
+	p.level == puzzle_size * puzzle_size - 1;		//初始化level, 默认只挖一个空
 	return p;
 }
 
@@ -53,22 +57,22 @@ static struct Formula* g_rule = restrain();
 */
 bool dfs(struct Puzzle *p)
 {
-	for (int i = 0; i < puzzle_size; i++) {
+	for (int i = 0; i < puzzle_size; i++) {		//尝试棋盘每一个位置
 		for (int j = 0; j < puzzle_size; j++) {
-			if (p->puzzle[i][j] < 0) {
-				for (int ans = 0; ans < 2; ans++) {
+			if (p->puzzle[i][j] < 0) {			//如果棋盘尚未填空
+				for (int ans = 0; ans < 2; ans++) {		//分别尝试0和1
 					p->puzzle[i][j] = ans;
 					if (checkValid(*p, g_rule)) {
 						p->puzzle[i][j] = ans;
-						if (dfs(p)) return true;
+						if (dfs(p)) return true;			//指向下一位置
 					}
 					p->puzzle[i][j] = -1;
 				}
-				return false;
+				return false;			//若全都不满足，则当前分支返回false
 			}
 		}
 	}
-	return true;
+	return true;			//表示生成了一个正确的棋盘
 }
 
 
@@ -83,7 +87,7 @@ bool lasVegas(struct Puzzle* p, int n = puzzle_size * puzzle_size / 6 + 1)
 	int i, j, value;
 	srand((unsigned)time(NULL));
 	
-	while (n > 0) {
+	while (n > 0) {		//随机找寻n个位置填入元素
 		i = rand() % puzzle_size;
 		j = rand() % puzzle_size;
 		if (p->puzzle[i][j] < 0) {
@@ -94,7 +98,7 @@ bool lasVegas(struct Puzzle* p, int n = puzzle_size * puzzle_size / 6 + 1)
 		}
 	}
 
-	if(dfs(p)) 
+	if(dfs(p))			//生成剩余的棋盘
 		return true;
 	else
 		return false;

@@ -5,7 +5,7 @@
 /**********************************************************/
 
 #pragma once
-#include"generate.h"
+#include"../generator/generate.h"
 
 /**
 @brief: 从命令行中读取棋盘

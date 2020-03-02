@@ -6,7 +6,7 @@
 
 #pragma once
 
-#include"../config/config.h"
+#include"../../config/config.h"
 
 //表示棋盘的结构体
 struct Puzzle

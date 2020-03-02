@@ -5,8 +5,8 @@
 /**********************************************************/
 
 #pragma once
-#include"comb_tool.h"
-#include"puzzle.h"
+#include"../tools/comb_tool.h"
+#include"../generator/puzzle.h"
 
 
 //---------------------------------Rule 0----------------------------------------//

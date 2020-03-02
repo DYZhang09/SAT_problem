@@ -5,10 +5,11 @@
 /**********************************************************/
 
 #pragma once
-#include"transform.h"
-#include"load_puzzle.h"
-#include"print.h"
-#include"../naive_implementation/solver/solver.h"
+#include"./transform.h"
+
+#include"../tools/load_puzzle.h"
+#include"../tools/tool_function.h"
+#include"../../naive_implementation/solver/solver.h"
 
 
 

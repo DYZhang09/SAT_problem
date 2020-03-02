@@ -6,7 +6,7 @@
 
 #pragma once
 //#include"generate.h"
-#include"../naive_implementation/data_structure/tool_functions.h"
+#include"../../naive_implementation/data_structure/tool_functions.h"
 
 constexpr int N = puzzle_size;
 constexpr int M = (puzzle_size / 2) + 1;

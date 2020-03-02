@@ -5,10 +5,8 @@
 /**********************************************************/
 
 #pragma once
-#include"./tool_function.h"
-#include"./transform.h"
-#include"./print.h"
-#include"./solve_puzzle.h"
+#include"./tools/tool_function.h"
+#include"./solver/solve_puzzle.h"
 
 /**
 @brief: 数独游玩模块主程序
@@ -26,8 +24,8 @@ void puzzlePlay(struct Puzzle p)
 	while (hasVacant(p)) {
 		int* input = getPlayInput();
 		if (input[2] != -1) {
-			applyInput(&p, input);
-			draw(p);
+			if(applyInput(&p, input))
+				draw(p);
 		}
 		else {
 			flag = true;
