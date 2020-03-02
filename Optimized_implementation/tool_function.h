@@ -8,6 +8,10 @@
 #include"../naive_implementation/data_structure/data_struct.h"
 
 
+/**
+@brief: 初始化一个计数器
+@return: 初始化后的计数器
+*/
 int* initCounter()
 {
 	int* counter = (int*)malloc(sizeof(int) * ( 2 * info.num_literal + 1));
@@ -16,6 +20,11 @@ int* initCounter()
 }
 
 
+/**
+@brief: 复制计数器
+@param counter: 被复制的计数器
+@return: 复制后的计数器
+*/
 int* copyCounter(int* counter)
 {
 	int* copy_counter = initCounter();
@@ -25,18 +34,34 @@ int* copyCounter(int* counter)
 }
 
 
+/**
+@brief: 将文字序号转化为计数器中对应位置的下标
+@param data: 被转化的文字序号
+@return: 被转化文字在计数器中的位置下标
+*/
 int counterIndex(int data)
 {
 	return data > 0 ? (2 * data) : (2 * abs(data) -1);
 }
 
 
+/**
+@brief: 将计数器中的下标转化为对应的文字序号
+@param index: 被转化的计数器的下标
+@return: 计数器下标对应的文字序号
+*/
 int counterData(int index)
 {
 	return (index % 2) ? (-(index + 1) / 2) : (index / 2);
 }
 
 
+/**
+@brief: 删除子句中的特定文字
+@param clause: 指向子句的指针
+@param data: 需要被删除的文字的序号
+@param counter: 计数器
+*/
 void deleteLiteralOpti(struct Clause* clause, int data, int* counter)
 {
 	struct Literal* curr = clause->head->nextLiteral;
@@ -49,19 +74,24 @@ void deleteLiteralOpti(struct Clause* clause, int data, int* counter)
 			curr = curr->nextLiteral;
 			free(target);
 			clause->len--;
-			counter[counterIndex(data)] --;
+			counter[counterIndex(data)] --;		//计数器中对应文字数量-1
 		}
 		else curr = curr->nextLiteral;
 	}
 }
 
 
+/**
+@brief: 删除一个子句
+@param clause: 被删除的子句的指针
+@param counter: 计数器
+*/
 void destroyClauseOpti(struct Clause* clause, int* counter)
 {
 	struct Literal* curr = clause->tail;
 	struct Literal* prev = curr->beforeLiteral;
 	while (prev != NULL) {		//遍历删除文字
-		if (!curr->isTail) counter[counterIndex(curr->data)] --;
+		if (!curr->isTail) counter[counterIndex(curr->data)] --;		//对应文字数量-1
 		free(curr);
 		curr = prev;
 		prev = prev->beforeLiteral;
@@ -71,6 +101,11 @@ void destroyClauseOpti(struct Clause* clause, int* counter)
 }
 
 
+/**
+@brief: 删除公式
+@param formula: 指向被删除的公式的指针
+@param counter: 计数器
+*/
 void destoryFormulaOpti(struct Formula* formula, int* counter)
 {
 	struct Clause* curr = formula->tail;
@@ -85,6 +120,13 @@ void destoryFormulaOpti(struct Formula* formula, int* counter)
 }
 
 
+/**
+@brief: 从公式中删除所有与特定文字相等的文字
+@param formula: 指向公式的指针
+@param data: 被删除的文字序号
+@param counter: 计数器
+@return: 被删除的文字序号
+*/
 int removeLiteralFromFormulaOpti(struct Formula* formula, int data, int* counter)
 {
 	struct Clause* curr = formula->head->nextClause;
@@ -96,6 +138,13 @@ int removeLiteralFromFormulaOpti(struct Formula* formula, int data, int* counter
 }
 
 
+/**
+@brief: 从公式中删除所有包含特定文字的子句
+@param formula: 指向公式的指针
+@param data: 被删除的特定文字
+@param counter: 计数器
+@return: 被删除的文字序号
+*/
 int removeClauseHasLiteralOpti(struct Formula* formula, int data, int* counter)
 {
 	struct Clause* target;
@@ -116,6 +165,12 @@ int removeClauseHasLiteralOpti(struct Formula* formula, int data, int* counter)
 }
 
 
+/**
+@brief: 从单子句中选出文字(选出单子句中正负文字出现次数之和最大的文字)
+@param formula: 指向公式的指针
+@param counter: 计数器
+@return: 被选出的文字的序号
+*/
 int selectDataFromUnitClauseOpti(struct Formula* formula, int* counter)
 {
 	int max_freq = 0, selected_data =0;
@@ -136,6 +191,11 @@ int selectDataFromUnitClauseOpti(struct Formula* formula, int* counter)
 }
 
 
+/**
+@brief: 选取纯文字
+@param counter: 计数器
+@return: 选出的文字的序号
+*/
 int selectPureData(int* counter)
 {
 	for (int i = 1; i < info.num_literal + 1; i++) {
@@ -146,7 +206,11 @@ int selectPureData(int* counter)
 }
 
 
-
+/**
+@brief: 选取最短的子句
+@param formula: 指向公式的指针
+@return: 指向最短子句的指针
+*/
 struct Clause* selectShortestClause(struct Formula* formula)
 {
 	static struct Clause* shortest = NULL;
@@ -163,6 +227,12 @@ struct Clause* selectShortestClause(struct Formula* formula)
 }
 
 
+/**
+@brief: 选取子句中正负文字出现次数之和最大的文字
+@param clause: 指向子句的指针
+@param counter: 计数器
+@return: 被选取的文字序号
+*/
 int selectMaxFreqLiteralData(struct Clause* clause, int* counter)
 {
 	struct Literal* curr = clause->head->nextLiteral;
@@ -178,55 +248,14 @@ int selectMaxFreqLiteralData(struct Clause* clause, int* counter)
 }
 
 
+/**
+@brief: 根据最短子句频率最大策略选取文字
+@param formula: 指向公式的指针
+@param counter: 计数器
+@return: 被选取的文字序号
+*/
 int selectData(struct Formula* formula, int* counter)
 {
 	struct Clause* shortest_clause = selectShortestClause(formula);
 	return selectMaxFreqLiteralData(shortest_clause, counter);
-}
-
-
-int selectData(int* counter)
-{
-	int max = 0, selected = 0;
-	for (int i = 1; i < 2 * info.num_literal + 1; i++) {
-		if (counter[i] > max) {
-			max = counter[i];
-			selected = i;
-		}
-	}
-	return counterData(selected);
-}
-
-
-int randomSelectData(int* counter)
-{
-	int data = 0;
-	do {
-		data = rand() % (info.num_literal + 1);
-		data = rand() % 2 ? data : -data;
-	} while (data == 0 or counter[counterIndex(data)] == 0);
-	printf("random\n");
-	return data;
-}
-
-
-void unitClauseRuleOpti(struct Formula* formula, int data, int* counter)
-{
-	struct Clause* target;
-	struct Clause* curr = formula->head->nextClause;
-	while (!curr->isLastClause) {			//一次遍历完成单子句传播规则
-		if (hasData(curr, data)) {
-			curr->beforeClause->nextClause = curr->nextClause;
-			curr->nextClause->beforeClause = curr->beforeClause;
-			target = curr;
-			curr = curr->nextClause;
-			//free(target);
-			destroyClauseOpti(target, counter);
-			formula->num_clause--;
-		}
-		else {
-			deleteLiteralOpti(curr, -data, counter);
-			curr = curr->nextClause;
-		}
-	}
 }

@@ -10,6 +10,13 @@
 #include"../../display/debug.h"
 
 
+/**
+@brief: 根据所选的文字赋值并进行传播
+@param formula: 指向公式的指针
+@param res: 存放所有文字赋值的数组
+@param counter: 计数器
+@param selected_data: 所选的文字序号
+*/
 void applySelectedData(struct Formula* formula, int* res, int* counter, int selected_data)
 {
 	res[abs(selected_data)] = selected_data;	//赋值
@@ -18,6 +25,13 @@ void applySelectedData(struct Formula* formula, int* res, int* counter, int sele
 }
 
 
+/**
+@brief: dpll算法主程序
+@param formula: 指向公式的指针
+@param res: 所有文字赋值的数组
+@param counter: 计数器
+@return: 若公式可满足则返回true
+*/
 bool dpllOpti(struct Formula* formula, int* res, int* counter)
 {
 	int selected_data = 0;
@@ -44,6 +58,12 @@ bool dpllOpti(struct Formula* formula, int* res, int* counter)
 }
 
 
+/**
+@brief: 调用dpll算法的接口
+@param formula: 指向公式的指针
+@param counter: 计数器
+@return: 表示结果的Result结构体
+*/
 struct Result DPLLOpti(struct Formula* formula, int* counter)
 {
 	struct Result result;
