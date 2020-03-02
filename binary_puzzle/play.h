@@ -5,8 +5,10 @@
 /**********************************************************/
 
 #pragma once
-#include"puzzle.h"
-#include"tool_function.h"
+#include"./tool_function.h"
+#include"./transform.h"
+#include"./print.h"
+#include"./solve_puzzle.h"
 
 /**
 @brief: 数独游玩模块主程序
