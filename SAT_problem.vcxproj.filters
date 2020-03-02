@@ -102,9 +102,6 @@
     <ClInclude Include="walksat-dpll\tools.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="walksat-dpll\test.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="walksat-dpll\walksat.h">
       <Filter>头文件</Filter>
     </ClInclude>

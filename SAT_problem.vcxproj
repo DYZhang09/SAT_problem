@@ -164,7 +164,6 @@
     <ClInclude Include="walksat-dpll\data_struct.h" />
     <ClInclude Include="walksat-dpll\dpll.h" />
     <ClInclude Include="walksat-dpll\parser.h" />
-    <ClInclude Include="walksat-dpll\test.h" />
     <ClInclude Include="walksat-dpll\tools.h" />
     <ClInclude Include="walksat-dpll\walksat.h" />
   </ItemGroup>

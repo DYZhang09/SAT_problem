@@ -9,7 +9,6 @@
 #include"display/test.h"
 #include"walksat-dpll/data_struct.h"
 #include"walksat-dpll/parser.h"
-#include"walksat-dpll/test.h"
 
 int main()
 {
