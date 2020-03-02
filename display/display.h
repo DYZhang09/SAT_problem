@@ -5,10 +5,11 @@
 /**********************************************************/
 
 #pragma once
+#include"./debug.h"
+
+#include"../binary_puzzle/play.h"
 #include"../naive_implementation/solver/solver.h"
 #include"../Optimized_implementation/solver/solver.h"
-#include"../binary_puzzle/play.h"
-#include"debug.h"
 #include"../walksat-dpll/dpll.h"
 
 //模式状态
@@ -86,12 +87,28 @@ char* getPuzzleName()
 
 
 /**
+@brief: 获得cnf求解后文件的输出路径
+@param cnf_filename: cnf输入文件路径
+@return: 输出路径
+*/
+char* cnfOutputName(char* cnf_filename)
+{
+	char* suffix = strstr(cnf_filename, ".cnf");
+	char c[5] = { '.', 'r', 'e', 's', '\0' };
+	int suffix_len = strlen(suffix);
+	for (int i = 0; i < suffix_len; i++)
+		suffix[i] = c[i];
+	return cnf_filename;
+}
+
+
+/**
 @brief: 模式选择函数
 */
 void modeChange()
 {
 	mode = MAIN;
-	printf("/*请进行模式选择(按键选择: c - CNF求解模式, p - 数独求解模式, g - 数独游玩模式, d - debug模式): \n");
+	printf("/*请进行模式选择(按键选择: c - CNF求解模式, p - 数独求解模式, g - 数独游玩模式, d - debug模式, ESC退出): \n");
 	char c = getch();
 	if (c == 'c' or c == 'C') {
 		mode = CNF;
@@ -133,17 +150,33 @@ void callCnfSolver()
 	float finish = clock();	//时间终点
 	result.time = finish - start;		//求解时间
 
-	char* suffix = strstr(cnf_filename, ".cnf");
-	int suffix_len = strlen(suffix);
-	for (int i = 0; i < suffix_len; i++)
-		if (i == 0) suffix[i] = '.';
-		else if (i == 1) suffix[i] = 'r';
-		else if (i == 2) suffix[i] = 'e';
-		else if (i == 3) suffix[i] = 's';
-		else suffix[i] = '\0';
+	cnf_filename = cnfOutputName(cnf_filename);
 	cnfResultPrint(cnf_filename, result);
 	free(result.res);			//释放空间
 	free(cnf_filename);
+	destoryFormula(formula);
+}
+
+
+/**
+@brief: 调用cnf求解模块(决策优化版本)
+*/
+void callCnfSolverOpti()
+{
+	char* cnf_filename = getCnfFileName();
+	int* counter = initCounter();
+	struct Formula* formula = loadFile_opti1(cnf_filename, &counter);
+
+	float start = clock();		//时间起点
+	struct Result result = DPLLOpti(formula, counter);		//调用DPLL函数求解CNF公式
+	float finish = clock();	//时间终点
+	result.time = finish - start;		//求解时间
+
+	cnf_filename = cnfOutputName(cnf_filename);
+	cnfResultPrint(cnf_filename, result);
+	free(result.res);			//释放空间
+	free(cnf_filename);
+	free(counter);
 	destoryFormula(formula);
 }
 
@@ -202,6 +235,9 @@ void debug(char* filename)
 }
 
 
+/**
+@brief: debug模式调用接口
+*/
 void callDebug()
 {
 	char* filename = getCnfFileName();
@@ -217,7 +253,10 @@ void display()
 	printGuide();		//打印说明界面
 	modeChange();	//模式选择
 	while (mode != ESC){		//当模式不是ESC时循环
-		if (mode == CNF) callCnfSolver();		//调用CNF求解模块
+		if (mode == CNF) {
+			if(cnf_solver_version==0) callCnfSolver();		//调用CNF求解模块
+			if (cnf_solver_version == 1) callCnfSolverOpti();
+		}
 		if (mode == PUZZLE) callPuzzleSolver();		//调用数独求解模块
 		if (mode == PUZZLE_PLAY) callPuzzlePlayer();	//调用数独游玩模块
 		if (mode == DEBUG) callDebug();

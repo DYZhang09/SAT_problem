@@ -28,16 +28,6 @@ void testCnfSolverOpti()
 	destoryFormula(formula);
 }
 
-void testLoadFileOpti()
-{
-	char* cnf_filename = getCnfFileName();
-	int* counter = NULL;
-	struct Formula* formula = loadFile_opti1(cnf_filename, &counter);
-
-	for (int i = 0; i < info.num_literal+1 ; i++)
-		printf("%d ", counter[i]);
-}
-
 
 void test_WALKSAT_DPLL()
 {
