@@ -9,6 +9,7 @@
 #include"../Optimized_implementation/solver/solver.h"
 #include"../binary_puzzle/play.h"
 #include"debug.h"
+#include"../walksat-dpll/dpll.h"
 
 //模式状态
 //MAIN: 主界面(选择模式界面), 
@@ -140,9 +141,6 @@ void callCnfSolver()
 		else if (i == 2) suffix[i] = 'e';
 		else if (i == 3) suffix[i] = 's';
 		else suffix[i] = '\0';
-	//char* path = strtok(cnf_filename, ".");		//获取结果写入文件的路径
-	//char* w_filename = strcat(path, ".res");
-	//cnfResultPrint(w_filename, result);		//将结果写入文件
 	cnfResultPrint(cnf_filename, result);
 	free(result.res);			//释放空间
 	free(cnf_filename);
