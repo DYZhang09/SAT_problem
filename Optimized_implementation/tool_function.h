@@ -128,6 +128,7 @@ int selectDataFromUnitClauseOpti(struct Formula* formula, int* counter)
 				max_freq = counter[counterIndex(curr->head->nextLiteral->data)] +
 									counter[counterIndex(-(curr->head->nextLiteral->data))];
 			}
+			return selected_data;
 		}
 		curr = curr->nextClause;
 	}

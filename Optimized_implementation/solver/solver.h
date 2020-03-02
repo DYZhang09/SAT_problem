@@ -7,6 +7,7 @@
 #pragma once
 #include"../cnfparser/cnfparser.h"
 #include"../tool_function.h"
+#include"../../display/debug.h"
 
 
 void applySelectedData(struct Formula* formula, int* res, int* counter, int selected_data)
@@ -24,7 +25,7 @@ bool dpllOpti(struct Formula* formula, int* res, int* counter)
 	while ((selected_data = selectDataFromUnitClauseOpti(formula, counter))) {				//选取单子句进行单子句传播
 		applySelectedData(formula, res, counter, selected_data);
 		if (formula->num_clause == 0) return true;		//公式全空说明公式可满足
-		else if (hasVoidClause(formula)) return false;		//有空子句说明公式不可满足
+		else if (hasVoidClause(formula)) return false;//有空子句说明公式不可满足
 	}
 	if (formula->num_clause == 0) return true;
 
