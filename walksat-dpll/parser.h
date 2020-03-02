@@ -1,5 +1,6 @@
 #pragma once
 #include"data_struct.h"
+#include"tools.h"
 
 
 void skipHead(FILE* fp)
@@ -14,7 +15,7 @@ void skipHead(FILE* fp)
 }
 
 
-bool loadFile(const char* filename, struct BinVector* bvec, struct Mask* mask)
+bool loadFile(const char* filename, struct BinVector* bvec, struct Mask* mask, int** p_counter)
 {
 	FILE* fp = fopen(filename, "r");
 	if (!fp) {
@@ -24,7 +25,9 @@ bool loadFile(const char* filename, struct BinVector* bvec, struct Mask* mask)
 	else {
 		int num = 0, i = 1;
 		skipHead(fp);
-		
+		*p_counter = (int*)malloc(sizeof(int) * (2 * info.num_literal + 1));
+		memset(*p_counter, 0, sizeof(int) * (2 * info.num_literal + 1));
+
 		struct Vector vec = vecInit();
 		struct Vector lit_mask = vecInit();
 		while (!feof(fp) and (i <= info.num_clause)) {
@@ -40,6 +43,7 @@ bool loadFile(const char* filename, struct BinVector* bvec, struct Mask* mask)
 			else if (num != 0) {		//给当前子句添加一个文字
 				vec_push_back(&vec, num);
 				vec_push_back(&lit_mask, 0);
+				(*p_counter)[dataToIndex(num)]++;
 			}
 			else break;		//读取输入完毕
 		}
@@ -78,7 +82,7 @@ bool load_formula(const char* filename, struct BinVector* formula, struct Vector
 			}
 			else break;
 		}
-		*vars = vecInit(info.num_literal + 2, info.num_literal + 1, -1);
+		*vars = vecInit(info.num_literal + 2, info.num_literal + 1, 0);
 		return true;
 	}
 }
