@@ -159,7 +159,7 @@
     <ClInclude Include="naive_dpll\solver\tool_functions.h" />
     <ClInclude Include="Optimized_implementation\cnfparser\cnfparser.h" />
     <ClInclude Include="Optimized_implementation\solver\solver.h" />
-    <ClInclude Include="Optimized_implementation\tool_function.h" />
+    <ClInclude Include="Optimized_implementation\solver\tool_functions.h" />
     <ClInclude Include="walksat-dpll\data_struct.h" />
     <ClInclude Include="walksat-dpll\dpll.h" />
     <ClInclude Include="walksat-dpll\parser.h" />
