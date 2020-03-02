@@ -147,7 +147,6 @@
     <ClInclude Include="binary_puzzle\print.h" />
     <ClInclude Include="binary_puzzle\puzzle.h" />
     <ClInclude Include="binary_puzzle\solve_puzzle.h" />
-    <ClInclude Include="binary_puzzle\test.h" />
     <ClInclude Include="binary_puzzle\comb_tool.h" />
     <ClInclude Include="binary_puzzle\tool_function.h" />
     <ClInclude Include="binary_puzzle\transform.h" />
@@ -162,6 +161,12 @@
     <ClInclude Include="Optimized_implementation\cnfparser\cnfparser.h" />
     <ClInclude Include="Optimized_implementation\solver\solver.h" />
     <ClInclude Include="Optimized_implementation\tool_function.h" />
+    <ClInclude Include="walksat-dpll\data_struct.h" />
+    <ClInclude Include="walksat-dpll\dpll.h" />
+    <ClInclude Include="walksat-dpll\parser.h" />
+    <ClInclude Include="walksat-dpll\test.h" />
+    <ClInclude Include="walksat-dpll\tools.h" />
+    <ClInclude Include="walksat-dpll\walksat.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />

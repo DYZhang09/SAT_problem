@@ -54,9 +54,6 @@
     <ClInclude Include="binary_puzzle\load_puzzle.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="binary_puzzle\test.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="config\config.h">
       <Filter>config</Filter>
     </ClInclude>
@@ -91,6 +88,24 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="display\debug.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="walksat-dpll\data_struct.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="walksat-dpll\parser.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="walksat-dpll\dpll.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="walksat-dpll\tools.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="walksat-dpll\test.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="walksat-dpll\walksat.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
