@@ -30,18 +30,6 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="naive_implementation\cnfparser\cnfparser.h">
-      <Filter>cnfparser</Filter>
-    </ClInclude>
-    <ClInclude Include="naive_implementation\data_structure\data_struct.h">
-      <Filter>data_structure</Filter>
-    </ClInclude>
-    <ClInclude Include="naive_implementation\solver\solver.h">
-      <Filter>solver</Filter>
-    </ClInclude>
-    <ClInclude Include="naive_implementation\data_structure\tool_functions.h">
-      <Filter>data_structure</Filter>
-    </ClInclude>
     <ClInclude Include="config\config.h">
       <Filter>config</Filter>
     </ClInclude>
@@ -101,6 +89,18 @@
     </ClInclude>
     <ClInclude Include="binary_puzzle\tools\load_puzzle.h">
       <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="naive_dpll\cnfparser\cnfparser.h">
+      <Filter>cnfparser</Filter>
+    </ClInclude>
+    <ClInclude Include="naive_dpll\data_structure\data_struct.h">
+      <Filter>data_structure</Filter>
+    </ClInclude>
+    <ClInclude Include="naive_dpll\solver\solver.h">
+      <Filter>solver</Filter>
+    </ClInclude>
+    <ClInclude Include="naive_dpll\solver\tool_functions.h">
+      <Filter>data_structure</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
