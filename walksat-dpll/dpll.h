@@ -8,7 +8,7 @@
 #include"parser.h"
 #include"data_struct.h"
 #include"tools.h"
-#include"../naive_implementation/data_structure/data_struct.h"
+#include"../naive_dpll/data_structure/data_struct.h"
 
 
 /**

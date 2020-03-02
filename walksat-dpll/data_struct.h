@@ -7,7 +7,7 @@
 
 #pragma once
 #include"../config/config.h"
-#include"../naive_implementation/data_structure/data_struct.h"
+#include"../naive_dpll/data_structure/data_struct.h"
 
 #define DEFAULT_CAPACITY 3
 
