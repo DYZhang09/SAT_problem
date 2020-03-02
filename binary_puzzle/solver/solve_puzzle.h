@@ -9,7 +9,7 @@
 
 #include"../tools/load_puzzle.h"
 #include"../tools/tool_function.h"
-#include"../../naive_implementation/solver/solver.h"
+#include"../../naive_dpll/solver/solver.h"
 
 
 
