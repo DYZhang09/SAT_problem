@@ -29,7 +29,6 @@ bool dpll(struct Formula* formula, int *res)
 
 	struct Formula* formula_copy = copyFormula(formula);		//复制公式
 	selected_data = selectFirstData(formula);			//选取第一个元素
-	int num = formula->num_clause;
 	res[abs(selected_data)] = abs(selected_data);			
 	removeClauseHasLiteral(formula_copy, abs(selected_data));
 	removeLiteralFromFormula(formula_copy, -abs(selected_data));
