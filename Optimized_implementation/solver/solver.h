@@ -5,9 +5,12 @@
 /**********************************************************/
 
 #pragma once
+#include"./tool_functions.h"
 #include"../cnfparser/cnfparser.h"
-#include"../tool_function.h"
 #include"../../display/debug.h"
+
+
+bool dpllOpti(struct Formula*, int*, int*);
 
 
 /**
@@ -22,6 +25,21 @@ void applySelectedData(struct Formula* formula, int* res, int* counter, int sele
 	res[abs(selected_data)] = selected_data;	//赋值
 	removeClauseHasLiteralOpti(formula, selected_data, counter);
 	removeLiteralFromFormulaOpti(formula, -selected_data, counter);
+}
+
+
+/**
+@brief: dpll分支函数
+@param formula: 指向公式的指针
+@param res: 存放变量赋值的数组
+@param counter: 计数器
+@param data: 根据分支策略选取的文字
+@return: 若当前分支公式可满足则返回true
+*/
+bool branchOpti(struct Formula* formula, int* res, int* counter, int data)
+{
+	applySelectedData(formula, res, counter, data);
+	return dpllOpti(formula, res, counter);
 }
 
 
@@ -42,18 +60,14 @@ bool dpllOpti(struct Formula* formula, int* res, int* counter)
 		else if (hasVoidClause(formula)) return false;//有空子句说明公式不可满足
 	}
 	if (formula->num_clause == 0) return true;
-
 	struct Formula* formula_copy = copyFormula(formula);		//复制公式
 	int* counter_copy = copyCounter(counter);
 	selected_data = selectData(formula, counter);
-	applySelectedData(formula_copy, res, counter_copy, selected_data);
-
-	if (dpllOpti(formula_copy, res, counter_copy)) return true;			//分支1
+	if (branchOpti(formula_copy, res, counter_copy, selected_data)) return true;			//分支1
 	else {		//分支2
 		destoryFormula(formula_copy);
 		free(counter_copy);
-		applySelectedData(formula, res, counter, -selected_data);
-		return dpllOpti(formula, res, counter);
+		return branchOpti(formula, res, counter, -selected_data);
 	}
 }
 

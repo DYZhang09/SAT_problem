@@ -5,7 +5,7 @@
 /**********************************************************/
 
 #pragma once
-#include"../naive_dpll/data_structure/data_struct.h"
+#include"../../naive_dpll/data_structure/data_struct.h"
 
 
 /**
