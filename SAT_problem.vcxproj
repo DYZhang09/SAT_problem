@@ -157,9 +157,9 @@
     <ClInclude Include="naive_dpll\data_structure\data_struct.h" />
     <ClInclude Include="naive_dpll\solver\solver.h" />
     <ClInclude Include="naive_dpll\solver\tool_functions.h" />
-    <ClInclude Include="Optimized_implementation\cnfparser\cnfparser.h" />
-    <ClInclude Include="Optimized_implementation\solver\solver.h" />
-    <ClInclude Include="Optimized_implementation\solver\tool_functions.h" />
+    <ClInclude Include="Opti_dpll\cnfparser\cnfparser.h" />
+    <ClInclude Include="Opti_dpll\solver\solver.h" />
+    <ClInclude Include="Opti_dpll\solver\tool_functions.h" />
     <ClInclude Include="walksat-dpll\data_struct.h" />
     <ClInclude Include="walksat-dpll\dpll.h" />
     <ClInclude Include="walksat-dpll\parser.h" />

@@ -39,12 +39,6 @@
     <ClInclude Include="binary_puzzle\play.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Optimized_implementation\cnfparser\cnfparser.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="Optimized_implementation\solver\solver.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="display\test.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -99,7 +93,13 @@
     <ClInclude Include="naive_dpll\solver\tool_functions.h">
       <Filter>data_structure</Filter>
     </ClInclude>
-    <ClInclude Include="Optimized_implementation\solver\tool_functions.h">
+    <ClInclude Include="Opti_dpll\cnfparser\cnfparser.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Opti_dpll\solver\solver.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="Opti_dpll\solver\tool_functions.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
