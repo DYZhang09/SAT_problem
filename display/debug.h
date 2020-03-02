@@ -5,7 +5,7 @@
 /**********************************************************/
 
 #pragma once
-#include"../naive_implementation/solver/solver.h"
+#include"../naive_dpll/solver/solver.h"
 
 /**
 @brief: ´òÓ¡¹«Ê½

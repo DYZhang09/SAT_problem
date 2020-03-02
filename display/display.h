@@ -8,7 +8,7 @@
 #include"./debug.h"
 
 #include"../binary_puzzle/play.h"
-#include"../naive_implementation/solver/solver.h"
+#include"../naive_dpll/solver/solver.h"
 #include"../Optimized_implementation/solver/solver.h"
 #include"../walksat-dpll/dpll.h"
 
@@ -254,7 +254,7 @@ void display()
 	modeChange();	//模式选择
 	while (mode != ESC){		//当模式不是ESC时循环
 		if (mode == CNF) {
-			if(cnf_solver_version==0) callCnfSolver();		//调用CNF求解模块
+			if(cnf_solver_version == 0) callCnfSolver();		//调用CNF求解模块
 			if (cnf_solver_version == 1) callCnfSolverOpti();
 		}
 		if (mode == PUZZLE) callPuzzleSolver();		//调用数独求解模块
