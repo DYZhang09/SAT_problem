@@ -9,7 +9,7 @@
 
 #include"../binary_puzzle/play.h"
 #include"../naive_dpll/solver/solver.h"
-#include"../Optimized_implementation/solver/solver.h"
+#include"../Opti_dpll/solver/solver.h"
 #include"../walksat-dpll/dpll.h"
 
 //ģʽ״̬
