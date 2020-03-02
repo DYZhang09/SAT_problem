@@ -42,37 +42,13 @@
     <ClInclude Include="naive_implementation\data_structure\tool_functions.h">
       <Filter>data_structure</Filter>
     </ClInclude>
-    <ClInclude Include="binary_puzzle\generate.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="binary_puzzle\transform.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="binary_puzzle\solve_puzzle.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="binary_puzzle\load_puzzle.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="config\config.h">
       <Filter>config</Filter>
-    </ClInclude>
-    <ClInclude Include="binary_puzzle\print.h">
-      <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="display\display.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="binary_puzzle\play.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="binary_puzzle\tool_function.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="binary_puzzle\comb_tool.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="binary_puzzle\puzzle.h">
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="Optimized_implementation\cnfparser\cnfparser.h">
@@ -103,6 +79,27 @@
       <Filter>头文件</Filter>
     </ClInclude>
     <ClInclude Include="walksat-dpll\walksat.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="binary_puzzle\tools\comb_tool.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="binary_puzzle\tools\tool_function.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="binary_puzzle\generator\generate.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="binary_puzzle\generator\puzzle.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="binary_puzzle\solver\solve_puzzle.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="binary_puzzle\solver\transform.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="binary_puzzle\tools\load_puzzle.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>

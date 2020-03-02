@@ -141,15 +141,14 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="binary_puzzle\generate.h" />
-    <ClInclude Include="binary_puzzle\load_puzzle.h" />
+    <ClInclude Include="binary_puzzle\generator\generate.h" />
+    <ClInclude Include="binary_puzzle\tools\load_puzzle.h" />
     <ClInclude Include="binary_puzzle\play.h" />
-    <ClInclude Include="binary_puzzle\print.h" />
-    <ClInclude Include="binary_puzzle\puzzle.h" />
-    <ClInclude Include="binary_puzzle\solve_puzzle.h" />
-    <ClInclude Include="binary_puzzle\comb_tool.h" />
-    <ClInclude Include="binary_puzzle\tool_function.h" />
-    <ClInclude Include="binary_puzzle\transform.h" />
+    <ClInclude Include="binary_puzzle\generator\puzzle.h" />
+    <ClInclude Include="binary_puzzle\solver\solve_puzzle.h" />
+    <ClInclude Include="binary_puzzle\tools\comb_tool.h" />
+    <ClInclude Include="binary_puzzle\tools\tool_function.h" />
+    <ClInclude Include="binary_puzzle\solver\transform.h" />
     <ClInclude Include="display\debug.h" />
     <ClInclude Include="display\display.h" />
     <ClInclude Include="display\test.h" />
