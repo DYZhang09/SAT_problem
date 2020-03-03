@@ -14,7 +14,7 @@
 @param data: 指定文字的序号
 @return: 找到返回true, 否则false
 */
-bool hasData(struct Clause* clause, int data)
+bool hasData(struct Clause* clause, short data)
 {
 	struct Literal* curr = clause->head->nextLiteral;
 	while (!curr->isTail) {		//遍历判断
@@ -48,7 +48,7 @@ bool hasVoidClause(struct Formula* formula)
 @calls: deleteLiteral()
 @return: 被删除的文字的序号
 */
-int removeLiteralFromFormula(struct Formula* formula, int data)
+int removeLiteralFromFormula(struct Formula* formula, short data)
 {
 	struct Clause* curr = formula->head->nextClause;
 	while (!curr->isLastClause) {		//遍历删除
@@ -66,7 +66,7 @@ int removeLiteralFromFormula(struct Formula* formula, int data)
 @calls: hasData()
 @return: 被删除的文字的序号
 */
-int removeClauseHasLiteral(struct Formula* formula, int data)
+int removeClauseHasLiteral(struct Formula* formula, short data)
 {
 	struct Clause* target;
 	struct Clause* curr = formula->head->nextClause;
@@ -131,7 +131,7 @@ int selectDataFromUnitClause(struct Formula* formula)
 @param var: 变元值数组
 @return: 子句为真则为true, 否则为false
 */
-bool evaluateClause(struct Clause* clause, int* var)
+bool evaluateClause(struct Clause* clause, short* var)
 {
 	struct Literal* curr = clause->head->nextLiteral;
 	while (!curr->isTail) {		//当存在文字序号与所赋的值同号时表明为真
@@ -149,7 +149,7 @@ bool evaluateClause(struct Clause* clause, int* var)
 @calls: evaluateClause()
 @return: 公式为真则为true, 否则为false
 */
-bool evaluateFormula(struct Formula* formula, int* var)
+bool evaluateFormula(struct Formula* formula, short* var)
 {
 	struct Clause* curr = formula->head->nextClause;
 	while (!curr->isLastClause) {		//遍历，只要有子句不满足则整个公式即不满足
@@ -169,7 +169,7 @@ bool evaluateFormula(struct Formula* formula, int* var)
 @param res: 存放所有文字赋值的数组
 @param data: 所选的文字序号
 */
-void applySelData(struct Formula* formula, int* res, int data)
+void applySelData(struct Formula* formula, short* res, short data)
 {
 	res[abs(data)] = data;
 	removeClauseHasLiteral(formula, data);

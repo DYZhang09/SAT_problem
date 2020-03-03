@@ -10,7 +10,7 @@
 //------------------------naive data structure---------------------//
 struct Literal			//文字结构体，data对应文字序号
 {
-	int data = 0;
+	short data = 0;
 	struct Literal* nextLiteral = NULL;
 	struct Literal* beforeLiteral = NULL;
 	bool isHead = false;
@@ -26,7 +26,7 @@ struct Clause		//子句结构体
 
 	bool isFirstClause = false;
 	bool isLastClause = false;
-	int len = 0;
+	short len = 0;
 };
 
 struct Formula		//公式结构体
@@ -41,15 +41,15 @@ struct Formula		//公式结构体
 //CNF总体信息结构体
 struct ProblemInfo
 {
+	short num_literal;
 	int num_clause;
-	int num_literal;
 }info;
 
 
 struct Result
 {
 	bool isSatisfied;
-	int* res;
+	short* res;
 	int* counter;
 	float time;
 };
@@ -57,36 +57,41 @@ struct Result
 
 //----------------------------------------functions---------------------------------------------------//
 /**
+@brief: 初始化一个文字
+@param ... : Literal各成员初始值
+@return: 初始化后的指向文字的指针
+*/
+struct Literal* initLiteral(short data = 0, struct Literal* nextLiteral = NULL, struct Literal* beforeLiteral = NULL,
+										bool isHead = false, bool isTail = false)
+{
+	struct Literal* new_lit = (struct Literal*)malloc(sizeof(struct Literal));
+	new_lit->data = data;
+	new_lit->nextLiteral = nextLiteral;
+	new_lit->beforeLiteral = beforeLiteral;
+	new_lit->isHead = isHead;
+	new_lit->isTail = isTail;
+	return new_lit;
+}
+
+
+/**
 @brief: 初始化一个子句
+@param ... : Clause的成员初始值
 @return: 指向初始化子句的指针
 */
-struct Clause* initClause()
+struct Clause* initClause(struct Clause* nextClause = NULL,struct Clause* beforeClause = NULL, 
+										bool isFirstCla = false, bool isLastCla = false)
 {
 	struct Clause* clause = (struct Clause*) malloc(sizeof(struct Clause));			//动态分配子句空间
-	if (!clause) {
-		printf("malloc error.\nFileName:data_struct\nFunc:initClause\n");
-		return NULL;
-	}
-	else {
-		clause->head = (struct Literal*)malloc(sizeof(struct Literal));			//动态分配子句首尾空间
-		clause->tail = (struct Literal*)malloc(sizeof(struct Literal));
-		if (!clause->head or !clause->tail) {
-			printf("malloc error.\nFileName:data_struct\nFunc:initClause\n");
-			return NULL;
-		}
-		else {
-			clause->head->nextLiteral = clause->tail;			//初始化子句
-			clause->head->isHead = true;
-			clause->head->isTail = false;
-			clause->head->beforeLiteral = NULL;
-			clause->tail->beforeLiteral = clause->head;
-			clause->tail->isHead = false;
-			clause->tail->isTail = true;
-			clause->tail->nextLiteral = NULL;
-			clause->len = 0;
-			return clause;
-		}
-	}
+	clause->head = initLiteral(0, NULL, NULL, true, false);
+	clause->tail = initLiteral(0, NULL, clause->head, false, true);
+	clause->head->nextLiteral = clause->tail;
+	clause->nextClause = nextClause;
+	clause->beforeClause = beforeClause;
+	clause->isFirstClause = isFirstCla;
+	clause->isLastClause = isLastCla;
+	clause->len = 0;
+	return clause;
 }
 
 
@@ -98,24 +103,25 @@ struct Clause* initClause()
 struct Formula* initFormula()
 {
 	struct Formula* formula = (struct Formula*)malloc(sizeof(struct Formula));		//动态分配公式空间
-	if (!formula) {
-		printf("malloc error.\nFileName:data_struct\nFunc:initFormula\n");
-		return NULL;
-	}
-	else {
-		formula->head = initClause();			//初始化公式
-		formula->tail = initClause();
-		formula->head->nextClause = formula->tail;
-		formula->head->isFirstClause = true;
-		formula->head->isLastClause = false;
-		formula->head->beforeClause = NULL;
-		formula->tail->beforeClause = formula->head;
-		formula->tail->isFirstClause = false;
-		formula->tail->isLastClause = true;
-		formula->tail->nextClause = NULL;
-		formula->num_clause = 0;
-		return formula;
-	}
+	formula->head = initClause(NULL, NULL, true, false);
+	formula->tail = initClause(NULL, formula->head, false, true);
+	formula->head->nextClause = formula->tail;
+	formula->num_clause = 0;
+	return formula;
+}
+
+
+/*
+@brief: 初始化一个答案结构体
+@return: 初始化后的答案结构体
+*/
+struct Result initResult()
+{
+	struct Result result;
+	result.isSatisfied = false;		//初始化结果
+	result.res = (short*)malloc(sizeof(short) * (info.num_literal + 1));
+	memset(result.res, 0, sizeof(short) * (info.num_literal + 1));
+	return result;
 }
 
 
@@ -124,23 +130,14 @@ struct Formula* initFormula()
 @param clause: 需要添加文字的指向子句的指针
 @param data: 添加文字的序号
 */
-void addLiteral(struct Clause* clause, int data)
+void addLiteral(struct Clause* clause, short data)
 {
 	struct Literal* tl = clause->tail;
-	struct Literal* temp = (struct Literal*)malloc(sizeof(struct Literal));			//动态分配文字空间
-	if (temp) {
-		temp->data = data;			//初始化文字
-		temp->isTail = false;
-		temp->isHead = false;
-		tl->beforeLiteral->nextLiteral = temp;		//添加文字
-		temp->beforeLiteral = tl->beforeLiteral;
-		temp->nextLiteral = tl;
-		tl->beforeLiteral = temp;
-		clause->len++;
-	}
-	else {
-		printf("malloc error.\n FileName:data_struct.h\nFunc:addLiteral\n");
-	}
+	struct Literal* temp = initLiteral(data, tl, tl->beforeLiteral);
+	tl->beforeLiteral->nextLiteral = temp;		//添加文字
+	tl->beforeLiteral = temp;
+	clause->len++;
+
 }
 
 
@@ -149,7 +146,7 @@ void addLiteral(struct Clause* clause, int data)
 @param clause: 指向指定子句的指针
 @param data: 需要删除的文字的序号
 */
-void deleteLiteral(struct Clause* clause, int data)
+void deleteLiteral(struct Clause* clause, short data)
 {
 	struct Literal* curr = clause->head->nextLiteral;
 	struct Literal* target = curr;
@@ -175,20 +172,11 @@ void deleteLiteral(struct Clause* clause, int data)
 struct Clause* createClause(struct Formula* formula)
 {
 	struct Clause* tl = formula->tail;
-	struct Clause* temp = initClause();			//初始化子句
-	if (temp) {
-		temp->isFirstClause = temp->isLastClause = false;		//添加子句
-		tl->beforeClause->nextClause = temp;
-		temp->beforeClause = tl->beforeClause;
-		temp->nextClause = tl;
-		tl->beforeClause = temp;
-		formula->num_clause++;
-		return temp;
-	}
-	else {
-		printf("malloc error.\n FileName:data_struct.h\nFunc:addClause\n");
-		return NULL;
-	}
+	struct Clause* temp = initClause(tl, tl->beforeClause);
+	tl->beforeClause->nextClause = temp;
+	tl->beforeClause = temp;
+	formula->num_clause++;
+	return temp;
 }
 
 
@@ -200,18 +188,12 @@ struct Clause* createClause(struct Formula* formula)
 void addClause(struct Formula* formula, struct Clause* clause)
 {
 	struct Clause* tl = formula->tail;
-	struct Clause* temp = clause;
-	if (temp) {
-		temp->isFirstClause = temp->isLastClause = false;		//添加子句
-		tl->beforeClause->nextClause = temp;
-		temp->beforeClause = tl->beforeClause;
-		temp->nextClause = tl;
-		tl->beforeClause = temp;
-		formula->num_clause++;
-	}
-	else {
-		printf("malloc error.\n FileName:data_struct.h\nFunc:addClause\n");
-	}
+	clause->isFirstClause = clause->isLastClause = false;		//添加子句
+	tl->beforeClause->nextClause = clause;
+	clause->beforeClause = tl->beforeClause;
+	clause->nextClause = tl;
+	tl->beforeClause = clause;
+	formula->num_clause++;
 }
 
 

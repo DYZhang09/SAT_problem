@@ -9,7 +9,7 @@
 #include "../cnfparser/cnfparser.h"
 
 
-bool dpll(struct Formula*, int*);
+bool dpll(struct Formula*, short*);
 
 /**
 @brief: dpll分支函数
@@ -18,7 +18,7 @@ bool dpll(struct Formula*, int*);
 @param data: 根据策略选择的文字序号
 @return: 当前分支是否可使公式满足
 */
-bool branch(struct Formula* formula, int* res, int data)
+bool branch(struct Formula* formula, short* res, short data)
 {
 	applySelData(formula, res, data);
 	return dpll(formula, res);
@@ -30,12 +30,12 @@ bool branch(struct Formula* formula, int* res, int data)
 @param formula: 待求解的公式
 @return: 可满足则返回true, 否则返回false
 */
-bool dpll(struct Formula* formula, int *res)
+bool dpll(struct Formula* formula, short*res)
 {
 	if (formula->num_clause == 0) return true;
-	int data_unit_clause = 0, selected_data = 0;
-	while ((data_unit_clause = selectDataFromUnitClause(formula))) {				//选取单子句进行单子句传播
-		applySelData(formula, res, data_unit_clause);
+	int selected_data = 0;
+	while ((selected_data = selectDataFromUnitClause(formula))) {				//选取单子句进行单子句传播
+		applySelData(formula, res, selected_data);
 		if (formula->num_clause == 0) return true;		//公式全空说明公式可满足
 		else if (hasVoidClause(formula)) return false;		//有空子句说明公式不可满足
 	}
@@ -57,11 +57,7 @@ bool dpll(struct Formula* formula, int *res)
 */
 struct Result DPLL(struct Formula* formula)
 {
-	struct Result result;
-	result.isSatisfied = false;		//初始化结果
-	result.res = (int*)malloc(sizeof(int) * (info.num_literal + 1));
-	memset(result.res, 0, sizeof(int) * (info.num_literal + 1));
-
+	struct Result result = initResult();
 	result.isSatisfied = dpll(formula, result.res);			//进行求解
 	return result;
 }

@@ -20,7 +20,7 @@ void skip(FILE* fp)
 		if (strcmp(c, "p") == 0) break;		//遇到"p"，说明读取到总体信息行
 	}
 	fscanf(fp, "%s", c);
-	fscanf(fp, "%d %d", &info.num_literal, &info.num_clause);		//读取总体信息
+	fscanf(fp, "%hd %d", &info.num_literal, &info.num_clause);		//读取总体信息
 }
 
 
@@ -43,7 +43,7 @@ struct Formula* loadFile(const char* filename)
 
 		struct Clause* clause = createClause(formula);	//特别处理:添加第一个子句
 		while (!feof(fp) and (i <= info.num_clause)) {
-			fscanf(fp, "%d", &num);
+			fscanf(fp, "%hd", &num);
 			if (num == 0 and i < info.num_clause) {		//遇到行尾，新建一个子句
 				clause = createClause(formula);
 				i++;
