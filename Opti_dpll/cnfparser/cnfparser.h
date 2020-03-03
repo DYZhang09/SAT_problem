@@ -30,7 +30,7 @@ struct Formula* loadFile_opti1(const char* filename, int** counter)
 
 		struct Clause* clause = createClause(formula);	//特别处理:添加第一个子句
 		while (!feof(fp) and (i <= info.num_clause)) {
-			fscanf(fp, "%d", &num);
+			fscanf(fp, "%hd", &num);
 			if (num == 0 and i < info.num_clause) {		//遇到行尾，新建一个子句
 				clause = createClause(formula);
 				i++;

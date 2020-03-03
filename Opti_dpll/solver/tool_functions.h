@@ -39,7 +39,7 @@ int* copyCounter(int* counter)
 @param data: 被转化的文字序号
 @return: 被转化文字在计数器中的位置下标
 */
-int counterIndex(int data)
+short counterIndex(short data)
 {
 	return data > 0 ? (2 * data) : (2 * abs(data) -1);
 }
@@ -50,7 +50,7 @@ int counterIndex(int data)
 @param index: 被转化的计数器的下标
 @return: 计数器下标对应的文字序号
 */
-int counterData(int index)
+short counterData(int index)
 {
 	return (index % 2) ? (-(index + 1) / 2) : (index / 2);
 }
@@ -62,7 +62,7 @@ int counterData(int index)
 @param data: 需要被删除的文字的序号
 @param counter: 计数器
 */
-void deleteLiteralOpti(struct Clause* clause, int data, int* counter)
+void deleteLiteralOpti(struct Clause* clause, short data, int* counter)
 {
 	struct Literal* curr = clause->head->nextLiteral;
 	struct Literal* target = curr;
@@ -127,7 +127,7 @@ void destoryFormulaOpti(struct Formula* formula, int* counter)
 @param counter: 计数器
 @return: 被删除的文字序号
 */
-int removeLiteralFromFormulaOpti(struct Formula* formula, int data, int* counter)
+int removeLiteralFromFormulaOpti(struct Formula* formula, short data, int* counter)
 {
 	struct Clause* curr = formula->head->nextClause;
 	while (!curr->isLastClause) {		//遍历删除
@@ -145,7 +145,7 @@ int removeLiteralFromFormulaOpti(struct Formula* formula, int data, int* counter
 @param counter: 计数器
 @return: 被删除的文字序号
 */
-int removeClauseHasLiteralOpti(struct Formula* formula, int data, int* counter)
+int removeClauseHasLiteralOpti(struct Formula* formula, short data, int* counter)
 {
 	struct Clause* target;
 	struct Clause* curr = formula->head->nextClause;
@@ -155,7 +155,6 @@ int removeClauseHasLiteralOpti(struct Formula* formula, int data, int* counter)
 			curr->nextClause->beforeClause = curr->beforeClause;
 			target = curr;
 			curr = curr->nextClause;
-			//free(target);
 			destroyClauseOpti(target, counter);
 			formula->num_clause--;
 		}
@@ -173,36 +172,20 @@ int removeClauseHasLiteralOpti(struct Formula* formula, int data, int* counter)
 */
 int selectDataFromUnitClauseOpti(struct Formula* formula, int* counter)
 {
-	int max_freq = 0, selected_data =0;
+	int max_freq = 0, selected_data =0, freq = 0;
 	struct Clause* curr = formula->head->nextClause;
 	while (!curr->isLastClause) {		//遍历，直到找到一个单子句
 		if (isUnitClause(curr)) {
-			if (counter[counterIndex(curr->head->nextLiteral->data)] + 
-				counter[counterIndex(-(curr->head->nextLiteral->data ))]> max_freq) {
+			if ((freq = counter[counterIndex(curr->head->nextLiteral->data)] + 
+				counter[counterIndex(-(curr->head->nextLiteral->data ))])> max_freq) {
 				selected_data = curr->head->nextLiteral->data;
-				max_freq = counter[counterIndex(curr->head->nextLiteral->data)] +
-									counter[counterIndex(-(curr->head->nextLiteral->data))];
+				max_freq = freq;
 			}
 			return selected_data;
 		}
 		curr = curr->nextClause;
 	}
 	return selected_data;
-}
-
-
-/**
-@brief: 选取纯文字
-@param counter: 计数器
-@return: 选出的文字的序号
-*/
-int selectPureData(int* counter)
-{
-	for (int i = 1; i < info.num_literal + 1; i++) {
-		if (counter[counterIndex(i)] == 0 and counter[counterIndex(-i)] > 0) return -i;
-		if (counter[counterIndex(i)] > 0 and counter[counterIndex(-i)] == 0) return i;
-	}
-	return 0;
 }
 
 
@@ -235,12 +218,12 @@ struct Clause* selectShortestClause(struct Formula* formula)
 */
 int selectMaxFreqLiteralData(struct Clause* clause, int* counter)
 {
+	int max_freq = 0, selected_data = 0, freq = 0;
 	struct Literal* curr = clause->head->nextLiteral;
-	int max_freq = 0, selected_data = 0;
 	while (!curr->isTail) {
-		if (counter[counterIndex(curr->data)] + counter[counterIndex(-(curr->data))] > max_freq) {
+		if ((freq = counter[counterIndex(curr->data)] + counter[counterIndex(-(curr->data))]) > max_freq) {
 			selected_data = curr->data;
-			max_freq = counter[counterIndex(curr->data)] + counter[counterIndex(-(curr->data))];
+			max_freq = freq;
 		}
 		curr = curr->nextLiteral;
 	}

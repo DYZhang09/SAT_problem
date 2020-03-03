@@ -10,7 +10,7 @@
 #include"../../display/debug.h"
 
 
-bool dpllOpti(struct Formula*, int*, int*);
+bool dpllOpti(struct Formula*, short*, int*);
 
 
 /**
@@ -20,7 +20,7 @@ bool dpllOpti(struct Formula*, int*, int*);
 @param counter: 计数器
 @param selected_data: 所选的文字序号
 */
-void applySelectedData(struct Formula* formula, int* res, int* counter, int selected_data)
+void applySelectedData(struct Formula* formula, short* res, int* counter, short selected_data)
 {
 	res[abs(selected_data)] = selected_data;	//赋值
 	removeClauseHasLiteralOpti(formula, selected_data, counter);
@@ -36,7 +36,7 @@ void applySelectedData(struct Formula* formula, int* res, int* counter, int sele
 @param data: 根据分支策略选取的文字
 @return: 若当前分支公式可满足则返回true
 */
-bool branchOpti(struct Formula* formula, int* res, int* counter, int data)
+bool branchOpti(struct Formula* formula, short* res, int* counter, short data)
 {
 	applySelectedData(formula, res, counter, data);
 	return dpllOpti(formula, res, counter);
@@ -50,10 +50,9 @@ bool branchOpti(struct Formula* formula, int* res, int* counter, int data)
 @param counter: 计数器
 @return: 若公式可满足则返回true
 */
-bool dpllOpti(struct Formula* formula, int* res, int* counter)
+bool dpllOpti(struct Formula* formula, short* res, int* counter)
 {
 	int selected_data = 0;
-
 	while ((selected_data = selectDataFromUnitClauseOpti(formula, counter))) {				//选取单子句进行单子句传播
 		applySelectedData(formula, res, counter, selected_data);
 		if (formula->num_clause == 0) return true;		//公式全空说明公式可满足
@@ -64,10 +63,10 @@ bool dpllOpti(struct Formula* formula, int* res, int* counter)
 	int* counter_copy = copyCounter(counter);
 	selected_data = selectData(formula, counter);
 	if (branchOpti(formula_copy, res, counter_copy, selected_data)) return true;			//分支1
-	else {		//分支2
+	else {		
 		destoryFormula(formula_copy);
 		free(counter_copy);
-		return branchOpti(formula, res, counter, -selected_data);
+		return branchOpti(formula, res, counter, -selected_data);		//分支2
 	}
 }
 
@@ -80,11 +79,7 @@ bool dpllOpti(struct Formula* formula, int* res, int* counter)
 */
 struct Result DPLLOpti(struct Formula* formula, int* counter)
 {
-	struct Result result;
-	result.isSatisfied = false;		//初始化结果
-	result.res = (int*)malloc(sizeof(int) * (info.num_literal + 1));
-	memset(result.res, 0, sizeof(int) * (info.num_literal + 1));
-
+	struct Result result = initResult();
 	result.isSatisfied = dpllOpti(formula, result.res, counter);			//进行求解
 	return result;
 }
