@@ -32,7 +32,7 @@ void printFormula(struct Formula* formula)
 @brief: 打印结果的数组
 @param res: 结果数组
 */
-void printArray(int* res)
+void printArray(short* res)
 {
 	for (int i = 1; i <= info.num_literal; i++) {
 		printf("%d ", res[i]);
@@ -41,3 +41,13 @@ void printArray(int* res)
 }
 
 
+//@brief: 打印debug模式下的信息
+void printDebugInfo(struct Result result, struct Formula* formula)
+{
+	printf("结果:\n");
+	printf("%d\n", result.isSatisfied);
+	printArray(result.res);
+	printf("\n%f\n", result.time);
+	printf("验证:\n");
+	printf("公式结果:%d\n", evaluateFormula(formula, result.res, true));
+}
