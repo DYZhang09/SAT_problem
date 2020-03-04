@@ -10,7 +10,7 @@
 #include"../binary_puzzle/play.h"
 #include"../naive_dpll/solver/solver.h"
 #include"../opti_deci_dpll/solver/solver.h"
-#include"../opti_memo_dpll/dpll.h"
+#include"../opti_memo_dpll/solver/solver.h"
 
 //模式状态
 //MAIN: 主界面(选择模式界面), 
@@ -146,15 +146,12 @@ void modeChange()
 @brief: 处理动态分配的空间
 @param .. : 指向需要被释放空间的各个指针
 */
-void handleTrash(char* filename, struct Result result, struct Formula* formula, int* counter = NULL)
+void handleTrash(char* filename, struct Result result, struct Formula* formula = NULL, int* counter = NULL)
 {
-	free(filename);
-	filename = 0;
-	free(result.res);
-	result.res = 0;
-	destoryFormula(formula);
-	if (!counter) free(counter);
-	counter = 0;
+	if(filename)	free(filename), filename = 0;
+	if(result.res) free(result.res), result.res = 0;
+	if (formula) destoryFormula(formula);
+	if (counter) free(counter), counter = 0;
 }
 
 
@@ -186,6 +183,25 @@ void callCnfSolverOpti()
 	cnf_filename = cnfOutputName(cnf_filename);
 	cnfResultPrint(cnf_filename, result);
 	handleTrash(cnf_filename, result, formula, counter);
+}
+
+
+
+void callCNfSolverOptiX()
+{
+	printSolverVer();
+	char* filename = getCnfFileName();
+	struct BinVector formula = binVecInit();
+	struct Mask mask = maskInit();
+	int* counter;
+	if (!loadFile(filename, &formula, &mask, &counter)) return;
+	else {
+		struct Result result = WALKSAT_DPLL(&formula, &mask, counter);
+		filename = cnfOutputName(filename);
+		cnfResultPrint(filename, result);
+		handleTrash(filename, result, NULL);
+		freeBinVec(&formula);
+	}
 }
 
 
@@ -249,6 +265,7 @@ void display()
 		if (mode == CNF) {
 			if(cnf_solver_version == 0) callCnfSolver();		//调用CNF求解模块
 			if (cnf_solver_version == 1) callCnfSolverOpti();
+			if (cnf_solver_version == 2) callCNfSolverOptiX();
 		}
 		if (mode == PUZZLE) callPuzzleSolver();		//调用数独求解模块
 		if (mode == PUZZLE_PLAY) callPuzzlePlayer();	//调用数独游玩模块

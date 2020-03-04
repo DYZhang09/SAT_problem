@@ -1,6 +1,7 @@
 #pragma once
 #include"display.h"
-#include"../opti_memo_dpll/walksat.h"
+#include"../opti_memo_dpll/solver/solver.h"
+#include"../opti_memo_dpll/solver/walksat.h"
 
 
 
