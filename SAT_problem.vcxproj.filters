@@ -87,19 +87,19 @@
     <ClInclude Include="opti_deci_dpll\solver\tool_functions.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="opti_memo_dpll\data_struct.h">
+    <ClInclude Include="opti_memo_dpll\data_struct\data_struct.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="opti_memo_dpll\dpll.h">
+    <ClInclude Include="opti_memo_dpll\parser\parser.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="opti_memo_dpll\parser.h">
+    <ClInclude Include="opti_memo_dpll\solver\walksat.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="opti_memo_dpll\tools.h">
+    <ClInclude Include="opti_memo_dpll\solver\tools.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="opti_memo_dpll\walksat.h">
+    <ClInclude Include="opti_memo_dpll\solver\solver.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
