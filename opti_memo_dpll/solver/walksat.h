@@ -1,7 +1,8 @@
 #pragma once
-#include"../config/config.h"
-#include"./data_struct.h"
-#include"parser.h"
+
+#include"../parser/parser.h"
+#include"../data_struct/data_struct.h"
+#include"../../config/config.h"
 
 typedef int v_iterator;
 
@@ -119,27 +120,6 @@ void climb(unsigned int cl, unsigned int true_clauses)
     }
 }
 
-
-//void climb(unsigned int true_clauses)
-//{
-//    unsigned int result;
-//    int best_lit = -1;
-//    v_iterator li_it;
-//
-//    for (li_it = 0; li_it < vecSize(vars); li_it++) {
-//        vecNth_re(&vars, li_it, -vecNth(vars, li_it));
-//        result = test_model();
-//        vecNth_re(&vars, li_it, -vecNth(vars, li_it));
-//
-//        if (result > true_clauses) {
-//            best_lit = li_it;
-//            true_clauses = result;
-//        }
-//    }
-//    if (best_lit != -1) {
-//        vecNth_re(&vars, best_lit, -vecNth(vars, best_lit));
-//    }
-//}
 
 
 void flip_random_lit(unsigned int cl)

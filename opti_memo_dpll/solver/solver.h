@@ -5,10 +5,10 @@
 /**********************************************************/
 
 #pragma once
-#include"parser.h"
-#include"data_struct.h"
 #include"tools.h"
-#include"../naive_dpll/data_structure/data_struct.h"
+#include"../parser/parser.h"
+#include"../data_struct/data_struct.h"
+#include"../../naive_dpll/data_structure/data_struct.h"
 
 
 /**
@@ -74,11 +74,9 @@ bool walksat_dpll(struct BinVector* formula, struct Mask* mask, short* res, int 
 */
 struct Result WALKSAT_DPLL(struct BinVector* formula, struct Mask* mask, int *counter)
 {
-	struct Result result;
-	result.isSatisfied = false;		//初始化结果
-	result.res = (short*)malloc(sizeof(short) * (info.num_literal + 1));
-	memset(result.res, 0, sizeof(short) * (info.num_literal + 1));
-
+	struct Result result = initResult();
+	float time_start = clock();
 	result.isSatisfied = walksat_dpll(formula, mask, result.res, 0, counter);			//进行求解
+	result.time = clock() - time_start;
 	return result;
 }

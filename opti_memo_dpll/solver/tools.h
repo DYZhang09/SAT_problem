@@ -5,7 +5,7 @@
 /**********************************************************/
 
 #pragma once
-#include"data_struct.h"
+#include"../data_struct/data_struct.h"
 
 
 /**

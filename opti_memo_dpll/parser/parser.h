@@ -5,10 +5,10 @@
 /**********************************************************/
 
 #pragma once
-#include"data_struct.h"
-#include"tools.h"
+#include"../data_struct/data_struct.h"
+#include"../solver/tools.h"
 
-#include"../naive_dpll/cnfparser/cnfparser.h"
+#include"../../naive_dpll/cnfparser/cnfparser.h"
 
 
 /**
@@ -27,7 +27,8 @@ bool loadFile(const char* filename, struct BinVector* formula, struct Mask* mask
 		return false;
 	}
 	else {
-		int num = 0, i = 1;
+		short num = 0;
+		int i = 1;
 		skip(fp);
 		*p_counter = (int*)malloc(sizeof(int) * (2 * info.num_literal + 1));
 		memset(*p_counter, 0, sizeof(int) * (2 * info.num_literal + 1));
@@ -76,7 +77,8 @@ bool load_formula(const char* filename, struct BinVector* formula, struct Vector
 		return false;
 	}
 	else {
-		int num = 0, i = 1;
+		short num = 0;
+		int i = 1;
 		skip(fp);
 
 		struct Vector buffer = vecInit();
