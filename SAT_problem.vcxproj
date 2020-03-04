@@ -151,7 +151,6 @@
     <ClInclude Include="binary_puzzle\solver\transform.h" />
     <ClInclude Include="display\debug.h" />
     <ClInclude Include="display\display.h" />
-    <ClInclude Include="display\test.h" />
     <ClInclude Include="naive_dpll\cnfparser\cnfparser.h" />
     <ClInclude Include="config\config.h" />
     <ClInclude Include="naive_dpll\data_structure\data_struct.h" />

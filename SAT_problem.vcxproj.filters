@@ -39,9 +39,6 @@
     <ClInclude Include="binary_puzzle\play.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="display\test.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="display\debug.h">
       <Filter>头文件</Filter>
     </ClInclude>
