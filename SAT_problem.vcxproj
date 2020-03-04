@@ -157,14 +157,14 @@
     <ClInclude Include="naive_dpll\data_structure\data_struct.h" />
     <ClInclude Include="naive_dpll\solver\solver.h" />
     <ClInclude Include="naive_dpll\solver\tool_functions.h" />
-    <ClInclude Include="Opti_dpll\cnfparser\cnfparser.h" />
-    <ClInclude Include="Opti_dpll\solver\solver.h" />
-    <ClInclude Include="Opti_dpll\solver\tool_functions.h" />
-    <ClInclude Include="walksat-dpll\data_struct.h" />
-    <ClInclude Include="walksat-dpll\dpll.h" />
-    <ClInclude Include="walksat-dpll\parser.h" />
-    <ClInclude Include="walksat-dpll\tools.h" />
-    <ClInclude Include="walksat-dpll\walksat.h" />
+    <ClInclude Include="opti_deci_dpll\cnfparser\cnfparser.h" />
+    <ClInclude Include="opti_deci_dpll\solver\solver.h" />
+    <ClInclude Include="opti_deci_dpll\solver\tool_functions.h" />
+    <ClInclude Include="opti_memo_dpll\data_struct.h" />
+    <ClInclude Include="opti_memo_dpll\dpll.h" />
+    <ClInclude Include="opti_memo_dpll\parser.h" />
+    <ClInclude Include="opti_memo_dpll\tools.h" />
+    <ClInclude Include="opti_memo_dpll\walksat.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />

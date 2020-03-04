@@ -45,21 +45,6 @@
     <ClInclude Include="display\debug.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="walksat-dpll\data_struct.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="walksat-dpll\parser.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="walksat-dpll\dpll.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="walksat-dpll\tools.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
-    <ClInclude Include="walksat-dpll\walksat.h">
-      <Filter>头文件</Filter>
-    </ClInclude>
     <ClInclude Include="binary_puzzle\tools\comb_tool.h">
       <Filter>头文件</Filter>
     </ClInclude>
@@ -93,13 +78,28 @@
     <ClInclude Include="naive_dpll\solver\tool_functions.h">
       <Filter>data_structure</Filter>
     </ClInclude>
-    <ClInclude Include="Opti_dpll\cnfparser\cnfparser.h">
+    <ClInclude Include="opti_deci_dpll\cnfparser\cnfparser.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Opti_dpll\solver\solver.h">
+    <ClInclude Include="opti_deci_dpll\solver\solver.h">
       <Filter>头文件</Filter>
     </ClInclude>
-    <ClInclude Include="Opti_dpll\solver\tool_functions.h">
+    <ClInclude Include="opti_deci_dpll\solver\tool_functions.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="opti_memo_dpll\data_struct.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="opti_memo_dpll\dpll.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="opti_memo_dpll\parser.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="opti_memo_dpll\tools.h">
+      <Filter>头文件</Filter>
+    </ClInclude>
+    <ClInclude Include="opti_memo_dpll\walksat.h">
       <Filter>头文件</Filter>
     </ClInclude>
   </ItemGroup>
