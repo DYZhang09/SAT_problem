@@ -186,7 +186,9 @@ void callCnfSolverOpti()
 }
 
 
-
+/**
+@brief: 调用cnf求解模块(内存使用优化版本)
+*/
 void callCNfSolverOptiX()
 {
 	printSolverVer();
