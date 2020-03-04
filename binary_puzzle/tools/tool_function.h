@@ -39,7 +39,7 @@ bool checkInput(int* input)
 */
 bool checkValid(struct Puzzle p, struct Formula* formula)
 {
-	int result[puzzle_size * puzzle_size + 1];
+	short result[puzzle_size * puzzle_size + 1];
 	for (int i = 0; i < puzzle_size; i++) {
 		for (int j = 0; j < puzzle_size; j++) {
 			int data = i * puzzle_size + j + 1;
