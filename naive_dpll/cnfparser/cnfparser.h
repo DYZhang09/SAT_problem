@@ -37,7 +37,8 @@ struct Formula* loadFile(const char* filename)
 		exit(1);
 	}
 	else {
-		int num=0, i = 1;
+		short num = 0;
+		int i = 1;
 		struct Formula* formula = initFormula();		//初始化公式
 		skip(fp);	//跳过文件注释行
 

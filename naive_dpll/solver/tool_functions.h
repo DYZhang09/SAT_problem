@@ -48,7 +48,7 @@ bool hasVoidClause(struct Formula* formula)
 @calls: deleteLiteral()
 @return: 被删除的文字的序号
 */
-int removeLiteralFromFormula(struct Formula* formula, short data)
+short removeLiteralFromFormula(struct Formula* formula, short data)
 {
 	struct Clause* curr = formula->head->nextClause;
 	while (!curr->isLastClause) {		//遍历删除
@@ -66,7 +66,7 @@ int removeLiteralFromFormula(struct Formula* formula, short data)
 @calls: hasData()
 @return: 被删除的文字的序号
 */
-int removeClauseHasLiteral(struct Formula* formula, short data)
+short removeClauseHasLiteral(struct Formula* formula, short data)
 {
 	struct Clause* target;
 	struct Clause* curr = formula->head->nextClause;
@@ -102,7 +102,7 @@ bool isUnitClause(struct Clause* clause)
 @param formula: 指向公式的指针
 @return: 选取的文字的序号
 */
-int selectFirstData(struct Formula* formula)
+short selectFirstData(struct Formula* formula)
 {
 	return	formula->head->nextClause->head->nextLiteral->data;
 }
@@ -114,7 +114,7 @@ int selectFirstData(struct Formula* formula)
 @calls: isUnitClause()
 @return: 单子句的文字序号, 若不存在单子句返回0
 */
-int selectDataFromUnitClause(struct Formula* formula)
+short selectDataFromUnitClause(struct Formula* formula)
 {
 	struct Clause* curr = formula->head->nextClause;
 	while (!curr->isLastClause) {		//遍历，直到找到一个单子句
@@ -149,15 +149,14 @@ bool evaluateClause(struct Clause* clause, short* var)
 @calls: evaluateClause()
 @return: 公式为真则为true, 否则为false
 */
-bool evaluateFormula(struct Formula* formula, short* var)
+bool evaluateFormula(struct Formula* formula, short* var, bool verbose = false)
 {
 	struct Clause* curr = formula->head->nextClause;
 	while (!curr->isLastClause) {		//遍历，只要有子句不满足则整个公式即不满足
 		bool flag = evaluateClause(curr, var);
+		if (verbose) printf("%d\n", flag);
 		if (!flag) return false;
-		else {
-			curr = curr->nextClause;
-		}
+		curr = curr->nextClause;
 	}
 	return true;
 }

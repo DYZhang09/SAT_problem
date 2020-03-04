@@ -33,7 +33,7 @@ bool branch(struct Formula* formula, short* res, short data)
 bool dpll(struct Formula* formula, short*res)
 {
 	if (formula->num_clause == 0) return true;
-	int selected_data = 0;
+	short selected_data = 0;
 	while ((selected_data = selectDataFromUnitClause(formula))) {				//选取单子句进行单子句传播
 		applySelData(formula, res, selected_data);
 		if (formula->num_clause == 0) return true;		//公式全空说明公式可满足
@@ -58,6 +58,8 @@ bool dpll(struct Formula* formula, short*res)
 struct Result DPLL(struct Formula* formula)
 {
 	struct Result result = initResult();
+	float time_start = clock();
 	result.isSatisfied = dpll(formula, result.res);			//进行求解
+	result.time = clock() - time_start;
 	return result;
 }
