@@ -90,7 +90,7 @@ char* getCnfFileName()
 */
 char* getPuzzleName()
 {
-	printf("\n/*请输入Puzzle棋盘文件路径:\n");
+	printf("/*请输入Puzzle棋盘文件路径:\n");
 	char* filename = (char*)malloc(sizeof(char) * 255);
 	scanf("%s", filename);
 	return filename;
@@ -163,6 +163,10 @@ void callCnfSolver()
 	printSolverVer();
 	char* cnf_filename = getCnfFileName();		//获取cnf输入文件路径
 	struct Formula* formula = loadFile(cnf_filename);		//读取文件得到CNF公式
+	if (!formula) {
+		free(cnf_filename);
+		return;
+	}
 	struct Result result = DPLL(formula);		//调用DPLL函数求解CNF公式
 	cnf_filename = cnfOutputName(cnf_filename);
 	cnfResultPrint(cnf_filename, result);
@@ -177,8 +181,12 @@ void callCnfSolverOpti()
 {
 	printSolverVer();
 	char* cnf_filename = getCnfFileName();
-	int* counter = initCounter();
+	int* counter;
 	struct Formula* formula = loadFile_opti1(cnf_filename, &counter);
+	if (!formula) {
+		free(cnf_filename);
+		return;
+	}
 	struct Result result = DPLLOpti(formula, counter);		//调用DPLL函数求解CNF公式
 	cnf_filename = cnfOutputName(cnf_filename);
 	cnfResultPrint(cnf_filename, result);
@@ -189,7 +197,7 @@ void callCnfSolverOpti()
 /**
 @brief: 调用cnf求解模块(内存使用优化版本)
 */
-void callCNfSolverOptiX()
+void callCnfSolverOptiX()
 {
 	printSolverVer();
 	char* filename = getCnfFileName();
@@ -198,7 +206,7 @@ void callCNfSolverOptiX()
 	int* counter;
 	if (!loadFile(filename, &formula, &mask, &counter)) return;
 	else {
-		struct Result result = WALKSAT_DPLL(&formula, &mask, counter);
+		struct Result result = DPLLOptiX(&formula, &mask, counter);
 		filename = cnfOutputName(filename);
 		cnfResultPrint(filename, result);
 		handleTrash(filename, result, NULL);
@@ -213,7 +221,8 @@ void callCNfSolverOptiX()
 void callPuzzleSolver()
 {
 	char* puzzle_filename = getPuzzleName();		//获取初始棋盘文件
-	struct Puzzle p = loadPuzzleFromFile(puzzle_filename);		//从文件中读取棋盘
+	struct Puzzle p;
+	if(!loadPuzzleFromFile(puzzle_filename, &p)) return;		//从文件中读取棋盘
 	solvePuzzle(p);		//求解数独
 	free(puzzle_filename);		//释放空间
 }
@@ -230,29 +239,22 @@ void callPuzzlePlayer()
 
 
 /**
-@brief: debug时使用函数, 负责将结果输出到屏幕
-@param filename: cnf文件路径
-@calls: loadFile(), copyFormula(), DPLL(), printArray()
-*/
-void debug(char* filename)
-{
-	struct Formula* formula = loadFile(filename);
-	struct Formula* old_formula =  copyFormula(formula);
-	printFormula(formula);
-	struct Result result = DPLL(formula);
-	printDebugInfo(result, old_formula);
-	destoryFormula(old_formula);
-	handleTrash(filename, result, formula);
-}
-
-
-/**
 @brief: debug模式调用接口
 */
 void callDebug()
 {
 	char* filename = getCnfFileName();
-	debug(filename);
+	struct Formula* formula = loadFile(filename);
+	if (!formula) {
+		free(filename);
+		return;
+	}
+	struct Formula* old_formula = copyFormula(formula);
+	printFormula(formula);
+	struct Result result = DPLL(formula);
+	printDebugInfo(result, old_formula);
+	destoryFormula(old_formula);
+	handleTrash(filename, result, formula);
 }
 
 
@@ -267,7 +269,7 @@ void display()
 		if (mode == CNF) {
 			if(cnf_solver_version == 0) callCnfSolver();		//调用CNF求解模块
 			if (cnf_solver_version == 1) callCnfSolverOpti();
-			if (cnf_solver_version == 2) callCNfSolverOptiX();
+			if (cnf_solver_version == 2) callCnfSolverOptiX();
 		}
 		if (mode == PUZZLE) callPuzzleSolver();		//调用数独求解模块
 		if (mode == PUZZLE_PLAY) callPuzzlePlayer();	//调用数独游玩模块

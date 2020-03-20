@@ -17,12 +17,14 @@ void printFormula(struct Formula* formula)
 	struct Clause* currClause = formula->head->nextClause;
 	while (!currClause->isLastClause) {
 		struct Literal* currLit = currClause->head->nextLiteral;
-		printf("Formula %d:\n", i++);
+		printf("Formula %d: ", i++);
 		while (!currLit->isTail) {
 			printf("%d ", currLit->data);
 			currLit = currLit->nextLiteral;
 		}
-		std::cout << currClause->len << '\n';
+		//std::cout << currClause->len << '\n';
+		printf("\t");
+		if (i % 3 == 0)printf("\n");
 		currClause = currClause->nextClause;
 	}
 }
@@ -44,10 +46,10 @@ void printArray(short* res)
 //@brief: 打印debug模式下的信息
 void printDebugInfo(struct Result result, struct Formula* formula)
 {
-	printf("结果:\n");
+	printf("\n结果:\n");
 	printf("%d\n", result.isSatisfied);
 	printArray(result.res);
-	printf("\n%f\n", result.time);
+	printf("%f\n", result.time);
 	printf("验证:\n");
-	printf("公式结果:%d\n", evaluateFormula(formula, result.res, true));
+	printf("公式结果:%d\t",evaluateFormula(formula, result.res, true));
 }
