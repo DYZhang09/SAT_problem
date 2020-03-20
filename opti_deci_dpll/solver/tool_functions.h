@@ -217,7 +217,7 @@ struct Clause* selectShortestClause(struct Formula* formula)
 @param counter: 计数器
 @return: 被选取的文字序号
 */
-short selectMaxFreqLiteralData(struct Clause* clause, int* counter)
+short selectMaxFreqData(struct Clause* clause, int* counter)
 {
 	int max_freq = 0, freq = 0;
 	short selected_data = 0;
@@ -242,5 +242,5 @@ short selectMaxFreqLiteralData(struct Clause* clause, int* counter)
 short selectData(struct Formula* formula, int* counter)
 {
 	struct Clause* shortest_clause = selectShortestClause(formula);
-	return selectMaxFreqLiteralData(shortest_clause, counter);
+	return selectMaxFreqData(shortest_clause, counter);
 }
