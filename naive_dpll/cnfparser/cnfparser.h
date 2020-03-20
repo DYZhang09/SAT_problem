@@ -34,7 +34,7 @@ struct Formula* loadFile(const char* filename)
 	FILE* fp = fopen(filename, "r");
 	if (!fp) {
 		printf("无法读取文件:%s", filename);
-		exit(1);
+		return NULL;
 	}
 	else {
 		short num = 0;

@@ -76,7 +76,6 @@ short removeClauseHasLiteral(struct Formula* formula, short data)
 			curr->nextClause->beforeClause = curr->beforeClause;
 			target = curr;
 			curr = curr->nextClause;
-			//free(target);
 			destroyClause(target);
 			formula->num_clause--;
 		}
@@ -151,10 +150,12 @@ bool evaluateClause(struct Clause* clause, short* var)
 */
 bool evaluateFormula(struct Formula* formula, short* var, bool verbose = false)
 {
+	static int i = 1;
 	struct Clause* curr = formula->head->nextClause;
 	while (!curr->isLastClause) {		//遍历，只要有子句不满足则整个公式即不满足
 		bool flag = evaluateClause(curr, var);
-		if (verbose) printf("%d\n", flag);
+		if (verbose) printf("Formula %d: %d\t", i++, flag);
+		if (i % 10 == 0) printf("\n");
 		if (!flag) return false;
 		curr = curr->nextClause;
 	}
