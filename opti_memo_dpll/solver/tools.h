@@ -320,8 +320,8 @@ void recoverFormula(struct BinVector formula, struct Mask* mask, int level, int*
 	}
 	for (int i = 0; i < vecSize(del_cla); i++)
 		mask->del_clause_log[vecNth(del_cla, i)] = 0;
-	freeVec(&del_cla);
-	freeVec(&del_lit);
+	/*freeVec(&del_cla);
+	freeVec(&del_lit);*/
 }
 
 

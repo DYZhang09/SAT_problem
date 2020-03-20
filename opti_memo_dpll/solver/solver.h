@@ -37,7 +37,7 @@ void simplify(struct BinVector* formula, short*res, short data, struct Mask* mas
 @param counter: 计数器
 @return: 公式可满足返回true
 */
-bool walksat_dpll(struct BinVector* formula, struct Mask* mask, short* res, int level, int* counter)
+bool dpllOptiX(struct BinVector* formula, struct Mask* mask, short* res, int level, int* counter)
 {
 	int selected_data = 0;
 	while ((selected_data = chooseUnitData(*formula, *mask))) {
@@ -54,10 +54,10 @@ bool walksat_dpll(struct BinVector* formula, struct Mask* mask, short* res, int 
 	//selected_data = chooseFIrstData(*formula, *mask);
 	selected_data = chooseData(*formula, *mask, counter);
 	simplify(formula, res, selected_data, mask, level + 1, counter);
-	if (walksat_dpll(formula, mask, res, level+1, counter)) return true;
+	if (dpllOptiX(formula, mask, res, level+1, counter)) return true;
 	else {
 		simplify(formula, res, -selected_data, mask, level + 1, counter);
-		if(walksat_dpll(formula, mask, res, level+1, counter)) return true;
+		if(dpllOptiX(formula, mask, res, level+1, counter)) return true;
 		else {
 			recoverFormula(*formula, mask, level, counter);
 			return false;
@@ -72,11 +72,11 @@ bool walksat_dpll(struct BinVector* formula, struct Mask* mask, short* res, int 
 @param mask: 指向mask的指针
 @param counter: 计数器
 */
-struct Result WALKSAT_DPLL(struct BinVector* formula, struct Mask* mask, int *counter)
+struct Result DPLLOptiX(struct BinVector* formula, struct Mask* mask, int *counter)
 {
 	struct Result result = initResult();
 	float time_start = clock();
-	result.isSatisfied = walksat_dpll(formula, mask, result.res, 0, counter);			//进行求解
+	result.isSatisfied = dpllOptiX(formula, mask, result.res, 0, counter);			//进行求解
 	result.time = clock() - time_start;
 	return result;
 }
