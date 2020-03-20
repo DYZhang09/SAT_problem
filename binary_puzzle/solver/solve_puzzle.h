@@ -38,6 +38,7 @@ struct Puzzle  solvePuzzle(struct Puzzle p, bool verbose = true)
 	}
 	printf("解答:\n");
 	draw(p);		//打印棋盘
+	printf("求解时间 %f ms\n", result.time);
 	destoryFormula(formula);		//释放空间
 	free(result.res);
 	return p;

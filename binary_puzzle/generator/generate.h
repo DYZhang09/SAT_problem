@@ -26,7 +26,6 @@ struct Puzzle initPuzzle()
 			p.puzzle[i][j] = -1;		//棋盘初始化全部为-1
 			p.mask[i][j] = 0;
 		}
-	
 	p.level == puzzle_size * puzzle_size - 1;		//初始化level, 默认只挖一个空
 	return p;
 }
@@ -77,7 +76,7 @@ bool dfs(struct Puzzle *p)
 
 
 /**
-@brief: 拉斯维加斯算法初始化n个数独数字
+@brief: 拉斯维加斯算法生成棋盘
 @param p: 指向数独的指针
 @param n: 初始化数字的个数
 @return: 生成成功返回true
@@ -177,25 +176,23 @@ void digHoleRandom(struct Puzzle* p)
 */
 void getLevel(struct Puzzle* p)
 {
-	int difficulty = 0;
+	float difficulty = 0;
 	printf("/*请输入难度等级(1-3难度依次增加): ");
-	scanf("%d", &difficulty);
-	switch (difficulty)
-	{
-	case 3:
-		p->level = puzzle_size * puzzle_size / 3;
-		break;
-	case 2:
-		p->level = puzzle_size * puzzle_size/ 3 + puzzle_size;
-		break;
-	case 1:
-		p->level = puzzle_size * puzzle_size/ 3 + 2 * puzzle_size;
-		break;
-	default:
-		printf("/*请检查输入的难度等级\n");
-		getLevel(p);
-		break;
+	scanf("%f", &difficulty);
+	if (abs(difficulty - 1) < 1e-6) {
+		p->level = puzzle_size * puzzle_size / 3 + 2 * puzzle_size;
+		return;
 	}
+	if (abs(difficulty - 2) < 1e-6) {
+		p->level = puzzle_size * puzzle_size / 3 + puzzle_size;
+		return;
+	}
+	if (abs(difficulty - 3) < 1e-6) {
+		p->level = puzzle_size * puzzle_size / 3;
+		return;
+	}
+	printf("/*请检查输入的难度等级\n");
+	getLevel(p);
 	return;
 }
 
@@ -207,9 +204,10 @@ void getLevel(struct Puzzle* p)
 struct Puzzle generatePuzzle()
 {
 	printf("/*棋盘生成中\n");
+	float time_start = clock();
 	struct Puzzle p = initPuzzle();
 	while (!lasVegas(&p));
-
+	printf("生成时间 %f ms\n", clock() - time_start);
 	getLevel(&p);
 	digHoleRandom(&p);
 	return p;

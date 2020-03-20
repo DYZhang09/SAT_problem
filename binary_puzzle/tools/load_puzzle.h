@@ -28,24 +28,25 @@ struct Puzzle loadPuzzleFromTerm()
 /**
 @brief: 从文件中读取棋盘
 @param filename: 目标文件路径名
-@return: 读取数据后的棋盘
+@param p: 指向棋盘的指针
+@return: 成功读取则返回true
 */
-struct Puzzle loadPuzzleFromFile(const char* filename)
+bool loadPuzzleFromFile(const char* filename, struct Puzzle* p)
 {
 	FILE* fp = fopen(filename, "r");
 	if (!fp) {
 		printf("无法打开文件: %s\n", filename);
-		exit(-1);
+		return false;
 	}
 	else {
-		struct Puzzle p = initPuzzle();
+		*p = initPuzzle();
 		int c = -1;
 		for (int i = 0; i < puzzle_size; i++) {
 			for (int j = 0; j < puzzle_size; j++) {
 				fscanf(fp, "%d", &c);
-				if (c != -1) p.puzzle[i][j] = c;
+				if (c != -1) p->puzzle[i][j] = c;
 			}
 		}
-		return p;
+		return true;
 	}
 }
