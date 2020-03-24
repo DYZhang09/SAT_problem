@@ -179,15 +179,15 @@ void getLevel(struct Puzzle* p)
 	float difficulty = 0;
 	printf("/*请输入难度等级(1-3难度依次增加): ");
 	scanf("%f", &difficulty);
-	if (abs(difficulty - 1) < 1e-6) {
+	if (fabs(difficulty - 1) < 1e-6) {
 		p->level = puzzle_size * puzzle_size / 3 + 2 * puzzle_size;
 		return;
 	}
-	if (abs(difficulty - 2) < 1e-6) {
+	if (fabs(difficulty - 2) < 1e-6) {
 		p->level = puzzle_size * puzzle_size / 3 + puzzle_size;
 		return;
 	}
-	if (abs(difficulty - 3) < 1e-6) {
+	if (fabs(difficulty - 3) < 1e-6) {
 		p->level = puzzle_size * puzzle_size / 3;
 		return;
 	}
