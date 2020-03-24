@@ -11,6 +11,7 @@
 #include<iostream>
 #include<time.h>
 #include<conio.h>
+#include<math.h>
 #include<string>
 using namespace std;
 
